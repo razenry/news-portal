@@ -2,17 +2,13 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Models\Category;
-use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
+use App\Filament\Resources\UnitResource\Pages;
+use App\Models\Unit;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,11 +22,11 @@ use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ForceDeleteAction;
 use Illuminate\Support\Str;
 
-class CategoryResource extends Resource
+class UnitResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Unit::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
 
     protected static ?string $navigationGroup = 'Master Data';
 
@@ -44,14 +40,8 @@ class CategoryResource extends Resource
                     ->afterStateUpdated(fn(callable $set, $state) => $set('slug', Str::slug($state))),
 
                 TextInput::make('slug')
-                    ->unique(Category::class, 'slug')
+                    ->unique(Unit::class, 'slug')
                     ->required(),
-
-                FileUpload::make('icon')
-                    ->image()
-                    ->directory('category-icons')
-                    ->required()->columnSpan(2),
-
 
                 RichEditor::make('description')
                     ->required()
@@ -63,23 +53,9 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('icon')
-                    ->circular()
-                    ->toggleable(), 
-                
-                TextColumn::make('name')
-                    ->sortable()
-                    ->searchable()
-                    ->toggleable(), 
-                
-                TextColumn::make('slug')
-                    ->sortable()
-                    ->copyable()
-                    ->toggleable(), 
-                
-                TextColumn::make('description')
-                    ->limit(50)
-                    ->toggleable(),
+                TextColumn::make('name')->sortable()->searchable()->toggleable(),
+                TextColumn::make('slug')->sortable()->copyable()->toggleable(),
+                TextColumn::make('description')->limit(50)->toggleable(),
             ])
             ->filters([
                 TrashedFilter::make(),
@@ -114,7 +90,6 @@ class CategoryResource extends Resource
                 SoftDeletingScope::class,
             ]));
     }
-    
 
     public static function getRelations(): array
     {
@@ -124,9 +99,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListUnits::route('/'),
+            'create' => Pages\CreateUnit::route('/create'),
+            'edit' => Pages\EditUnit::route('/{record}/edit'),
         ];
     }
 }
