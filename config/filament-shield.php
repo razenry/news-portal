@@ -63,7 +63,7 @@ return [
         'policy_directory' => 'Policies',
         'policy_namespace' => 'Policies',
     ],
-
+    'nav.group' => 'User Management',
     'exclude' => [
         'enabled' => true,
 
