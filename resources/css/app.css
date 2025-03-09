@@ -1,4 +1,10 @@
 @import 'tailwindcss';
+/* @import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite"; */
+
+/* Preline UI */
+@import "./node_modules/preline/variants.css";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

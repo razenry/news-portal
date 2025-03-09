@@ -41,11 +41,27 @@ class CategoryResource extends Resource
                 TextInput::make('name')
                     ->required()
                     ->lazy()
-                    ->afterStateUpdated(fn(callable $set, $state) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(function (callable $set, callable $get, $state) {
+                        $slug = Str::slug($state);
+                        $originalSlug = $slug;
+                        $count = 1;
+
+                        // Ambil ID kategori jika sedang dalam mode edit
+                        $categoryId = $get('id');
+
+                        while (Category::where('slug', $slug)->where('id', '!=', $categoryId)->exists()) {
+                            $slug = "{$originalSlug}-{$count}";
+                            $count++;
+                        }
+
+                        $set('slug', $slug);
+                    }),
 
                 TextInput::make('slug')
-                    ->unique(Category::class, 'slug')
-                    ->required(),
+                    ->unique(Category::class, 'slug', ignoreRecord: true) // Abaikan validasi unik saat mengedit
+                    ->required()
+                    ->readOnly(),
+
 
                 FileUpload::make('icon')
                     ->image()
@@ -65,18 +81,18 @@ class CategoryResource extends Resource
             ->columns([
                 ImageColumn::make('icon')
                     ->circular()
-                    ->toggleable(), 
-                
+                    ->toggleable(),
+
                 TextColumn::make('name')
                     ->sortable()
                     ->searchable()
-                    ->toggleable(), 
-                
+                    ->toggleable(),
+
                 TextColumn::make('slug')
                     ->sortable()
                     ->copyable()
-                    ->toggleable(), 
-                
+                    ->toggleable(),
+
                 TextColumn::make('description')
                     ->limit(50)
                     ->toggleable(),
@@ -114,7 +130,7 @@ class CategoryResource extends Resource
                 SoftDeletingScope::class,
             ]));
     }
-    
+
 
     public static function getRelations(): array
     {

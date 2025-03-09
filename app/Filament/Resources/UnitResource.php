@@ -26,7 +26,7 @@ class UnitResource extends Resource
 {
     protected static ?string $model = Unit::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     protected static ?string $navigationGroup = 'Master Data';
 
@@ -35,14 +35,29 @@ class UnitResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->required()
-                    ->lazy()
-                    ->afterStateUpdated(fn(callable $set, $state) => $set('slug', Str::slug($state))),
-
-                TextInput::make('slug')
-                    ->unique(Unit::class, 'slug')
-                    ->required(),
-
+                ->required()
+                ->lazy()
+                ->afterStateUpdated(function (callable $set, callable $get, $state) {
+                    $slug = Str::slug($state);
+                    $originalSlug = $slug;
+                    $count = 1;
+            
+                    // Ambil ID kategori jika sedang dalam mode edit
+                    $unitId = $get('id');
+            
+                    while (Unit::where('slug', $slug)->where('id', '!=', $unitId)->exists()) {
+                        $slug = "{$originalSlug}-{$count}";
+                        $count++;
+                    }
+            
+                    $set('slug', $slug);
+                }),
+            
+            TextInput::make('slug')
+                ->unique(Unit::class, 'slug', ignoreRecord: true) // Abaikan validasi unik saat mengedit
+                ->required()
+                ->readOnly(),
+            
                 RichEditor::make('description')
                     ->required()
                     ->columnSpanFull(),
