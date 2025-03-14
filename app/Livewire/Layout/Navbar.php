@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Layout;
 
+use App\Models\Unit;
 use Livewire\Component;
 
 class Navbar extends Component
@@ -10,6 +11,8 @@ class Navbar extends Component
 
     public function render()
     {
-        return view('livewire.layout.navbar');
+        return view('livewire.layout.navbar', [
+            'units' => Unit::withoutTrashed()->get(),
+        ]);
     }
 }

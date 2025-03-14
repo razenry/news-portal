@@ -1,10 +1,9 @@
 @import 'tailwindcss';
-/* @import "flowbite/src/themes/default";
+@import "flowbite/src/themes/default";
+@custom-variant dark (&:where(.dark, .dark *));
 @plugin "flowbite/plugin";
-@source "../node_modules/flowbite"; */
-
-/* Preline UI */
-@import "./node_modules/preline/variants.css";
+@source "../node_modules/flowbite";
+/* @import "./node_modules/preline/variants.css"; */
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

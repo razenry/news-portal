@@ -27,7 +27,7 @@ class DashboardOverview extends BaseWidget
 
                 Card::make('Total Posts', Post::count())
                     ->description('Total number of posts created')
-                    ->icon('heroicon-o-document-text')
+                    ->icon('heroicon-o-arrow-up-on-square-stack')
                     ->color('primary'),
 
                 Card::make('Total Categories', Category::count())
