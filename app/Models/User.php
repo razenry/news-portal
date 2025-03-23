@@ -8,11 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-
-class User extends Authenticatable
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, SoftDeletes;
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@news-portal-main-hqpyhy.laravel.cloud') && $this->hasVerifiedEmail();
+    }
 
     /**
      * The attributes that are mass assignable.
