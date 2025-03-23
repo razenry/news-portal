@@ -24,6 +24,8 @@ return [
         'name' => 'super_admin',
         'define_via_gate' => false,
         'intercept_gate' => 'before', // after
+        'select_all' => true, // Pastikan ini bernilai `true`
+        'select_all_name' => 'All Permissions',
     ],
 
     'panel_user' => [
@@ -72,7 +74,8 @@ return [
         ],
 
         'widgets' => [
-            'AccountWidget', 'FilamentInfoWidget',
+            'AccountWidget',
+            'FilamentInfoWidget',
         ],
 
         'resources' => [],

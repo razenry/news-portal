@@ -1,7 +1,7 @@
 import "./bootstrap";
-import "flowbite";
+import 'flowbite';
+// import "../../node_modules/flowbite/dist/flowbite.min.js";
 
-// import '../../node_modules/preline/dist/preline.js';
 
 var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
 var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");

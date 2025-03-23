@@ -1,85 +1,134 @@
-<div class="">
-    <!-- Hero -->
-    <div class="relative overflow-hidden">
-        <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24">
-            <div class="text-center">
-                <h1 class="text-4xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200">
-                    Insights
-                </h1>
+<main class="container mx-auto px-4 py-8">
+    <style>
+        .carousel-item {
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+        }
 
-                <p class="mt-3 text-gray-600 dark:text-gray-400">
-                    Stay in the know with insights from industry experts.
-                </p>
+        .carousel-item.active {
+            display: block;
+        }
+    </style>
 
-                <div class="mt-7 sm:mt-12 mx-auto max-w-xl relative">
-                    <!-- Form -->
-                    <form>
-                        <div
-                            class="relative z-10 flex gap-x-3 p-3 bg-white border border-gray-200 rounded-lg shadow-lg shadow-gray-100 dark:bg-gray-900 dark:border-gray-700 dark:shadow-gray-900/20">
-                            <div class="w-full">
-                                <label for="hs-search-article-1"
-                                    class="block text-sm text-gray-700 font-medium dark:text-white"><span
-                                        class="sr-only">Search article</span></label>
-                                <input type="email" name="hs-search-article-1" id="hs-search-article-1"
-                                    class="py-2.5 px-4 block w-full border-transparent rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-900 dark:border-transparent dark:text-gray-400 dark:placeholder-gray-500 dark:focus:ring-gray-600"
-                                    placeholder="Search article">
-                            </div>
-                            <div>
-                                <a class="size-11 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-                                    href="#">
-                                    <svg class="shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="11" cy="11" r="8" />
-                                        <path d="m21 21-4.3-4.3" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- End Form -->
-
-                    <!-- SVG Element -->
-                    <div class="hidden md:block absolute top-0 end-0 -translate-y-12 translate-x-20">
-                        <svg class="w-16 h-auto text-orange-500" width="121" height="135" viewBox="0 0 121 135"
-                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 16.4754C11.7688 27.4499 21.2452 57.3224 5 89.0164" stroke="currentColor"
-                                stroke-width="10" stroke-linecap="round" />
-                            <path d="M33.6761 112.104C44.6984 98.1239 74.2618 57.6776 83.4821 5" stroke="currentColor"
-                                stroke-width="10" stroke-linecap="round" />
-                            <path d="M50.5525 130C68.2064 127.495 110.731 117.541 116 78.0874" stroke="currentColor"
-                                stroke-width="10" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                    <!-- End SVG Element -->
-
-                    <!-- SVG Element -->
-                    <div class="hidden md:block absolute bottom-0 start-0 translate-y-10 -translate-x-32">
-                        <svg class="w-40 h-auto text-cyan-500" width="347" height="188" viewBox="0 0 347 188"
-                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M4 82.4591C54.7956 92.8751 30.9771 162.782 68.2065 181.385C112.642 203.59 127.943 78.57 122.161 25.5053C120.504 2.2376 93.4028 -8.11128 89.7468 25.5053C85.8633 61.2125 130.186 199.678 180.982 146.248L214.898 107.02C224.322 95.4118 242.9 79.2851 258.6 107.02C274.299 134.754 299.315 125.589 309.861 117.539L343 93.4426"
-                                stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                    <!-- End SVG Element -->
+    <!-- Carousel Container -->
+    <div class="relative w-full mx-auto overflow-hidden rounded-xl shadow-2xl">
+        <!-- Carousel Slides -->
+        <div class="carousel-inner relative w-full">
+            <!-- Slide 1 -->
+            <div class="carousel-item active transition-opacity duration-700 ease-in-out">
+                <img src="https://placehold.co/1200x500" alt="Slide 1" class="w-full h-80 md:h-120 object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h2 class="text-3xl font-bold mb-2">Judul Slide 1</h2>
+                    <p class="text-lg opacity-90">Deskripsi singkat untuk slide 1.</p>
                 </div>
-
-                <div class="mt-10 sm:mt-20">
-
-                    @foreach ($categories as $key => $category)
-
-                        <a class="m-1 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700"
-                            href="#">
-                            <img class="shrink-0 size-4" src="{{ asset('storage/' . $category->icon) }}" alt="" srcset="">
-                            {{ $category->name }}
-                        </a>
-
-                    @endforeach
-
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item transition-opacity duration-700 ease-in-out">
+                <img src="https://placehold.co/1200x500" alt="Slide 2" class="w-full h-80 md:h-120 object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h2 class="text-3xl font-bold mb-2">Judul Slide 2</h2>
+                    <p class="text-lg opacity-90">Deskripsi singkat untuk slide 2.</p>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item transition-opacity duration-700 ease-in-out">
+                <img src="https://placehold.co/1200x500" alt="Slide 3" class="w-full h-80 md:h-120 object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white ">
+                    <h2 class="text-3xl font-bold mb-2">Judul Slide 3</h2>
+                    <p class="text-lg opacity-90">Deskripsi singkat untuk slide 3.</p>
                 </div>
             </div>
         </div>
+
+        <!-- Tombol Navigasi -->
+        <button id="prevButton"
+            class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/30 dark:bg-gray-800/30 p-3 rounded-full hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all duration-300">
+            <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <button id="nextButton"
+            class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/30 dark:bg-gray-800/30 p-3 rounded-full hover:bg-white/50 dark:hover:bg-gray-800/50 transition-all duration-300">
+            <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
     </div>
-    <!-- End Hero -->
-</div>
+
+    <!-- JavaScript untuk Carousel -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const totalSlides = slides.length;
+
+        // Fungsi untuk menampilkan slide
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        // Fungsi untuk slide berikutnya
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Fungsi untuk slide sebelumnya
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Event listener untuk tombol navigasi
+        document.getElementById('nextButton').addEventListener('click', nextSlide);
+        document.getElementById('prevButton').addEventListener('click', prevSlide);
+
+        // Otomatis pindah slide setiap 5 detik
+        setInterval(nextSlide, 5000);
+    </script>
+
+    <!-- Berita Terbaru -->
+    <section class="mt-12">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Berita Terbaru</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Berita 1 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <img src="https://placehold.co/400x200" alt="Gambar Berita 1" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Kegiatan Lomba Melipat Kertas Origami</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Kegiatan lomba melipat kertas origami telah
+                        dilaksanakan dengan sukses.</p>
+                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Baca Selengkapnya</a>
+                </div>
+            </div>
+
+            <!-- Berita 2 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <img src="https://placehold.co/400x200" alt="Gambar Berita 2" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Peringatan HUT RI ke-77</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Peringatan HUT RI ke-77 di YPP Al Amanah Al Bantani
+                        berlangsung meriah.</p>
+                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Baca Selengkapnya</a>
+                </div>
+            </div>
+
+            <!-- Berita 3 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <img src="https://placehold.co/400x200" alt="Gambar Berita 3" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Literasi Bersama Perpustakaan Keliling</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">Kegiatan literasi bersama perpustakaan keliling
+                        telah dilaksanakan.</p>
+                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Baca Selengkapnya</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

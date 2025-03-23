@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Unit;
 use App\Models\User;
+use App\Models\Unit;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UnitPolicy
@@ -11,7 +11,7 @@ class UnitPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any categories.
+     * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
@@ -19,7 +19,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can view a unit.
+     * Determine whether the user can view the model.
      */
     public function view(User $user, Unit $unit): bool
     {
@@ -27,7 +27,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can create categories.
+     * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {
@@ -35,7 +35,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can update a unit.
+     * Determine whether the user can update the model.
      */
     public function update(User $user, Unit $unit): bool
     {
@@ -43,7 +43,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can delete a unit.
+     * Determine whether the user can delete the model.
      */
     public function delete(User $user, Unit $unit): bool
     {
@@ -51,7 +51,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can bulk delete categories.
+     * Determine whether the user can bulk delete.
      */
     public function deleteAny(User $user): bool
     {
@@ -59,7 +59,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete a unit.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Unit $unit): bool
     {
@@ -67,7 +67,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can permanently bulk delete categories.
+     * Determine whether the user can permanently bulk delete.
      */
     public function forceDeleteAny(User $user): bool
     {
@@ -75,7 +75,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can restore a unit.
+     * Determine whether the user can restore.
      */
     public function restore(User $user, Unit $unit): bool
     {
@@ -83,7 +83,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can bulk restore categories.
+     * Determine whether the user can bulk restore.
      */
     public function restoreAny(User $user): bool
     {
@@ -91,7 +91,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can replicate a unit.
+     * Determine whether the user can replicate.
      */
     public function replicate(User $user, Unit $unit): bool
     {
@@ -99,7 +99,7 @@ class UnitPolicy
     }
 
     /**
-     * Determine whether the user can reorder categories.
+     * Determine whether the user can reorder.
      */
     public function reorder(User $user): bool
     {

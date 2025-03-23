@@ -30,15 +30,17 @@
     @endif
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900">
+<body class="bg-white dark:bg-gray-900">
+
 
     <livewire:layout.navbar />
 
-    <div class="container">
+    <div class="mt-14">
         {{ $slot ?? "Not Found" }}
     </div>
 
     @livewireScripts
+    <!-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> -->
 </body>
 
 </html>

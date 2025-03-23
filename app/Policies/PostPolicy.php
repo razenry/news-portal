@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Post;
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
@@ -11,7 +11,7 @@ class PostPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any categories.
+     * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
@@ -19,7 +19,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can view a post.
+     * Determine whether the user can view the model.
      */
     public function view(User $user, Post $post): bool
     {
@@ -27,7 +27,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can create categories.
+     * Determine whether the user can create models.
      */
     public function create(User $user): bool
     {
@@ -35,7 +35,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can update a post.
+     * Determine whether the user can update the model.
      */
     public function update(User $user, Post $post): bool
     {
@@ -43,7 +43,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can delete a post.
+     * Determine whether the user can delete the model.
      */
     public function delete(User $user, Post $post): bool
     {
@@ -51,7 +51,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can bulk delete categories.
+     * Determine whether the user can bulk delete.
      */
     public function deleteAny(User $user): bool
     {
@@ -59,7 +59,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can permanently delete a post.
+     * Determine whether the user can permanently delete.
      */
     public function forceDelete(User $user, Post $post): bool
     {
@@ -67,7 +67,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can permanently bulk delete categories.
+     * Determine whether the user can permanently bulk delete.
      */
     public function forceDeleteAny(User $user): bool
     {
@@ -75,7 +75,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can restore a post.
+     * Determine whether the user can restore.
      */
     public function restore(User $user, Post $post): bool
     {
@@ -83,7 +83,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can bulk restore categories.
+     * Determine whether the user can bulk restore.
      */
     public function restoreAny(User $user): bool
     {
@@ -91,7 +91,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can replicate a post.
+     * Determine whether the user can replicate.
      */
     public function replicate(User $user, Post $post): bool
     {
@@ -99,7 +99,7 @@ class PostPolicy
     }
 
     /**
-     * Determine whether the user can reorder categories.
+     * Determine whether the user can reorder.
      */
     public function reorder(User $user): bool
     {
