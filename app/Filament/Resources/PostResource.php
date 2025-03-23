@@ -3,16 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostResource\Pages;
-use App\Models\Category;
 use App\Models\User;
-use App\Models\Post;
-use App\Models\Unit;
-use Filament\Forms;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -31,6 +22,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\{Grid, Hidden, TextInput, RichEditor, FileUpload, Select, Toggle};
+use App\Models\{Post, Category, Unit};
 
 class PostResource extends Resource
 {
@@ -41,69 +34,77 @@ class PostResource extends Resource
     protected static ?string $navigationGroup = 'Content Management';
 
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Hidden::make('user_id')
-                    ->default(Auth::id())
-                    ->disabled(fn() => Auth::user()->hasRole('super_admin'))
-                    ->required(),
+{
+    return $form
+        ->schema([
+            Grid::make(2) // Grid dengan 2 kolom di layar besar
+                ->schema([
+                    Hidden::make('user_id')
+                        ->default(Auth::id())
+                        ->disabled(fn() => Auth::user()->hasRole('super_admin'))
+                        ->required(),
 
-                TextInput::make('title')
-                    ->required()
-                    ->lazy()
-                    ->afterStateUpdated(function (callable $set, callable $get, $state) {
-                        $slug = Str::slug($state);
-                        $originalSlug = $slug;
-                        $count = 1;
+                    TextInput::make('title')
+                        ->required()
+                        ->lazy()
+                        ->afterStateUpdated(function (callable $set, callable $get, $state) {
+                            $slug = Str::slug($state);
+                            $originalSlug = $slug;
+                            $count = 1;
 
-                        // Cek apakah sedang dalam mode edit dengan melihat apakah ada 'id'
-                        $postId = $get('id');
+                            // Cek apakah sedang dalam mode edit dengan melihat apakah ada 'id'
+                            $postId = $get('id');
 
-                        while (Post::where('slug', $slug)->where('id', '!=', $postId)->exists()) {
-                            $slug = "{$originalSlug}-{$count}";
-                            $count++;
-                        }
+                            while (Post::where('slug', $slug)->where('id', '!=', $postId)->exists()) {
+                                $slug = "{$originalSlug}-{$count}";
+                                $count++;
+                            }
 
-                        $set('slug', $slug);
-                    }),
+                            $set('slug', $slug);
+                        }),
 
-                TextInput::make('slug')
-                    ->unique(Post::class, 'slug', ignoreRecord: true) // Abaikan validasi unik jika sedang mengedit
-                    ->required()
-                    ->readOnly(),
+                    TextInput::make('slug')
+                        ->unique(Post::class, 'slug', ignoreRecord: true)
+                        ->required()
+                        ->readOnly(),
+                ]),
 
+            RichEditor::make('body')
+                ->required()
+                ->columnSpanFull(), // Full width agar lebih nyaman untuk menulis konten panjang
 
-                RichEditor::make('body')
-                    ->required()
-                    ->columnSpanFull(),
+            Grid::make(2) // Grid 2 kolom agar layout lebih rapi di layar besar
+                ->schema([
+                    FileUpload::make('image')
+                        ->image()
+                        ->directory('posts')
+                        ->columnSpan(['md' => 2, 'lg' => 2, 'xl' => 2, 'default' => 2]), // 2 kolom di mobile, 1 kolom di layar besar
 
-                FileUpload::make('image')
-                    ->image()
-                    ->directory('posts')
-                    ->columnSpan(2),
+                    Select::make('category_id')
+                        ->label('Category')
+                        ->options(Category::pluck('name', 'id'))
+                        ->searchable()
+                        ->required()
+                        ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
 
-                Select::make('category_id')
-                    ->label('Category')
-                    ->options(Category::pluck('name', 'id'))
-                    ->searchable()
-                    ->required(),
+                    Select::make('unit_id')
+                        ->label('Unit')
+                        ->options(Unit::pluck('name', 'id'))
+                        ->searchable()
+                        ->required()
+                        ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
+                ]),
 
-                Select::make('unit_id')
-                    ->label('Unit')
-                    ->options(Unit::pluck('name', 'id'))
-                    ->searchable()
-                    ->required(),
+            TextInput::make('tags')
+                ->placeholder('#example, #tag')
+                ->columnSpanFull(), // Full width agar mudah diinput
 
-                TextInput::make('tags')
-                    ->placeholder('#example, #tag')
-                    ->columnSpanFull(),
-
-                Forms\Components\Toggle::make('published')
-                    ->label('Published')
-                    ->default(false),
-            ]);
-    }
+            Toggle::make('published')
+                ->label('Published')
+                ->default(false)
+                ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]), // Letakkan di grid
+        ]);
+}
 
     public static function table(Table $table): Table
     {
