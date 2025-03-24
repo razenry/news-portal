@@ -15,7 +15,7 @@
         <!-- Carousel Slides -->
         <div class="carousel-inner relative w-full">
             <!-- Slide 1 -->
-            <div class="carousel-item active transition-opacity duration-700 ease-in-out ">
+            <div class="carousel-item active transition-opacity duration-700 ease-in-out aspect-video">
                 <img src="https://placehold.co/1200x500" alt="Slide 1" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <!-- Slide 2 -->
-            <div class="carousel-item transition-opacity duration-700 ease-in-out ">
+            <div class="carousel-item transition-opacity duration-700 ease-in-out aspect-video">
                 <img src="https://placehold.co/1200x500" alt="Slide 2" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <!-- Slide 3 -->
-            <div class="carousel-item transition-opacity duration-700 ease-in-out ">
+            <div class="carousel-item transition-opacity duration-700 ease-in-out aspect-video">
                 <img src="https://placehold.co/1200x500" alt="Slide 3" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
