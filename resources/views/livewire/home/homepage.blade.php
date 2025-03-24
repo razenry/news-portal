@@ -96,39 +96,70 @@
     <!-- Berita Terbaru -->
     <section class="mt-12">
         <h2 class="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Berita Terbaru</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Berita 1 -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden min-h-[400px] flex flex-col">
                 <img src="https://placehold.co/400x200" alt="Gambar Berita 1" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Kegiatan Lomba Melipat Kertas Origami</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">Kegiatan lomba melipat kertas origami telah
-                        dilaksanakan dengan sukses.</p>
-                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Baca Selengkapnya</a>
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">Kegiatan Lomba
+                        Melipat Kertas Origami</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 description-clamp">Kegiatan lomba melipat kertas
+                        origami telah dilaksanakan dengan sukses.</p>
+                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline mt-auto">Baca Selengkapnya</a>
                 </div>
             </div>
 
             <!-- Berita 2 -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden min-h-[400px] flex flex-col">
                 <img src="https://placehold.co/400x200" alt="Gambar Berita 2" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Peringatan HUT RI ke-77</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">Peringatan HUT RI ke-77 di YPP Al Amanah Al Bantani
-                        berlangsung meriah.</p>
-                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Baca Selengkapnya</a>
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">Peringatan HUT RI
+                        ke-77</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 description-clamp">Peringatan HUT RI ke-77 di YPP Al
+                        Amanah Al Bantani berlangsung meriah.</p>
+                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline mt-auto">Baca Selengkapnya</a>
                 </div>
             </div>
 
             <!-- Berita 3 -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden min-h-[400px] flex flex-col">
                 <img src="https://placehold.co/400x200" alt="Gambar Berita 3" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Literasi Bersama Perpustakaan Keliling</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">Kegiatan literasi bersama perpustakaan keliling
-                        telah dilaksanakan.</p>
-                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">Baca Selengkapnya</a>
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">Literasi Bersama
+                        Perpustakaan Keliling</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 description-clamp">Kegiatan literasi bersama
+                        perpustakaan keliling telah dilaksanakan.</p>
+                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline mt-auto">Baca Selengkapnya</a>
+                </div>
+            </div>
+
+            <!-- Berita 4 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden min-h-[400px] flex flex-col">
+                <img src="https://placehold.co/400x200" alt="Gambar Berita 4" class="w-full h-48 object-cover">
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">Literasi Bersama
+                        Perpustakaan Keliling</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 description-clamp">Kegiatan literasi bersama
+                        perpustakaan keliling telah dilaksanakan.</p>
+                    <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline mt-auto">Baca Selengkapnya</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <style>
+        .title-clamp {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .description-clamp {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </main>
