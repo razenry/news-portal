@@ -5,7 +5,7 @@
                 <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">NewsPortal</span>
             </a>
-            <div class="flex items-center lg:order-2 gap-2">
+            <div class="flex items-center lg:order-2">
 
                 <!-- Modal toggle -->
                 <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
@@ -115,7 +115,7 @@
                         </button>
                         <!-- Dropdown menu -->
                         <div id="dropdownNavbar"
-                            class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            class="z-50 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
                                 aria-labelledby="dropdownLargeButton">
                                 <li>
@@ -153,7 +153,7 @@
                         </button>
                         <!-- Dropdown menu -->
                         <div id="unit"
-                            class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            class="z-50 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
                                 aria-labelledby="dropdownLargeButton">
                                 <li>
