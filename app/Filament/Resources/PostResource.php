@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\{Grid, Hidden, TextInput, RichEditor, FileUpload, Select, Toggle, TagsInput, Textarea};
+use Filament\Forms\Components\{Grid, Hidden, TextInput, RichEditor, FileUpload, Select, Toggle, Textarea, TagsInput};
 use App\Models\{Post, Category, Unit};
 
 class PostResource extends Resource
@@ -37,22 +37,20 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Grid::make(2) // Grid dengan 2 kolom di layar besar
+                Grid::make(2)
                     ->schema([
                         Hidden::make('user_id')
                             ->default(Auth::id())
-                            ->disabled(fn() => Auth::user()->hasRole('super_admin'))
                             ->required(),
 
                         TextInput::make('title')
                             ->required()
-                            ->lazy()
+                            ->live(onBlur: true)
                             ->afterStateUpdated(function (callable $set, callable $get, $state) {
                                 $slug = Str::slug($state);
                                 $originalSlug = $slug;
                                 $count = 1;
 
-                                // Cek apakah sedang dalam mode edit dengan melihat apakah ada 'id'
                                 $postId = $get('id');
 
                                 while (Post::where('slug', $slug)->where('id', '!=', $postId)->exists()) {
@@ -64,25 +62,31 @@ class PostResource extends Resource
                             }),
 
                         TextInput::make('slug')
-                            ->unique(Post::class, 'slug', ignoreRecord: true)
                             ->required()
+                            ->unique(Post::class, 'slug', ignoreRecord: true)
                             ->readOnly(),
                     ]),
 
+                // Perbaikan utama: Pastikan RichEditor memiliki name 'body' yang sesuai dengan kolom di database
                 RichEditor::make('body')
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                        'codeBlock',
+                    ]),
 
                 Textarea::make('description')
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->maxLength(255),
 
                 Grid::make(2)
                     ->schema([
                         FileUpload::make('image')
                             ->image()
                             ->directory('posts')
-                            ->columnSpan(['md' => 2, 'lg' => 2, 'xl' => 2, 'default' => 2]), // 2 kolom di mobile, 1 kolom di layar besar
+                            ->columnSpan(['md' => 2, 'lg' => 2, 'xl' => 2, 'default' => 2]),
 
                         Select::make('category_id')
                             ->label('Category')
@@ -101,12 +105,12 @@ class PostResource extends Resource
 
                 TagsInput::make('tags')
                     ->placeholder('#example, #tag')
-                    ->columnSpanFull(), // Full width agar mudah diinput
+                    ->columnSpanFull(),
 
                 Toggle::make('published')
                     ->label('Published')
                     ->default(false)
-                    ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]), // Letakkan di grid
+                    ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
             ]);
     }
 
