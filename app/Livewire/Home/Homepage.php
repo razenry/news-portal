@@ -12,8 +12,8 @@ class Homepage extends Component
     public function render()
     {
         return view('livewire.home.homepage', [
-            'posts' => Post::where('published', '!=', 0)->paginate(10),
-            'categories' => Category::withoutTrashed()->get(),
+            'posts' => Post::where('published', '!=', 0)->withoutTrashed()->orderBy('created_at', 'DESC')->paginate(8),
+            'categories' => Category::withoutTrashed()->paginate(8),
         ])->layout('livewire.layout.app', [
             'title' => 'Homepage'
         ]);

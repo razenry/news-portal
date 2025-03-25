@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('body');
+            $table->text('description');
             $table->string('image')->nullable();
 
             // Foreign keys
