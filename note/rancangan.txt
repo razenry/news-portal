@@ -1,0 +1,44 @@
+1. nanti kalo mau publish postingan dsri editor unit nya harus nunggu konfirmasi dari admin dlu.
+Tiap postingan ada informasi nama editor unit nya, nama admin,  waktu posting (tgl, bulan, tahun, jam)
+
+2. Jadi yang ada di tampilan, bisa di rubah sedinamis mungkin sama admin.
+
+3. Hasil review
+
+    1. UI dibuat menarik dan user friendly -> konsep one touch one view
+    2. Nama portal (menyusul) -> konsep portal berisikan informasi dari unit pg-ra,sdi,smp,smk,pondok pesantren
+    3. Fitur di bagian atas berisikan Beranda, Informasi PPDB, kontak, tentang kami
+    4. Berita terkini muncul di 4 kolom atas
+    5. berita yg sudah dipost > 24 jam akan masuk ke storage kategori
+    6. Kategori berita bisa search by unit sekolah
+    7. Fitur portal "kata mereka" -> berisikan komentar & komen guru/siswa terhadap isu tertentu
+    8. Portal siswa -> publikasi hasil/karya belajar siswa
+
+# membuat full cms
+
+- Beranda (home)
+    Slide
+    Berita 1
+    kategori
+    Berita 2
+
+- Unit
+    - PG-RA
+    - SDI
+    - SMP
+    - SMK
+    - Pondok Pesantren
+
+- Infomasi PPDB
+    - PG-RA
+    - SDI
+    - SMP
+    - SMK
+    - Pondok Pesantren
+
+- Tentang kami
+    - Visi, Misi, Tujuan
+    - Struktur Organisasi
+    - Sejarah Singkat 
+    - Kemitraan
+    - Kontak

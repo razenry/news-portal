@@ -215,6 +215,11 @@
                         class="w-full h-48 object-cover">
 
                     <div class="p-6 flex flex-col flex-grow">
+                
+                        <!-- Judul -->
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">{{ $post->title }}
+                        </h3>
+s
                         <!-- Informasi Penulis & Tanggal -->
                         <div class="text-gray-500 dark:text-gray-400 text-sm mb-2 flex flex-col">
                             <span class="font-semibold">{{ $post->author->name }}</span>
@@ -224,10 +229,6 @@
                                 <span>{{ $post->category->name }}</span>
                             </div>
                         </div>
-
-                        <!-- Judul -->
-                        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">{{ $post->title }}
-                        </h3>
 
                         <!-- Deskripsi -->
                         <p class="text-gray-600 dark:text-gray-300 mb-4 description-clamp">{{ $post->description }}</p>
@@ -240,6 +241,7 @@
                                 </span>
                             @endforeach
                         </div>
+
                         <!-- Tombol Baca Selengkapnya -->
                         <a href="#" title=""
                             class="flex items-center text-base font-medium text-blue-700 hover:underline dark:text-blue-500">

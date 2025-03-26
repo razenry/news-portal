@@ -110,9 +110,10 @@ class PostResource extends Resource
                 Toggle::make('published')
                     ->label('Published')
                     ->default(false)
-                    ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
+                    ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2])
+                    ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
             ]);
-    }
+    }   
 
     public static function table(Table $table): Table
     {
@@ -196,7 +197,7 @@ class PostResource extends Resource
                 ]),
             ])
             ->modifyQueryUsing(function (Builder $query) {
-                if (!Auth::user()->hasRole('super_admin')) {
+                if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
                     $query->where('user_id', Auth::id());
                 }
                 $query->withoutGlobalScopes([SoftDeletingScope::class]);
