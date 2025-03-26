@@ -219,7 +219,7 @@
                         <!-- Judul -->
                         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">{{ $post->title }}
                         </h3>
-s
+
                         <!-- Informasi Penulis & Tanggal -->
                         <div class="text-gray-500 dark:text-gray-400 text-sm mb-2 flex flex-col">
                             <span class="font-semibold">{{ $post->author->name }}</span>
