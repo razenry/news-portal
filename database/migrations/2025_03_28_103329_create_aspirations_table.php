@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('aspirations', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->string('slug')->unique();
             $table->text('body');
+            $table->text('description');
             $table->boolean('published')->default(1);
             $table->timestamps();
             $table->softDeletes();
