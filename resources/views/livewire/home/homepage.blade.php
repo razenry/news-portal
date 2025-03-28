@@ -12,7 +12,7 @@
                 <div class="carousel-inner relative w-full h-full">
                     @forelse ($slides as $index => $slide)
                         <div
-                            class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9] {{ $index === 0 ? '' : 'hidden' }}">
+                            class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9] {{ $index === 0 ? '' : 'hidden' }} shadow-lg">
                             <img src="{{ asset('storage/' . $slide->image) }}" alt="Slide {{ $index + 1 }}"
                                 class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
@@ -101,7 +101,7 @@
 
 
                 @forelse ($aspirations as $aspiration)
-                    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800
+                    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800
                          dark:border-gray-700 h-full flex flex-col">
                         <a href="#">
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -126,7 +126,7 @@
                     </div>
 
                 @empty
-                    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800
+                    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800
                          dark:border-gray-700 h-full flex flex-col">
                         <a href="#">
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -178,31 +178,28 @@
 
             <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
-                <!-- Kategori -->
-
                 @forelse($categories as $category)
-                    <a href="#"
-                        class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <img class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true"
+                    <a href="#" 
+                        class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 w-full hover:bg-gray-50 dark:text-gray-900 dark:border-gray-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 shadow-lg">
+                        <img class="h-6 w-6 shrink-0" aria-hidden="true"
                             src="{{ asset('storage/' . $category->icon) }}" />
-                        <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $category->name }}</span>
+                        <span class="text-sm text-gray-900 font-bold">{{ $category->name }}</span>
                     </a>
                 @empty
-                    <a href="#"
-                        class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                        <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true"
+                    <a href="#" 
+                        class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 w-full hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 shadow-lg">
+                        <svg class="h-6 w-6 shrink-0 text-gray-900 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z">
                             </path>
                         </svg>
-                        <span class="text-sm font-medium text-gray-900 dark:text-white">Computer &amp; Office</span>
+                        <span class="text-sm font-medium text-gray-900">Computer &amp; Office</span>
                     </a>
                 @endforelse
-
-
-
+            
             </div>
+            
         </div>
     </section>
 
@@ -272,7 +269,7 @@
                 </div>
 
             @empty
-                <div class="flex flex-col items-center justify-center text-center ">
+                <div class="flex flex-col items-center justify-center text-center shadow-lg py-3">
                     <img src="https://placehold.co/300x200?text=No+News" alt="No News" class="mb-6">
                     <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Berita belum tersedia</h2>
                     <p class="text-gray-600 dark:text-gray-400">Kami belum memiliki berita terbaru untuk ditampilkan saat
