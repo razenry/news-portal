@@ -70,11 +70,7 @@ class PostResource extends Resource
                 // Perbaikan utama: Pastikan RichEditor memiliki name 'body' yang sesuai dengan kolom di database
                 RichEditor::make('body')
                     ->required()
-                    ->columnSpanFull()
-                    ->disableToolbarButtons([
-                        'attachFiles',
-                        'codeBlock',
-                    ]),
+                    ->columnSpanFull(),
 
                 Textarea::make('description')
                     ->required()
@@ -113,7 +109,7 @@ class PostResource extends Resource
                     ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2])
                     ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
             ]);
-    }   
+    }
 
     public static function table(Table $table): Table
     {

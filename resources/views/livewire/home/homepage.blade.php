@@ -1,55 +1,39 @@
 <main class="container mx-auto px-4 py-8">
-    <style>
-        .carousel-item {
-            display: none;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        .carousel-item.active {
-            display: block;
-        }
-    </style>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-
         <div class="">
             <div class="flex items-center justify-between gap-4 md">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl"></h2>
             </div>
+
             <!-- Carousel Container -->
-            <div class="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg">
+            <div class="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg" data-carousel>
                 <!-- Carousel Slides -->
                 <div class="carousel-inner relative w-full h-full">
-                    <!-- Slide 1 -->
-                    <div class="carousel-item active transition-opacity duration-700 ease-in-out aspect-[16/9]">
-                        <img src="{{ asset('image/banner.jpg') }}" alt="Slide 1" class="w-full h-full object-fit">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
+                    @forelse ($slides as $index => $slide)
+                        <div
+                            class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9] {{ $index === 0 ? '' : 'hidden' }}">
+                            <img src="{{ asset('storage/' . $slide->image) }}" alt="Slide {{ $index + 1 }}"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+                                <h2 class="text-xl font-bold">{{ $slide->title }}</h2>
+                                <p class="text-sm opacity-90">{{ $slide->description ?? 'Deskripsi tidak tersedia' }}</p>
+                            </div>
                         </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
-                            <h2 class="text-xl font-bold">Judul Slide 1</h2>
-                            <p class="text-sm opacity-90">Deskripsi singkat untuk slide 1.</p>
+                    @empty
+                        <div class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9]">
+                            <img src="{{ asset('image/banner.jpg') }}" alt="Default Slide"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+                                <h2 class="text-xl font-bold">Judul Slide 1</h2>
+                                <p class="text-sm opacity-90">Deskripsi singkat untuk slide 1.</p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9]">
-                        <img src="{{ asset('image/banner.jpg') }}" alt="Slide 2" class="w-full h-full object-fit">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
-                            <h2 class="text-xl font-bold">Judul Slide 2</h2>
-                            <p class="text-sm opacity-90">Deskripsi singkat untuk slide 2.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9]">
-                        <img src="{{ asset('image/banner.jpg') }}" alt="Slide 3" class="w-full h-full object-fit">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
-                            <h2 class="text-xl font-bold">Judul Slide 3</h2>
-                            <p class="text-sm opacity-90">Deskripsi singkat untuk slide 3.</p>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
 
                 <!-- Tombol Navigasi -->
@@ -71,6 +55,32 @@
             </div>
         </div>
 
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const slides = document.querySelectorAll(".carousel-item");
+                let currentIndex = 0;
+
+                function showSlide(index) {
+                    slides.forEach((slide, i) => {
+                        slide.classList.toggle("hidden", i !== index);
+                    });
+                }
+
+                document.getElementById("prevButton").addEventListener("click", function () {
+                    currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                    showSlide(currentIndex);
+                });
+
+                document.getElementById("nextButton").addEventListener("click", function () {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    showSlide(currentIndex);
+                });
+
+                showSlide(currentIndex);
+            });
+        </script>
+
+
         <!-- Side -->
         <div class="space-y-2">
 
@@ -89,7 +99,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 justify-center place-items-center">
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 
+                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800
              dark:border-gray-700 h-full flex flex-col">
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -101,8 +111,8 @@
                         order.
                     </p>
                     <div class="">
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 
-                     rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700
+                     rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300
                      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Read more
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
@@ -114,7 +124,7 @@
                     </div>
                 </div>
 
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 
+                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800
              dark:border-gray-700 h-full flex flex-col">
                     <a href="#">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -127,8 +137,8 @@
                         But the card size remains the same.
                     </p>
                     <div class="">
-                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 
-                     rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 
+                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700
+                     rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300
                      dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Read more
                             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
@@ -168,7 +178,7 @@
                     <a href="#"
                         class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <img class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true"
-                            src="{{ asset('storage/' . $category->icon) }}"/>
+                            src="{{ asset('storage/' . $category->icon) }}" />
                         <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $category->name }}</span>
                     </a>
                 @empty
@@ -215,7 +225,7 @@
                         class="w-full h-48 object-cover">
 
                     <div class="p-6 flex flex-col flex-grow">
-                
+
                         <!-- Judul -->
                         <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">{{ $post->title }}
                         </h3>
@@ -284,36 +294,4 @@
             overflow: hidden;
         }
     </style>
-    <!-- JavaScript untuk Carousel -->
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-item');
-        const totalSlides = slides.length;
-
-        // Fungsi untuk menampilkan slide
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-        }
-
-        // Fungsi untuk slide berikutnya
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Fungsi untuk slide sebelumnya
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
-
-        // Event listener untuk tombol navigasi
-        document.getElementById('nextButton').addEventListener('click', nextSlide);
-        document.getElementById('prevButton').addEventListener('click', prevSlide);
-
-        // Otomatis pindah slide setiap 5 detik
-        setInterval(nextSlide, 5000);
-    </script>
 </main>

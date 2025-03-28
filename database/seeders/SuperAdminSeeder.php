@@ -12,7 +12,7 @@ class SuperAdminSeeder extends Seeder
     {
         // Buat super admin jika belum ada
         $superAdmin = User::firstOrCreate(
-            ['email' => 'superadmin@example.com'], // Ganti dengan email yang kamu mau
+            ['email' => 'superadmin@gmail.com'], // Ganti dengan email yang kamu mau
             [
                 'name' => 'Super Admin',
                 'password' => Hash::make('password123'), // Ganti dengan password yang lebih aman
