@@ -39,29 +39,7 @@
                 </a>
             </div>
 
-            <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-
-                @forelse($categories as $category)
-                    <a href="#" 
-                        class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 w-full hover:bg-gray-50 dark:text-gray-900 dark:border-gray-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 shadow-lg">
-                        <img class="h-6 w-6 shrink-0" aria-hidden="true"
-                            src="{{ asset('storage/' . $category->icon) }}" />
-                        <span class="text-sm text-gray-900 font-bold">{{ $category->name }}</span>
-                    </a>
-                @empty
-                    <a href="#" 
-                        class="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-3 w-full hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 shadow-lg">
-                        <svg class="h-6 w-6 shrink-0 text-gray-900 dark:text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z">
-                            </path>
-                        </svg>
-                        <span class="text-sm font-medium text-gray-900">Computer &amp; Office</span>
-                    </a>
-                @endforelse
-            
-            </div>
+            <livewire:components.category.category-card />
             
         </div>
     </section>
