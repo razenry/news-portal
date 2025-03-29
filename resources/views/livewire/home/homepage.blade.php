@@ -1,86 +1,7 @@
 <main class="container mx-auto px-4 py-8">
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <div class="">
-            <div class="flex items-center justify-between gap-4 md">
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl"></h2>
-            </div>
-
-            <!-- Carousel Container -->
-            <div class="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg" data-carousel>
-                <!-- Carousel Slides -->
-                <div class="carousel-inner relative w-full h-full">
-                    @forelse ($slides as $index => $slide)
-                        <div
-                            class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9] {{ $index === 0 ? '' : 'hidden' }} shadow-lg">
-                            <img src="{{ asset('storage/' . $slide->image) }}" alt="Slide {{ $index + 1 }}"
-                                class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
-                            </div>
-                            <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
-                                <h2 class="text-xl font-bold">{{ $slide->title }}</h2>
-                                <p class="text-sm opacity-90">{{ $slide->description ?? 'Deskripsi tidak tersedia' }}</p>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="carousel-item transition-opacity duration-700 ease-in-out aspect-[16/9]">
-                            <img src="{{ asset('image/banner.jpg') }}" alt="Default Slide"
-                                class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent">
-                            </div>
-                            <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
-                                <h2 class="text-xl font-bold">Judul Slide 1</h2>
-                                <p class="text-sm opacity-90">Deskripsi singkat untuk slide 1.</p>
-                            </div>
-                        </div>
-                    @endforelse
-                </div>
-
-                <!-- Tombol Navigasi -->
-                <button id="prevButton"
-                    class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/30 p-2 rounded-full hover:bg-white/50 transition-all duration-300">
-                    <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                        </path>
-                    </svg>
-                </button>
-                <button id="nextButton"
-                    class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/30 p-2 rounded-full hover:bg-white/50 transition-all duration-300">
-                    <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const slides = document.querySelectorAll(".carousel-item");
-                let currentIndex = 0;
-
-                function showSlide(index) {
-                    slides.forEach((slide, i) => {
-                        slide.classList.toggle("hidden", i !== index);
-                    });
-                }
-
-                document.getElementById("prevButton").addEventListener("click", function () {
-                    currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
-                    showSlide(currentIndex);
-                });
-
-                document.getElementById("nextButton").addEventListener("click", function () {
-                    currentIndex = (currentIndex + 1) % slides.length;
-                    showSlide(currentIndex);
-                });
-
-                showSlide(currentIndex);
-            });
-        </script>
-
-
+        <livewire:components.carousel />   
         <!-- Side -->
         <div class="space-y-2">
             <div class="flex items-center justify-between gap-4">
@@ -218,68 +139,9 @@
                 </svg>
             </a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-            <!-- Berita  -->
-            @forelse ($posts as $post)
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden min-h-[400px] flex flex-col">
-                    <!-- Gambar -->
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
-                        class="w-full h-48 object-cover">
+            <livewire:components.post.post-card paginate="8"/>
 
-                    <div class="p-6 flex flex-col flex-grow">
-
-                        <!-- Judul -->
-                        <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white title-clamp">{{ $post->title }}
-                        </h3>
-
-                        <!-- Informasi Penulis & Tanggal -->
-                        <div class="text-gray-500 dark:text-gray-400 text-sm mb-2 flex flex-col">
-                            <span class="font-semibold">{{ $post->author->name }}</span>
-                            <div class="flex gap-1.5">
-                                <span>{{ $post->created_at->format('d M Y') }}</span>
-                                <span>|</span>
-                                <span>{{ $post->category->name }}</span>
-                            </div>
-                        </div>
-
-                        <!-- Deskripsi -->
-                        <p class="text-gray-600 dark:text-gray-300 mb-4 description-clamp">{{ $post->description }}</p>
-
-                        <!-- Hashtag -->
-                        <div class="flex flex-wrap gap-1 mb-4">
-                            @foreach($post->tags as $tag)
-                                <span class=" text-blue-600 dark:text-blue-300 text-sm ">
-                                    #{{ $tag }}
-                                </span>
-                            @endforeach
-                        </div>
-
-                        <!-- Tombol Baca Selengkapnya -->
-                        <a href="#" title=""
-                            class="flex items-center text-base font-medium text-blue-700 hover:underline dark:text-blue-500">
-                            Baca selengkapnya
-                            <svg class="ms-1 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 12H5m14 0-4 4m4-4-4-4" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-            @empty
-                <div class="flex flex-col items-center justify-center text-center shadow-lg py-3">
-                    <img src="https://placehold.co/300x200?text=No+News" alt="No News" class="mb-6">
-                    <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Berita belum tersedia</h2>
-                    <p class="text-gray-600 dark:text-gray-400">Kami belum memiliki berita terbaru untuk ditampilkan saat
-                        ini.</p>
-                    <a href="#" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Segera
-                        hadir</a>
-                </div>
-            @endforelse
-
-        </div>
     </section>
 
     <style>
