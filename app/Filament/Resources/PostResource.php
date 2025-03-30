@@ -45,17 +45,15 @@ class PostResource extends Resource
             // Jika bukan admin, hanya hitung data miliknya
             $unpublishedCount = $model::where('user_id', $user->id)
                 ->where('published', '0')
-                ->count();
+                ->withoutTrashed()->count();
             $publishedCount = $model::where('user_id', $user->id)
                 ->where('published', '1')
-                ->withoutGlobalScopes([SoftDeletingScope::class])
-                ->count();
+                ->withoutTrashed()->count();
         } else {
             // Jika admin, hitung semua data
-            $unpublishedCount = $model::where('published', '0')->count();
+            $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
             $publishedCount = $model::where('published', '1')
-                ->withoutGlobalScopes([SoftDeletingScope::class])
-                ->count();
+                ->withoutTrashed()->count();
         }
 
         // Jika tidak ada unpublished, tampilkan jumlah published
@@ -70,9 +68,9 @@ class PostResource extends Resource
         if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
             $unpublishedCount = $model::where('user_id', $user->id)
                 ->where('published', '0')
-                ->count();
+                ->withoutTrashed()->count();
         } else {
-            $unpublishedCount = $model::where('published', '0')->count();
+            $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
         }
 
         return $unpublishedCount > 0 ? 'Unpublished' : 'Published';
@@ -86,15 +84,13 @@ class PostResource extends Resource
         if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
             $unpublishedCount = $model::where('user_id', $user->id)
                 ->where('published', '0')
-                ->count();
+                ->withoutTrashed()->count();
         } else {
-            $unpublishedCount = $model::where('published', '0')->count();
+            $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
         }
 
         return $unpublishedCount > 0 ? 'warning' : 'success';
     }
-
-
 
     public static function form(Form $form): Form
     {

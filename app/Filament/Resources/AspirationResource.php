@@ -42,65 +42,62 @@ class AspirationResource extends Resource
     protected static ?string $navigationGroup = 'Content Management';
 
     public static function getNavigationBadge(): ?string
-{
-    $model = static::getModel();
+    {
+        $model = static::getModel();
 
-    // Ambil user yang sedang login
-    $user = Auth::user();
+        // Ambil user yang sedang login
+        $user = Auth::user();
 
-    if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
-        // Jika bukan admin, hanya hitung data miliknya
-        $unpublishedCount = $model::where('user_id', $user->id)
-            ->where('published', '0')
-            ->count();
-        $publishedCount = $model::where('user_id', $user->id)
-            ->where('published', '1')
-            ->withoutGlobalScopes([SoftDeletingScope::class])
-            ->count();
-    } else {
-        // Jika admin, hitung semua data
-        $unpublishedCount = $model::where('published', '0')->count();
-        $publishedCount = $model::where('published', '1')
-            ->withoutGlobalScopes([SoftDeletingScope::class])
-            ->count();
+        if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
+            // Jika bukan admin, hanya hitung data miliknya
+            $unpublishedCount = $model::where('user_id', $user->id)
+                ->where('published', '0')
+                ->withoutTrashed()->count();
+            $publishedCount = $model::where('user_id', $user->id)
+                ->where('published', '1')
+                ->withoutTrashed()->count();
+        } else {
+            // Jika admin, hitung semua data
+            $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
+            $publishedCount = $model::where('published', '1')
+                ->withoutTrashed()->count();
+        }
+
+        // Jika tidak ada unpublished, tampilkan jumlah published
+        return $unpublishedCount > 0 ? $unpublishedCount : $publishedCount;
     }
 
-    // Jika tidak ada unpublished, tampilkan jumlah published
-    return $unpublishedCount > 0 ? $unpublishedCount : $publishedCount;
-}
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        $model = static::getModel();
+        $user = Auth::user();
 
-public static function getNavigationBadgeTooltip(): ?string
-{
-    $model = static::getModel();
-    $user = Auth::user();
+        if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', $user->id)
+                ->where('published', '0')
+                ->withoutTrashed()->count();
+        } else {
+            $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
+        }
 
-    if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
-        $unpublishedCount = $model::where('user_id', $user->id)
-            ->where('published', '0')
-            ->count();
-    } else {
-        $unpublishedCount = $model::where('published', '0')->count();
+        return $unpublishedCount > 0 ? 'Unpublished' : 'Published';
     }
 
-    return $unpublishedCount > 0 ? 'Unpublished' : 'Published';
-}
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $model = static::getModel();
+        $user = Auth::user();
 
-public static function getNavigationBadgeColor(): ?string
-{
-    $model = static::getModel();
-    $user = Auth::user();
+        if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', $user->id)
+                ->where('published', '0')
+                ->withoutTrashed()->count();
+        } else {
+            $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
+        }
 
-    if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
-        $unpublishedCount = $model::where('user_id', $user->id)
-            ->where('published', '0')
-            ->count();
-    } else {
-        $unpublishedCount = $model::where('published', '0')->count();
+        return $unpublishedCount > 0 ? 'warning' : 'success';
     }
-
-    return $unpublishedCount > 0 ? 'warning' : 'success';
-}
-
 
     public static function form(Form $form): Form
     {
