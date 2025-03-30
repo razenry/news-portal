@@ -25,6 +25,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class SlideResource extends Resource
@@ -40,7 +41,11 @@ class SlideResource extends Resource
         $model = static::getModel();
 
         // Hitung jumlah unpublished
-        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+        }
+
+        $unpublishedCount = $model::where('published', '0')->count();
 
         // Jika tidak ada unpublished, tampilkan jumlah published
         return $unpublishedCount > 0
@@ -51,7 +56,11 @@ class SlideResource extends Resource
     public static function getNavigationBadgeTooltip(): ?string
     {
         $model = static::getModel();
-        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+        }
+
+        $unpublishedCount = $model::where('published', '0')->count();
 
         return $unpublishedCount > 0
             ? 'Unpublished'
@@ -61,7 +70,11 @@ class SlideResource extends Resource
     public static function getNavigationBadgeColor(): ?string
     {
         $model = static::getModel();
-        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+        }
+
+        $unpublishedCount = $model::where('published', '0')->count();
 
         return $unpublishedCount > 0 ? 'warning' : 'success';
     }

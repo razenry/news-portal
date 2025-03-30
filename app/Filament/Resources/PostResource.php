@@ -38,8 +38,11 @@ class PostResource extends Resource
     {
         $model = static::getModel();
 
-        // Hitung jumlah unpublished
-        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+        }
+
+        $unpublishedCount = $model::where('published', '0')->count();
 
         // Jika tidak ada unpublished, tampilkan jumlah published
         return $unpublishedCount > 0
@@ -50,7 +53,11 @@ class PostResource extends Resource
     public static function getNavigationBadgeTooltip(): ?string
     {
         $model = static::getModel();
-        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+        }
+
+        $unpublishedCount = $model::where('published', '0')->count();
 
         return $unpublishedCount > 0
             ? 'Unpublished'
@@ -60,7 +67,11 @@ class PostResource extends Resource
     public static function getNavigationBadgeColor(): ?string
     {
         $model = static::getModel();
-        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
+            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+        }
+
+        $unpublishedCount = $model::where('published', '0')->count();
 
         return $unpublishedCount > 0 ? 'warning' : 'success';
     }
