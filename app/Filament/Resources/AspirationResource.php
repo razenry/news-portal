@@ -42,47 +42,65 @@ class AspirationResource extends Resource
     protected static ?string $navigationGroup = 'Content Management';
 
     public static function getNavigationBadge(): ?string
-    {
-        $model = static::getModel();
+{
+    $model = static::getModel();
 
-        // Hitung jumlah unpublished
-        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', Auth::id())->count();
-        }
+    // Ambil user yang sedang login
+    $user = Auth::user();
 
+    if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
+        // Jika bukan admin, hanya hitung data miliknya
+        $unpublishedCount = $model::where('user_id', $user->id)
+            ->where('published', '0')
+            ->count();
+        $publishedCount = $model::where('user_id', $user->id)
+            ->where('published', '1')
+            ->withoutGlobalScopes([SoftDeletingScope::class])
+            ->count();
+    } else {
+        // Jika admin, hitung semua data
         $unpublishedCount = $model::where('published', '0')->count();
-
-        // Jika tidak ada unpublished, tampilkan jumlah published
-        return $unpublishedCount > 0
-            ? $unpublishedCount
-            : $model::where('published', '1')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+        $publishedCount = $model::where('published', '1')
+            ->withoutGlobalScopes([SoftDeletingScope::class])
+            ->count();
     }
 
-    public static function getNavigationBadgeTooltip(): ?string
-    {
-        $model = static::getModel();
-        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', Auth::id())->count();
-        }
+    // Jika tidak ada unpublished, tampilkan jumlah published
+    return $unpublishedCount > 0 ? $unpublishedCount : $publishedCount;
+}
 
+public static function getNavigationBadgeTooltip(): ?string
+{
+    $model = static::getModel();
+    $user = Auth::user();
+
+    if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
+        $unpublishedCount = $model::where('user_id', $user->id)
+            ->where('published', '0')
+            ->count();
+    } else {
         $unpublishedCount = $model::where('published', '0')->count();
-
-        return $unpublishedCount > 0
-            ? 'Unpublished'
-            : 'Published';
     }
 
-    public static function getNavigationBadgeColor(): ?string
-    {
-        $model = static::getModel();
-        if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', Auth::id())->count();
-        }
+    return $unpublishedCount > 0 ? 'Unpublished' : 'Published';
+}
 
+public static function getNavigationBadgeColor(): ?string
+{
+    $model = static::getModel();
+    $user = Auth::user();
+
+    if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
+        $unpublishedCount = $model::where('user_id', $user->id)
+            ->where('published', '0')
+            ->count();
+    } else {
         $unpublishedCount = $model::where('published', '0')->count();
-
-        return $unpublishedCount > 0 ? 'warning' : 'success';
     }
+
+    return $unpublishedCount > 0 ? 'warning' : 'success';
+}
+
 
     public static function form(Form $form): Form
     {
