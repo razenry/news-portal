@@ -33,6 +33,17 @@ class PostResource extends Resource
 
     protected static ?string $navigationGroup = 'Content Management';
 
+    public static function getNavigationBadge(): ?string
+    {
+        $model = static::getModel();
+        return $model::where('published', '!=', '1')->count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Unpublished';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -152,6 +163,13 @@ class PostResource extends Resource
                     ->toggleable(),
             ])
             ->filters([
+                SelectFilter::make('published')
+                    ->label('Published')
+                    ->options([
+                        '1' => 'Published',
+                        '0' => 'Unpublished',
+                    ])
+                    ->searchable(),
                 TrashedFilter::make(),
                 SelectFilter::make('author_id')
                     ->label('Author')
@@ -165,6 +183,7 @@ class PostResource extends Resource
                     ->label('Unit')
                     ->searchable()
                     ->options(Unit::pluck('name', 'id')),
+
             ])
             ->actions([
                 ActionGroup::make([
@@ -196,8 +215,12 @@ class PostResource extends Resource
                 if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
                     $query->where('user_id', Auth::id());
                 }
-                $query->withoutGlobalScopes([SoftDeletingScope::class]);
+
+                // Pastikan tidak memfilter hanya untuk published = 0
+                $query->withoutGlobalScopes([SoftDeletingScope::class])
+                    ->orderBy('created_at', 'DESC');
             });
+
     }
 
     public static function getRelations(): array

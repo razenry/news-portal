@@ -1,8 +1,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     <!-- Berita  -->
     @forelse ($posts as $post)
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden min-h-[400px] flex flex-col transition-transform transform hover:scale-103 duration-300 ease-in-out
-">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden min-h-[400px] flex flex-col transition-transform transform hover:scale-103 duration-300 ease-in-out" data-aos="fade-up">
             <!-- Gambar -->
             <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar {{ $post->title }}"
                 class="w-full h-48 object-cover">

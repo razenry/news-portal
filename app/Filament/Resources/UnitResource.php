@@ -6,6 +6,7 @@ use App\Filament\Resources\UnitResource\Pages;
 use App\Models\Unit;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -34,30 +35,33 @@ class UnitResource extends Resource
     {
         return $form
             ->schema([
+
+                FileUpload::make('logo')->required(),
+
                 TextInput::make('name')
-                ->required()
-                ->lazy()
-                ->afterStateUpdated(function (callable $set, callable $get, $state) {
-                    $slug = Str::slug($state);
-                    $originalSlug = $slug;
-                    $count = 1;
-            
-                    // Ambil ID kategori jika sedang dalam mode edit
-                    $unitId = $get('id');
-            
-                    while (Unit::where('slug', $slug)->where('id', '!=', $unitId)->exists()) {
-                        $slug = "{$originalSlug}-{$count}";
-                        $count++;
-                    }
-            
-                    $set('slug', $slug);
-                }),
-            
-            TextInput::make('slug')
-                ->unique(Unit::class, 'slug', ignoreRecord: true) // Abaikan validasi unik saat mengedit
-                ->required()
-                ->readOnly(),
-            
+                    ->required()
+                    ->lazy()
+                    ->afterStateUpdated(function (callable $set, callable $get, $state) {
+                        $slug = Str::slug($state);
+                        $originalSlug = $slug;
+                        $count = 1;
+
+                        // Ambil ID kategori jika sedang dalam mode edit
+                        $unitId = $get('id');
+
+                        while (Unit::where('slug', $slug)->where('id', '!=', $unitId)->exists()) {
+                            $slug = "{$originalSlug}-{$count}";
+                            $count++;
+                        }
+
+                        $set('slug', $slug);
+                    }),
+
+                TextInput::make('slug')
+                    ->unique(Unit::class, 'slug', ignoreRecord: true) // Abaikan validasi unik saat mengedit
+                    ->required()
+                    ->readOnly(),
+
                 RichEditor::make('description')
                     ->required()
                     ->columnSpanFull(),
@@ -101,7 +105,7 @@ class UnitResource extends Resource
                     Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn(Builder $query) => $query->withoutGlobalScopes([
+            ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('created_at', 'DESC')->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]));
     }

@@ -181,9 +181,9 @@ class AspirationResource extends Resource
             ])
             ->modifyQueryUsing(function (Builder $query) {
                 if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-                    $query->where('user_id', Auth::id());
+                    $query->where('user_id', Auth::id())->orderBy('created_at', 'DESC');    
                 }
-                $query->withoutGlobalScopes([SoftDeletingScope::class]);
+                $query->withoutGlobalScopes([SoftDeletingScope::class])->orderBy('created_at', 'DESC');
             });
     }
 

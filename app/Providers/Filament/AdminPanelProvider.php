@@ -9,6 +9,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Filament\Pages;
 use Filament\Panel;
@@ -36,6 +37,24 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->sidebarCollapsibleOnDesktop()
+            ->navigationItems([
+                NavigationItem::make('Web')
+                ->url(env('APP_URL'), shouldOpenInNewTab: true)
+                ->icon('heroicon-o-arrow-top-right-on-square')
+                ->group('External')
+                ->sort(2)
+            ])
+            ->colors([
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => Color::Indigo,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
+            ])
+            ->brandName(env('APP_NAME'))
+            // ->brandLogo(asset('favicon.ico'))
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->label(fn() => auth()->user()->name)
