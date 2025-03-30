@@ -53,6 +53,7 @@ class AdminPanelProvider extends PanelProvider
                 'success' => Color::Emerald,
                 'warning' => Color::Orange,
             ])
+            ->favicon(asset('favicon.ico'))
             ->brandName(env('APP_NAME'))
             // ->brandLogo(asset('favicon.ico'))
             ->userMenuItems([
