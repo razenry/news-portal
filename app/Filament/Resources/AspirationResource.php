@@ -25,6 +25,7 @@ use Filament\Tables\Actions\ForceDeleteAction;
 use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -39,6 +40,37 @@ class AspirationResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
     protected static ?string $navigationGroup = 'Content Management';
+
+    public static function getNavigationBadge(): ?string
+    {
+        $model = static::getModel();
+
+        // Hitung jumlah unpublished
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        // Jika tidak ada unpublished, tampilkan jumlah published
+        return $unpublishedCount > 0
+            ? $unpublishedCount
+            : $model::where('published', '1')->count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        $model = static::getModel();
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        return $unpublishedCount > 0
+            ? 'Unpublished'
+            : 'Published';
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $model = static::getModel();
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        return $unpublishedCount > 0 ? 'warning' : 'success';
+    }
 
     public static function form(Form $form): Form
     {
@@ -115,6 +147,12 @@ class AspirationResource extends Resource
                     ->searchable()
                     ->toggleable(),
 
+
+                ToggleColumn::make('published')
+                    ->label('Published')
+                    ->sortable()
+                    ->toggleable(),
+
                 TextColumn::make('title')
                     ->sortable()
                     ->searchable()
@@ -181,7 +219,7 @@ class AspirationResource extends Resource
             ])
             ->modifyQueryUsing(function (Builder $query) {
                 if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-                    $query->where('user_id', Auth::id())->orderBy('created_at', 'DESC');    
+                    $query->where('user_id', Auth::id())->orderBy('created_at', 'DESC');
                 }
                 $query->withoutGlobalScopes([SoftDeletingScope::class])->orderBy('created_at', 'DESC');
             });

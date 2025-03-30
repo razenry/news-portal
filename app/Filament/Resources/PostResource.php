@@ -9,6 +9,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Filters\SelectFilter;
@@ -36,13 +37,34 @@ class PostResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         $model = static::getModel();
-        return $model::where('published', '!=', '1')->count();
+
+        // Hitung jumlah unpublished
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        // Jika tidak ada unpublished, tampilkan jumlah published
+        return $unpublishedCount > 0
+            ? $unpublishedCount
+            : $model::where('published', '1')->count();
     }
 
     public static function getNavigationBadgeTooltip(): ?string
     {
-        return 'Unpublished';
+        $model = static::getModel();
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        return $unpublishedCount > 0
+            ? 'Unpublished'
+            : 'Published';
     }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $model = static::getModel();
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        return $unpublishedCount > 0 ? 'warning' : 'success';
+    }
+
 
     public static function form(Form $form): Form
     {
@@ -135,6 +157,11 @@ class PostResource extends Resource
                     ->searchable()
                     ->toggleable(),
 
+
+                ToggleColumn::make('published')
+                    ->label('Published')
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('title')
                     ->sortable()

@@ -35,6 +35,11 @@ class RoleResource extends Resource implements HasShieldPermissions
         ];
     }
 
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Available';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

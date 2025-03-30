@@ -35,6 +35,37 @@ class SlideResource extends Resource
 
     protected static ?string $navigationGroup = 'Content Management';
 
+    public static function getNavigationBadge(): ?string
+    {
+        $model = static::getModel();
+
+        // Hitung jumlah unpublished
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        // Jika tidak ada unpublished, tampilkan jumlah published
+        return $unpublishedCount > 0
+            ? $unpublishedCount
+            : $model::where('published', '1')->count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        $model = static::getModel();
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        return $unpublishedCount > 0
+            ? 'Unpublished'
+            : 'Published';
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        $model = static::getModel();
+        $unpublishedCount = $model::where('published', '0')->count();
+
+        return $unpublishedCount > 0 ? 'warning' : 'success';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
