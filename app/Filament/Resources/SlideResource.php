@@ -42,25 +42,25 @@ class SlideResource extends Resource
 
         // Hitung jumlah unpublished
         if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+            $unpublishedCount = $model::where('user_id', Auth::id())->withoutTrashed()->count();
         }
 
-        $unpublishedCount = $model::where('published', '0')->count();
+        $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
 
         // Jika tidak ada unpublished, tampilkan jumlah published
         return $unpublishedCount > 0
             ? $unpublishedCount
-            : $model::where('published', '1')->withoutGlobalScopes([SoftDeletingScope::class])->count();
+            : $model::where('published', '1')->withoutGlobalScopes([SoftDeletingScope::class])->withoutTrashed()->count();
     }
 
     public static function getNavigationBadgeTooltip(): ?string
     {
         $model = static::getModel();
         if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+            $unpublishedCount = $model::where('user_id', Auth::id())->withoutTrashed()->count();
         }
 
-        $unpublishedCount = $model::where('published', '0')->count();
+        $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
 
         return $unpublishedCount > 0
             ? 'Unpublished'
@@ -71,10 +71,10 @@ class SlideResource extends Resource
     {
         $model = static::getModel();
         if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', Auth::id())->count();
+            $unpublishedCount = $model::where('user_id', Auth::id())->withoutTrashed()->count();
         }
 
-        $unpublishedCount = $model::where('published', '0')->count();
+        $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
 
         return $unpublishedCount > 0 ? 'warning' : 'success';
     }
