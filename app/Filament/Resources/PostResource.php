@@ -39,18 +39,18 @@ class PostResource extends Resource
         $model = static::getModel();
 
         // Hitung jumlah unpublished
-        $unpublishedCount = $model::where('published', '0')->count();
+        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
 
         // Jika tidak ada unpublished, tampilkan jumlah published
         return $unpublishedCount > 0
             ? $unpublishedCount
-            : $model::where('published', '1')->count();
+            : $model::where('published', '1')->withoutGlobalScopes([SoftDeletingScope::class])->count();
     }
 
     public static function getNavigationBadgeTooltip(): ?string
     {
         $model = static::getModel();
-        $unpublishedCount = $model::where('published', '0')->count();
+        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
 
         return $unpublishedCount > 0
             ? 'Unpublished'
@@ -60,7 +60,7 @@ class PostResource extends Resource
     public static function getNavigationBadgeColor(): ?string
     {
         $model = static::getModel();
-        $unpublishedCount = $model::where('published', '0')->count();
+        $unpublishedCount = $model::where('published', '0')->withoutGlobalScopes([SoftDeletingScope::class])->count();
 
         return $unpublishedCount > 0 ? 'warning' : 'success';
     }
