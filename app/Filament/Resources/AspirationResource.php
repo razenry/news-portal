@@ -178,6 +178,7 @@ class AspirationResource extends Resource
                 ToggleColumn::make('published')
                     ->label('Published')
                     ->sortable()
+                    ->disabled(fn() => !Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
                     ->toggleable(),
 
                 TextColumn::make('title')

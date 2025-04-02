@@ -21,6 +21,8 @@ Tiap postingan ada informasi nama editor unit nya, nama admin,  waktu posting (t
     Berita 1
     kategori
     Berita 2
+    
+
 
 - Unit
     - PG-RA
@@ -42,3 +44,9 @@ Tiap postingan ada informasi nama editor unit nya, nama admin,  waktu posting (t
     - Sejarah Singkat 
     - Kemitraan
     - Kontak
+
+
+
+- Task
+
+1. Buat Halaman Single Post (Berita, Categori, Aspiration)
