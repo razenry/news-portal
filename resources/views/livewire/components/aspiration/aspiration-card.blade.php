@@ -10,7 +10,7 @@
                     <!-- Category Badge -->
                     <span
                         class="self-start mb-3 px-3 py-1 text-xs font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 rounded-full shadow">
-                        Aspirasi
+                        {{ $aspiration->category->name }}
                     </span>
 
                     <!-- Title with elegant underline effect -->

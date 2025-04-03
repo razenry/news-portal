@@ -36,7 +36,7 @@ class UnitResource extends Resource
         return $form
             ->schema([
 
-                FileUpload::make('logo')->required(),
+                // FileUpload::make('logo')->required(),
 
                 TextInput::make('name')
                     ->required()
