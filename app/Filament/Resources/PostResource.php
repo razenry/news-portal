@@ -25,6 +25,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\{Grid, Hidden, TextInput, RichEditor, FileUpload, Select, Toggle, Textarea, TagsInput};
 use App\Models\{Post, Category, Unit};
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 
 class PostResource extends Resource
 {
@@ -82,7 +83,7 @@ class PostResource extends Resource
         $user = Auth::user();
 
         if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', $user->id)
+            $unpublishedCount = $model::where('user_id', $user->id) 
                 ->where('published', '0')
                 ->withoutTrashed()->count();
         } else {
@@ -104,32 +105,17 @@ class PostResource extends Resource
 
                         TextInput::make('title')
                             ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (callable $set, callable $get, $state) {
-                                $slug = Str::slug($state);
-                                $originalSlug = $slug;
-                                $count = 1;
-
-                                $postId = $get('id');
-
-                                while (Post::where('slug', $slug)->where('id', '!=', $postId)->exists()) {
-                                    $slug = "{$originalSlug}-{$count}";
-                                    $count++;
-                                }
-
-                                $set('slug', $slug);
-                            }),
-
-                        TextInput::make('slug')
-                            ->required()
-                            ->unique(Post::class, 'slug', ignoreRecord: true)
-                            ->readOnly(),
+                            ->columnSpan(2),
                     ]),
 
-                // Perbaikan utama: Pastikan RichEditor memiliki name 'body' yang sesuai dengan kolom di database
-                RichEditor::make('body')
-                    ->required()
-                    ->columnSpanFull(),
+                TinyEditor::make('body')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsVisibility('public')
+                    ->fileAttachmentsDirectory('uploads')
+                    ->profile('default|simple|full|minimal|none|custom')
+                    ->ltr() // Set RTL or use ->direction('auto|rtl|ltr')
+                    ->columnSpan('full')
+                    ->required(),
 
                 Textarea::make('description')
                     ->required()

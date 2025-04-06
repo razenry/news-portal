@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\Resources\AspirationResource\Pages;
 use App\Filament\Resources\AspirationResource\RelationManagers;
 use App\Models\Aspiration;
@@ -11,7 +12,7 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\RichEditor;
+// use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -108,34 +109,20 @@ class AspirationResource extends Resource
                     ->required(),
                 TextInput::make('title')
                     ->required()
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function (callable $set, callable $get, $state) {
-                        $slug = \Illuminate\Support\Str::slug($state);
-                        $originalSlug = $slug;
-                        $count = 1;
-
-                        $aspirationId = $get('id');
-
-                        while (Aspiration::where('slug', $slug)->where('id', '!=', $aspirationId)->exists()) {
-                            $slug = "{$originalSlug}-{$count}";
-                            $count++;
-                        }
-
-                        $set('slug', $slug);
-                    })
                     ->columnSpan(2),
-                TextInput::make('slug')
-                    ->required()
-                    ->unique(Aspiration::class, 'slug', ignoreRecord: true)
-                    ->readOnly()
-                    ->columnSpan(2),
+
                 TextInput::make('description')
                     ->required()
                     ->maxLength(255)
                     ->columnSpan(2),
-                RichEditor::make('body')
-                    ->required()
-                    ->columnSpan(2),
+                TinyEditor::make('body')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsVisibility('public')
+                    ->fileAttachmentsDirectory('uploads')
+                    ->profile('default|simple|full|minimal|none|custom')
+                    ->ltr() // Set RTL or use ->direction('auto|rtl|ltr')
+                    ->columnSpan('full')
+                    ->required(),
                 Grid::make(2)
                     ->schema([
 

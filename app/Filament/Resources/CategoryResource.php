@@ -39,29 +39,7 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->required()
-                    ->lazy()
-                    ->afterStateUpdated(function (callable $set, callable $get, $state) {
-                        $slug = Str::slug($state);
-                        $originalSlug = $slug;
-                        $count = 1;
-
-                        // Ambil ID kategori jika sedang dalam mode edit
-                        $categoryId = $get('id');
-
-                        while (Category::where('slug', $slug)->where('id', '!=', $categoryId)->exists()) {
-                            $slug = "{$originalSlug}-{$count}";
-                            $count++;
-                        }
-
-                        $set('slug', $slug);
-                    }),
-
-                TextInput::make('slug')
-                    ->unique(Category::class, 'slug', ignoreRecord: true) // Abaikan validasi unik saat mengedit
-                    ->required()
-                    ->readOnly(),
-
+                    ->required(),
 
                 FileUpload::make('icon')
                     ->image()

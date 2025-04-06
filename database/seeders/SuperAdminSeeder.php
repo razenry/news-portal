@@ -15,7 +15,7 @@ class SuperAdminSeeder extends Seeder
             ['email' => 'superadmin@gmail.com'], // Ganti dengan email yang kamu mau
             [
                 'name' => 'Super Admin',
-                'password' => Hash::make('password123'), // Ganti dengan password yang lebih aman
+                'password' => Hash::make('superadmin'), // Ganti dengan password yang lebih aman
             ]
         );
 

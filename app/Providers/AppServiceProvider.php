@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Aspiration;
+use App\Models\Category;
+use App\Models\Post;
+use App\Observers\AspirationObserver;
+use App\Observers\CategoryObserver;
+use App\Observers\PostObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Aspiration::observe(AspirationObserver::class);
+        Post::observe(PostObserver::class);
+        Category::observe(CategoryObserver::class);
     }
 }

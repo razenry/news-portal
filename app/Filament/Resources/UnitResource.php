@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\Resources\UnitResource\Pages;
 use App\Models\Unit;
 use Filament\Forms\Components\RichEditor;
@@ -36,7 +37,7 @@ class UnitResource extends Resource
         return $form
             ->schema([
 
-                // FileUpload::make('logo')->required(),
+                FileUpload::make('logo')->required(),
 
                 TextInput::make('name')
                     ->required()
@@ -62,9 +63,14 @@ class UnitResource extends Resource
                     ->required()
                     ->readOnly(),
 
-                RichEditor::make('description')
-                    ->required()
-                    ->columnSpanFull(),
+                TinyEditor::make('description')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsVisibility('public')
+                    ->fileAttachmentsDirectory('uploads')
+                    ->profile('default|simple|full|minimal|none|custom')
+                    ->rtl() // Set RTL or use ->direction('auto|rtl|ltr')
+                    ->columnSpan('full')
+                    ->required(),
             ]);
     }
 
