@@ -40,35 +40,14 @@ class UnitResource extends Resource
                 FileUpload::make('logo')->required(),
 
                 TextInput::make('name')
-                    ->required()
-                    ->lazy()
-                    ->afterStateUpdated(function (callable $set, callable $get, $state) {
-                        $slug = Str::slug($state);
-                        $originalSlug = $slug;
-                        $count = 1;
-
-                        // Ambil ID kategori jika sedang dalam mode edit
-                        $unitId = $get('id');
-
-                        while (Unit::where('slug', $slug)->where('id', '!=', $unitId)->exists()) {
-                            $slug = "{$originalSlug}-{$count}";
-                            $count++;
-                        }
-
-                        $set('slug', $slug);
-                    }),
-
-                TextInput::make('slug')
-                    ->unique(Unit::class, 'slug', ignoreRecord: true) // Abaikan validasi unik saat mengedit
-                    ->required()
-                    ->readOnly(),
+                    ->required(),
 
                 TinyEditor::make('description')
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsVisibility('public')
                     ->fileAttachmentsDirectory('uploads')
                     ->profile('default|simple|full|minimal|none|custom')
-                    ->rtl() // Set RTL or use ->direction('auto|rtl|ltr')
+                    ->ltr() // Set RTL or use ->direction('auto|rtl|ltr')
                     ->columnSpan('full')
                     ->required(),
             ]);

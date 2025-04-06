@@ -83,27 +83,12 @@ class SlideResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('title')->live(onBlur: true)
-                    ->afterStateUpdated(function (callable $set, callable $get, $state) {
-                        $slug = Str::slug($state);
-                        $originalSlug = $slug;
-                        $count = 1;
-
-                        $slideId = $get('id');
-
-                        while (Slide::where('slug', $slug)->where('id', '!=', $slideId)->exists()) {
-                            $slug = "{$originalSlug}-{$count}";
-                            $count++;
-                        }
-
-                        $set('slug', $slug);
-                    }),
-                TextInput::make('slug')->required()
-                    ->unique(Slide::class, 'slug', ignoreRecord: true)
-                    ->readOnly(),
+                TextInput::make('title')->required(),
 
                 Textarea::make('description'),
+
                 FileUpload::make('image'),
+
                 Toggle::make('published')
                     ->label('Published')
                     ->default(1)
