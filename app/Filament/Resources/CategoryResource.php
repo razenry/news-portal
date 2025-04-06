@@ -7,6 +7,7 @@ use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
@@ -38,18 +39,34 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required(),
+                Section::make('Category Info')
+                    ->description('Fill in the category details below.')
+                    ->schema([
+                        TextInput::make('name')
+                            ->label('Category Name')
+                            ->placeholder('e.g. Technology, Food, etc.')
+                            ->required()
+                            ->columnSpanFull(),
 
-                FileUpload::make('icon')
-                    ->image()
-                    ->directory('category-icons')
-                    ->required()->columnSpan(2),
+                        FileUpload::make('icon')
+                            ->label('Category Icon')
+                            ->image()
+                            ->imagePreviewHeight('100') // Optional preview height
+                            ->directory('category-icons')
+                            ->required()
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
 
-
-                RichEditor::make('description')
-                    ->required()
-                    ->columnSpanFull(),
+                Section::make('Description')
+                    ->collapsible() // Optional: make it collapsible
+                    ->schema([
+                        RichEditor::make('description')
+                            ->label('Category Description')
+                            ->required()
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
             ]);
     }
 

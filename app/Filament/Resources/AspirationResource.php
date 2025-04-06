@@ -12,6 +12,7 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Section;
 // use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -41,6 +42,13 @@ class AspirationResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
     protected static ?string $navigationGroup = 'Content Management';
+
+    public static function getWidgets(): array
+    {
+        return [
+            AspirationResource\Widgets\AspirationOverview::class,
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {
@@ -104,50 +112,82 @@ class AspirationResource extends Resource
     {
         return $form
             ->schema([
-                Hidden::make('user_id')
-                    ->default(Auth::id())
-                    ->required(),
-                TextInput::make('title')
-                    ->required()
-                    ->columnSpan(2),
-
-                TextInput::make('description')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                TinyEditor::make('body')
-                    ->fileAttachmentsDisk('public')
-                    ->fileAttachmentsVisibility('public')
-                    ->fileAttachmentsDirectory('uploads')
-                    ->profile('default|simple|full|minimal|none|custom')
-                    ->ltr() // Set RTL or use ->direction('auto|rtl|ltr')
-                    ->columnSpan('full')
-                    ->required(),
-                Grid::make(2)
+                // SECTION: Meta Information
+                Section::make('Meta Information')
+                    ->description('Fill in the general aspiration details')
                     ->schema([
+                        Hidden::make('user_id')
+                            ->default(Auth::id())
+                            ->required(),
 
-                        Select::make('category_id')
-                            ->label('Category')
-                            ->options(Category::pluck('name', 'id'))
-                            ->searchable()
+                        Grid::make(2)->schema([
+                            TextInput::make('title')
+                                ->label('Title')
+                                ->placeholder('Enter aspiration title')
+                                ->required(),
+
+                            TextInput::make('description')
+                                ->label('Short Description')
+                                ->placeholder('Max 255 characters')
+                                ->maxLength(255)
+                                ->required(),
+                        ]),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
+
+                // SECTION: aspiration Content
+                Section::make('Content')
+                    ->description('Write the full content of your aspiration')
+                    ->schema([
+                        TinyEditor::make('body')
+                            ->label('Body Content')
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsDirectory('uploads')
+                            ->profile('full') // use 'simple' if you want it cleaner
+                            ->ltr()
                             ->required()
-                            ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
 
-                        Select::make('unit_id')
-                            ->label('Unit')
-                            ->options(Unit::pluck('name', 'id'))
-                            ->searchable()
+                // SECTION: Category & Unit
+                Section::make('Classification')
+                    ->description('Categorize the aspiration appropriately')
+                    ->schema([
+                        Grid::make(['default' => 1, 'md' => 2])->schema([
+                            Select::make('category_id')
+                                ->label('Category')
+                                ->options(Category::pluck('name', 'id'))
+                                ->searchable()
+                                ->required(),
+
+                            Select::make('unit_id')
+                                ->label('Unit')
+                                ->options(Unit::pluck('name', 'id'))
+                                ->searchable()
+                                ->required(),
+                        ]),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
+
+                // SECTION: Publish Toggle
+                Section::make('Visibility')
+                    ->description('Control whether this aspiration is visible to users')
+                    ->schema([
+                        Toggle::make('published')
+                            ->label('Published')
+                            ->default(1)
+                            ->inline()
                             ->required()
-                            ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
-                    ])->columnSpanFull(),
-
-                Toggle::make('published')
-                    ->label('Published')
-                    ->default(1)
-                    ->inline()
-                    ->required()
+                            ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web')),
+                    ])
+                    ->columns(1)
                     ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
-                    ->columnSpanFull(),
+                    ->collapsed(),
             ]);
     }
 

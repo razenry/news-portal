@@ -18,7 +18,7 @@ class DashboardOverview extends BaseWidget
         $user = Filament::auth()->user(); // Get the logged-in user
 
         // Check if the user is a super admin
-        if ($user->hasRole('super_admin')) {
+        if ($user->hasRole(['super_admin', 'admin'])) {
             return [
                 Card::make('Total Users', User::count())
                     ->description('Number of registered users')

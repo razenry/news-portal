@@ -6,6 +6,7 @@ use App\Filament\Resources\SlideResource\Pages;
 use App\Filament\Resources\SlideResource\RelationManagers;
 use App\Models\Slide;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -26,7 +27,6 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class SlideResource extends Resource
 {
@@ -80,22 +80,55 @@ class SlideResource extends Resource
     }
 
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                TextInput::make('title')->required(),
+{
+    return $form
+        ->schema([
+            // SECTION: Meta Information
+            Section::make('Slide Info')
+                ->description('Fill in the main details about the slide')
+                ->schema([
+                    TextInput::make('title')
+                        ->label('Title')
+                        ->placeholder('Enter the title')
+                        ->required()
+                        ->columnSpanFull(),
 
-                Textarea::make('description'),
+                    Textarea::make('description')
+                        ->label('Description')
+                        ->placeholder('Enter a description')
+                        ->rows(4)
+                        ->helperText('Provide a detailed description')
+                        ->columnSpanFull(),
+                ])
+                ->columns(1)
+                ->collapsible(),
 
-                FileUpload::make('image'),
+            // SECTION: Media Upload
+            Section::make('Image Upload')
+                ->description('Attach an image for this slide')
+                ->schema([
+                    FileUpload::make('image')
+                        ->label('Upload Image')
+                        ->image()
+                        ->maxSize(5120)
+                        ->directory('uploads/slides')
+                        ->imagePreviewHeight('150')
+                        ->columnSpanFull(),
+                ])
+                ->columns(1)
+                ->collapsible(),
 
-                Toggle::make('published')
-                    ->label('Published')
-                    ->default(1)
-                    ->required(),
-            ]);
-    }
-
+            // SECTION: Publish Control
+            Section::make('Visibility')
+                ->schema([
+                    Toggle::make('published')
+                        ->label('Published')
+                        ->default(true)
+                        ->helperText('Mark as published if you want this to be visible'),
+                ])
+                ->columns(1),
+        ]);
+}
     public static function table(Table $table): Table
     {
         return $table

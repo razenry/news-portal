@@ -8,6 +8,7 @@ use App\Models\Unit;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -36,20 +37,36 @@ class UnitResource extends Resource
     {
         return $form
             ->schema([
+                Section::make('Unit Identity')
+                    ->schema([
+                        FileUpload::make('logo')
+                            ->label('Upload Logo')
+                            ->image()
+                            ->directory('logos')
+                            ->required()
+                            ->columnSpanFull(),
 
-                FileUpload::make('logo')->required(),
+                        TextInput::make('name')
+                            ->label('Unit Name')
+                            ->placeholder('Enter unit name')
+                            ->required()
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
 
-                TextInput::make('name')
-                    ->required(),
-
-                TinyEditor::make('description')
-                    ->fileAttachmentsDisk('public')
-                    ->fileAttachmentsVisibility('public')
-                    ->fileAttachmentsDirectory('uploads')
-                    ->profile('default|simple|full|minimal|none|custom')
-                    ->ltr() // Set RTL or use ->direction('auto|rtl|ltr')
-                    ->columnSpan('full')
-                    ->required(),
+                Section::make('Description')
+                    ->schema([
+                        TinyEditor::make('description')
+                            ->label('Detailed Description')
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsDirectory('uploads')
+                            ->profile('full')
+                            ->ltr()
+                            ->required()
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
             ]);
     }
 

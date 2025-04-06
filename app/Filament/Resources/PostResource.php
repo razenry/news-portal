@@ -23,9 +23,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\{Grid, Hidden, TextInput, RichEditor, FileUpload, Select, Toggle, Textarea, TagsInput};
-use App\Models\{Post, Category, Unit};
+use Filament\Forms\Components\{Grid, TextInput, Textarea, FileUpload, Toggle, Select, Hidden, TagsInput, Section};
+
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
+use App\Models\{Post, Category, Unit};
 
 class PostResource extends Resource
 {
@@ -83,7 +84,7 @@ class PostResource extends Resource
         $user = Auth::user();
 
         if (!$user->hasRole(['super_admin', 'admin'], 'web')) {
-            $unpublishedCount = $model::where('user_id', $user->id) 
+            $unpublishedCount = $model::where('user_id', $user->id)
                 ->where('published', '0')
                 ->withoutTrashed()->count();
         } else {
@@ -97,65 +98,90 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Grid::make(2)
+
+                Section::make('Meta Data')
                     ->schema([
-                        Hidden::make('user_id')
-                            ->default(Auth::id())
-                            ->required(),
+                        Grid::make(2)
+                            ->schema([
+                                Hidden::make('user_id')
+                                    ->default(Auth::id())
+                                    ->required(),
 
-                        TextInput::make('title')
+                                TextInput::make('title')
+                                    ->label('Post Title')
+                                    ->placeholder('Enter post title')
+                                    ->required()
+                                    ->columnSpan(2),
+                            ]),
+                    ])
+                    ->columns(1),
+
+                Section::make('Content')
+                    ->schema([
+                        TinyEditor::make('body')
+                            ->label('Content')
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsDirectory('uploads')
+                            ->profile('full')
+                            ->ltr()
                             ->required()
-                            ->columnSpan(2),
-                    ]),
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
 
-                TinyEditor::make('body')
-                    ->fileAttachmentsDisk('public')
-                    ->fileAttachmentsVisibility('public')
-                    ->fileAttachmentsDirectory('uploads')
-                    ->profile('default|simple|full|minimal|none|custom')
-                    ->ltr() // Set RTL or use ->direction('auto|rtl|ltr')
-                    ->columnSpan('full')
-                    ->required(),
+                Section::make('Description')
+                    ->schema([
+                        Textarea::make('description')
+                            ->label('Short Description')
+                            ->placeholder('Write a short summary...')
+                            ->required()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1),
 
-                Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull()
-                    ->maxLength(255),
-
-                Grid::make(2)
+                Section::make('Media & Classification')
                     ->schema([
                         FileUpload::make('image')
+                            ->label('Featured Image')
                             ->image()
                             ->directory('posts')
-                            ->columnSpan(['md' => 2, 'lg' => 2, 'xl' => 2, 'default' => 2]),
+                            ->columnSpanFull(),
 
-                        Select::make('category_id')
-                            ->label('Category')
-                            ->options(Category::pluck('name', 'id'))
-                            ->searchable()
-                            ->required()
-                            ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
+                        Grid::make(['default' => 2, 'md' => 2])
+                            ->schema([
+                                Select::make('category_id')
+                                    ->label('Category')
+                                    ->options(Category::pluck('name', 'id'))
+                                    ->searchable()
+                                    ->required(),
 
-                        Select::make('unit_id')
-                            ->label('Unit')
-                            ->options(Unit::pluck('name', 'id'))
-                            ->searchable()
-                            ->required()
-                            ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2]),
-                    ]),
+                                Select::make('unit_id')
+                                    ->label('Unit')
+                                    ->options(Unit::pluck('name', 'id'))
+                                    ->searchable()
+                                    ->required(),
+                            ]),
+                    ])
+                    ->columns(1),
 
-                TagsInput::make('tags')
-                    ->placeholder('#example, #tag')
-                    ->columnSpanFull(),
+                Section::make('Tags & Visibility')
+                    ->schema([
+                        TagsInput::make('tags')
+                            ->placeholder('Add tags like news, update')
+                            ->label('Tags')
+                            ->columnSpanFull(),
 
-                Toggle::make('published')
-                    ->label('Published')
-                    ->default(false)
-                    ->columnSpan(['md' => 1, 'lg' => 1, 'xl' => 1, 'default' => 2])
-                    ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
+                        Toggle::make('published')
+                            ->label('Published')
+                            ->default(false)
+                            ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
+                            ->columnSpan(1),
+                    ])
+                    ->columns(1),
             ]);
     }
-
     public static function table(Table $table): Table
     {
         return $table

@@ -16,4 +16,11 @@ class ListAspirations extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            AspirationResource\Widgets\AspirationOverview::class,
+        ];
+    }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('body');
             $table->text('description');
             $table->boolean('published')->default(1);
+            $table->boolean('comments_enabled')->default(true);
             $table->timestamps();
             $table->softDeletes();
 

@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -36,21 +38,54 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')->required(),
-                TextInput::make('email')->email()->required(),
-                TextInput::make('password')
-                    ->password()
-                    ->default(fn($record) => $record ? null : '12345')
-                    ->required(fn($record) => is_null($record))
-                    ->dehydrated(fn($state) => !empty($state)),
-                Select::make('roles')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload()
-                    ->searchable(),
+                Section::make('User Information')
+                    ->description('Basic details about the user')
+                    ->schema([
+                        Grid::make(2)->schema([
+                            TextInput::make('name')
+                                ->label('Full Name')
+                                ->required(),
+
+                            TextInput::make('email')
+                                ->label('Email Address')
+                                ->email()
+                                ->required(),
+                        ]),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
+
+                Section::make('Security')
+                    ->description('Account security options')
+                    ->schema([
+                        TextInput::make('password')
+                            ->label('Password')
+                            ->password()
+                            ->default(fn ($record) => $record ? null : '12345')
+                            ->required(fn ($record) => is_null($record))
+                            ->dehydrated(fn ($state) => !empty($state))
+                            ->helperText(fn ($record) => $record ? 'Leave blank to keep current password' : 'Default password is 12345'),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
+
+                Section::make('Roles & Permissions')
+                    ->description('Assign roles to the user')
+                    ->schema([
+                        Select::make('roles')
+                            ->label('Roles')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->helperText('You can assign one or more roles'),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
             ]);
     }
-    
+
+
     public static function table(Table $table): Table
     {
         return $table
