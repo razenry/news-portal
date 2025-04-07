@@ -1,6 +1,16 @@
 import "./bootstrap";
 import 'flowbite';
-// import "../../node_modules/flowbite/dist/flowbite.min.js";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init({
+    duration: 800,
+    once: true,
+    offset: 50,
+    mirror: true,
+    // ➕ Tambahkan selector scrollable container
+    disableMutationObserver: false,
+});
 
 
 var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");

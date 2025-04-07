@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 use App\Filament\Resources\AspirationResource\Pages;
 use App\Filament\Resources\AspirationResource\RelationManagers;
+use App\Filament\Resources\CommentRelationManagerResource\RelationManagers\CommentsRelationManager;
 use App\Models\Aspiration;
 use App\Models\Category;
 use App\Models\Unit;
@@ -176,7 +177,7 @@ class AspirationResource extends Resource
 
                 // SECTION: Publish Toggle
                 Section::make('Visibility')
-                    ->description('Control whether this aspiration is visible to users')
+                    ->description('Control whether this aspiration & comments is visible to users')
                     ->schema([
                         Toggle::make('published')
                             ->label('Published')
@@ -184,6 +185,11 @@ class AspirationResource extends Resource
                             ->inline()
                             ->required()
                             ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web')),
+                        Toggle::make('comments_enabled')
+                            ->label('Comments enabled')
+                            ->default(1)
+                            ->inline()
+                            ->required()
                     ])
                     ->columns(1)
                     ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
@@ -206,6 +212,11 @@ class AspirationResource extends Resource
                     ->label('Published')
                     ->sortable()
                     ->disabled(fn() => !Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
+                    ->toggleable(),
+
+                ToggleColumn::make('comments_enabled')
+                    ->label('Comments enabled')
+                    ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('title')
@@ -232,7 +243,7 @@ class AspirationResource extends Resource
             ])
             ->filters([
                 TrashedFilter::make(),
-                SelectFilter::make('author_id')
+                SelectFilter::make('user_id')
                     ->label('Author')
                     ->searchable()
                     ->options(User::pluck('name', 'id')),
@@ -295,4 +306,5 @@ class AspirationResource extends Resource
             'edit' => Pages\EditAspiration::route('/{record}/edit'),
         ];
     }
+
 }
