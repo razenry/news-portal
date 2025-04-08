@@ -21,6 +21,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 
@@ -35,15 +36,15 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             // ->emailVerification()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
             ->sidebarCollapsibleOnDesktop()
             ->navigationItems([
                 NavigationItem::make('Web')
-                ->url(env('APP_URL'), shouldOpenInNewTab: true)
-                ->icon('heroicon-o-arrow-top-right-on-square')
-                ->group('External')
-                ->sort(2)
+                    ->url(env('APP_URL'), shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->group('External')
+                    ->sort(2)
             ])
             ->colors([
                 'danger' => Color::Rose,
@@ -58,8 +59,8 @@ class AdminPanelProvider extends PanelProvider
             // ->brandLogo(asset('favicon.ico'))
             ->userMenuItems([
                 'profile' => MenuItem::make()
-                    ->label(fn() => auth()->user()->name)
-                    ->url(fn (): string => EditProfilePage::getUrl())
+                    ->label(fn() => Auth::user()->name)
+                    ->url(fn(): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -87,11 +88,11 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make(),
                 FilamentEditProfilePlugin::make()->slug('my-profile')
-                ->setTitle('My Profile')
-                ->setNavigationLabel('My Profile')
-                ->setNavigationGroup('Settings')
-                ->setIcon('heroicon-o-user')
-                ->setSort(10)
+                    ->setTitle('My Profile')
+                    ->setNavigationLabel('My Profile')
+                    ->setNavigationGroup('Settings')
+                    ->setIcon('heroicon-o-user')
+                    ->setSort(10)
             ])
             ->authMiddleware([
                 Authenticate::class,

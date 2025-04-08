@@ -181,7 +181,6 @@ class AspirationResource extends Resource
                     ->schema([
                         Toggle::make('published')
                             ->label('Published')
-                            ->default(1)
                             ->inline()
                             ->required()
                             ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web')),
@@ -262,7 +261,7 @@ class AspirationResource extends Resource
                         ->color('info')
                         ->icon('heroicon-o-eye'),
                     EditAction::make()
-                        ->color('primary')
+                        ->color('warning')
                         ->icon('heroicon-o-pencil'),
                     DeleteAction::make()
                         ->color('danger')
@@ -270,7 +269,7 @@ class AspirationResource extends Resource
 
                 ]),
                 RestoreAction::make()
-                    ->color('warning')
+                    ->color('success')
                     ->icon('heroicon-o-arrow-path'),
                 ForceDeleteAction::make()
                     ->color('danger')
@@ -278,9 +277,9 @@ class AspirationResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->color('danger'),
+                    Tables\Actions\RestoreBulkAction::make()->color('success'),
+                    Tables\Actions\ForceDeleteBulkAction::make()->color('danger'),
                 ]),
             ])
             ->modifyQueryUsing(function (Builder $query) {
