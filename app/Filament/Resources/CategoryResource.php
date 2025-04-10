@@ -51,7 +51,7 @@ class CategoryResource extends Resource
                         FileUpload::make('icon')
                             ->label('Category Icon')
                             ->image()
-                            ->imagePreviewHeight('100') // Optional preview height
+                            ->imagePreviewHeight('100')
                             ->directory('category-icons')
                             ->required()
                             ->columnSpanFull(),
@@ -59,7 +59,7 @@ class CategoryResource extends Resource
                     ->columns(1),
 
                 Section::make('Description')
-                    ->collapsible() // Optional: make it collapsible
+                    ->collapsible()
                     ->schema([
                         RichEditor::make('description')
                             ->label('Category Description')
@@ -101,14 +101,14 @@ class CategoryResource extends Resource
                         ->color('info')
                         ->icon('heroicon-o-eye'),
                     EditAction::make()
-                        ->color('primary')
+                        ->color('warning')
                         ->icon('heroicon-o-pencil'),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-o-trash'),
                 ]),
                 RestoreAction::make()
-                    ->color('warning')
+                    ->color('success')
                     ->icon('heroicon-o-arrow-path'),
                 ForceDeleteAction::make()
                     ->color('danger')
@@ -116,9 +116,15 @@ class CategoryResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->color('danger')
+                        ->icon('heroicon-o-trash'),
+                    Tables\Actions\RestoreBulkAction::make()
+                        ->color('success')
+                        ->icon('heroicon-o-arrow-path'),
+                    Tables\Actions\ForceDeleteBulkAction::make()
+                        ->color('danger')
+                        ->icon('heroicon-o-trash'),
                 ]),
             ])
             ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('created_at', 'DESC')->withoutGlobalScopes([

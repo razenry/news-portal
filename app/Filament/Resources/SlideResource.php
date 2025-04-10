@@ -80,55 +80,55 @@ class SlideResource extends Resource
     }
 
     public static function form(Form $form): Form
-{
-    return $form
-        ->schema([
-            // SECTION: Meta Information
-            Section::make('Slide Info')
-                ->description('Fill in the main details about the slide')
-                ->schema([
-                    TextInput::make('title')
-                        ->label('Title')
-                        ->placeholder('Enter the title')
-                        ->required()
-                        ->columnSpanFull(),
+    {
+        return $form
+            ->schema([
+                // SECTION: Meta Information
+                Section::make('Slide Info')
+                    ->description('Fill in the main details about the slide')
+                    ->schema([
+                        TextInput::make('title')
+                            ->label('Title')
+                            ->placeholder('Enter the title')
+                            ->required()
+                            ->columnSpanFull(),
 
-                    Textarea::make('description')
-                        ->label('Description')
-                        ->placeholder('Enter a description')
-                        ->rows(4)
-                        ->helperText('Provide a detailed description')
-                        ->columnSpanFull(),
-                ])
-                ->columns(1)
-                ->collapsible(),
+                        Textarea::make('description')
+                            ->label('Description')
+                            ->placeholder('Enter a description')
+                            ->rows(4)
+                            ->helperText('Provide a detailed description')
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
 
-            // SECTION: Media Upload
-            Section::make('Image Upload')
-                ->description('Attach an image for this slide')
-                ->schema([
-                    FileUpload::make('image')
-                        ->label('Upload Image')
-                        ->image()
-                        ->maxSize(5120)
-                        ->directory('uploads/slides')
-                        ->imagePreviewHeight('150')
-                        ->columnSpanFull(),
-                ])
-                ->columns(1)
-                ->collapsible(),
+                // SECTION: Media Upload
+                Section::make('Image Upload')
+                    ->description('Attach an image for this slide')
+                    ->schema([
+                        FileUpload::make('image')
+                            ->label('Upload Image')
+                            ->image()
+                            ->maxSize(5120)
+                            ->directory('uploads/slides')
+                            ->imagePreviewHeight('150')
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
 
-            // SECTION: Publish Control
-            Section::make('Visibility')
-                ->schema([
-                    Toggle::make('published')
-                        ->label('Published')
-                        ->default(true)
-                        ->helperText('Mark as published if you want this to be visible'),
-                ])
-                ->columns(1),
-        ]);
-}
+                // SECTION: Publish Control
+                Section::make('Visibility')
+                    ->schema([
+                        Toggle::make('published')
+                            ->label('Published')
+                            ->default(true)
+                            ->helperText('Mark as published if you want this to be visible'),
+                    ])
+                    ->columns(1),
+            ]);
+    }
     public static function table(Table $table): Table
     {
         return $table
@@ -156,14 +156,14 @@ class SlideResource extends Resource
                         ->color('info')
                         ->icon('heroicon-o-eye'),
                     EditAction::make()
-                        ->color('primary')
+                        ->color('warning')
                         ->icon('heroicon-o-pencil'),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-o-trash'),
                 ]),
                 RestoreAction::make()
-                    ->color('warning')
+                    ->color('success')
                     ->icon('heroicon-o-arrow-path'),
                 ForceDeleteAction::make()
                     ->color('danger')
@@ -171,9 +171,15 @@ class SlideResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->color('danger')
+                        ->icon('heroicon-o-trash'),
+                    Tables\Actions\RestoreBulkAction::make()
+                        ->color('success')
+                        ->icon('heroicon-o-arrow-path'),
+                    Tables\Actions\ForceDeleteBulkAction::make()
+                        ->color('danger')
+                        ->icon('heroicon-o-trash'),
                 ]),
             ])->modifyQueryUsing(function (Builder $query) {
                 $query->orderBy('created_at', 'desc')

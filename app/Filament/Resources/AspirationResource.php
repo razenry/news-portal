@@ -270,7 +270,7 @@ class AspirationResource extends Resource
                 ]),
                 RestoreAction::make()
                     ->color('success')
-                    ->icon('heroicon-o-arrow-path'),
+                    ->icon('heroicon-o-arrow-path'),    
                 ForceDeleteAction::make()
                     ->color('danger')
                     ->icon('heroicon-o-trash'),

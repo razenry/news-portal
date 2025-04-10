@@ -257,14 +257,14 @@ class PostResource extends Resource
                         ->color('info')
                         ->icon('heroicon-o-eye'),
                     EditAction::make()
-                        ->color('primary')
+                        ->color('warning')
                         ->icon('heroicon-o-pencil'),
                     DeleteAction::make()
                         ->color('danger')
                         ->icon('heroicon-o-trash'),
                 ]),
                 RestoreAction::make()
-                    ->color('warning')
+                    ->color('success')
                     ->icon('heroicon-o-arrow-path'),
                 ForceDeleteAction::make()
                     ->color('danger')
@@ -272,9 +272,15 @@ class PostResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                    ->color('danger')
+                    ->icon('heroicon-o-trash'),
+                    Tables\Actions\RestoreBulkAction::make()
+                    ->color('success')
+                    ->icon('heroicon-o-arrow-path'),
+                    Tables\Actions\ForceDeleteBulkAction::make()
+                    ->color('danger')
+                    ->icon('heroicon-o-trash'),
                 ]),
             ])
             ->modifyQueryUsing(function (Builder $query) {
