@@ -218,7 +218,6 @@ class AspirationResource extends Resource
                             ->required()
                     ])
                     ->columns(1)
-                    ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web'))
                     ->collapsed(),
             ]);
     }
