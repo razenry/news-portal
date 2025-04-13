@@ -23,6 +23,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ForceDeleteAction;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Support\Str;
 
 class UnitResource extends Resource
@@ -31,33 +32,33 @@ class UnitResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'Data Master';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Unit Identity')
+                Section::make('Identitas Unit')
                     ->schema([
                         FileUpload::make('logo')
-                            ->label('Upload Logo')
+                            ->label('Unggah Logo')
                             ->image()
                             ->directory('logos')
                             ->required()
                             ->columnSpanFull(),
 
                         TextInput::make('name')
-                            ->label('Unit Name')
-                            ->placeholder('Enter unit name')
+                            ->label('Nama Unit')
+                            ->placeholder('Masukkan nama unit')
                             ->required()
                             ->columnSpanFull(),
                     ])
                     ->columns(1),
 
-                Section::make('Description')
+                Section::make('Deskripsi')
                     ->schema([
                         TinyEditor::make('description')
-                            ->label('Detailed Description')
+                            ->label('Deskripsi Lengkap')
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsVisibility('public')
                             ->fileAttachmentsDirectory('uploads')
@@ -74,42 +75,73 @@ class UnitResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable()->toggleable(),
-                TextColumn::make('slug')->sortable()->copyable()->toggleable(),
-                TextColumn::make('description')->limit(50)->toggleable(),
+
+                ImageColumn::make('logo')
+                    ->label('Logo')
+                    ->circular()
+                    ->toggleable(),
+
+                TextColumn::make('name')
+                    ->label('Nama Unit')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(),
+
+                TextColumn::make('slug')
+                    ->label('Slug')
+                    ->sortable()
+                    ->copyable()
+                    ->toggleable(),
+
+                TextColumn::make('description')
+                    ->label('Deskripsi')
+                    ->limit(50)
+                    ->toggleable(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                TrashedFilter::make()
+                    ->label('Tampilkan yang Dihapus'),
             ])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make()
+                        ->label('Lihat')
                         ->color('info')
                         ->icon('heroicon-o-eye'),
+
                     EditAction::make()
+                        ->label('Edit')
                         ->color('primary')
                         ->icon('heroicon-o-pencil'),
+
                     DeleteAction::make()
+                        ->label('Hapus')
                         ->color('danger')
                         ->icon('heroicon-o-trash'),
                 ]),
+
                 RestoreAction::make()
+                    ->label('Pulihkan')
                     ->color('warning')
                     ->icon('heroicon-o-arrow-path'),
+
                 ForceDeleteAction::make()
+                    ->label('Hapus Permanen')
                     ->color('danger')
                     ->icon('heroicon-o-trash'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->label('Hapus Massal'),
+                    Tables\Actions\RestoreBulkAction::make()->label('Pulihkan Massal'),
+                    Tables\Actions\ForceDeleteBulkAction::make()->label('Hapus Permanen Massal'),
                 ]),
             ])
-            ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('created_at', 'DESC')->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]));
+            ->modifyQueryUsing(fn(Builder $query) =>
+                $query->orderBy('created_at', 'DESC')->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ])
+            );
     }
 
     public static function getRelations(): array

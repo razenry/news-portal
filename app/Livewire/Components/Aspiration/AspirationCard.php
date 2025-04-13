@@ -12,8 +12,6 @@ class AspirationCard extends Component
 
     public function render()
     {
-        return view('livewire.components.aspiration.aspiration-card', [
-            'aspirations' => Aspiration::where('published', '!=', 0)->withoutTrashed()->orderBy('created_at', 'DESC')->paginate($this->paginate),
-        ]);
+        return view('livewire.components.aspiration.aspiration-card');
     }
 }

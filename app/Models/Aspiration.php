@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\AspirationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,8 +16,11 @@ class Aspiration extends Model
     protected $fillable = [
         'title',
         'slug',
+        'thumbnail',
         'description',
+        'tags',
         'body',
+        'type',
         'published',
         'comments_enabled',
         'user_id',
@@ -27,6 +31,8 @@ class Aspiration extends Model
     protected $casts = [
         'comments_enabled' => 'boolean',
         'published' => 'boolean',
+        'type' => AspirationType::class,
+        'tags' => 'array',
     ];
 
 

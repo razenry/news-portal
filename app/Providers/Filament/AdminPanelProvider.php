@@ -43,7 +43,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationItem::make('Web')
                     ->url(env('APP_URL'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-arrow-top-right-on-square')
-                    ->group('External')
                     ->sort(2)
             ])
             ->colors([
@@ -87,10 +86,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
-                FilamentEditProfilePlugin::make()->slug('my-profile')
-                    ->setTitle('My Profile')
-                    ->setNavigationLabel('My Profile')
-                    ->setNavigationGroup('Settings')
+                FilamentEditProfilePlugin::make()->slug('profil')
+                    ->setTitle('Profil')
+                    ->setNavigationLabel('Profil')
+                    ->setNavigationGroup('Pengaturan')
                     ->setIcon('heroicon-o-user')
                     ->setSort(10)
             ])

@@ -13,39 +13,40 @@ class AspirationOverview extends BaseWidget
     {
         $user = Filament::auth()->user();
 
-        // Jika super_admin, tampilkan total semua aspirasi
+        // Jika super_admin atau admin, tampilkan semua data Berita
         if ($user->hasRole(['super_admin', 'admin'])) {
             return [
-                Stat::make('Total Aspirations', Aspiration::count())
-                    ->description('All submitted aspirations')
+                Stat::make('Total Berita', Aspiration::count())
+                    ->description('Semua Berita yang telah dikirimkan')
                     ->icon('heroicon-o-chat-bubble-left-right')
                     ->color('primary'),
 
-                Stat::make('Published', Aspiration::where('published', true)->count())
-                    ->description('Visible to the public')
+                Stat::make('Telah Dipublikasikan', Aspiration::where('published', true)->count())
+                    ->description('Tampil untuk publik')
                     ->icon('heroicon-o-eye')
                     ->color('success'),
 
                 Stat::make('Draft', Aspiration::where('published', false)->count())
-                    ->description('Still being edited or hidden')
+                    ->description('Masih disunting atau disembunyikan')
                     ->icon('heroicon-o-pencil-square')
                     ->color('warning'),
             ];
         }
 
+        // Jika bukan admin, tampilkan hanya Berita milik sendiri
         return [
-            Stat::make('Your Aspirations', Aspiration::where('user_id', $user->id)->count())
-                ->description('Aspirations submitted by you')
+            Stat::make('Berita Anda', Aspiration::where('user_id', $user->id)->count())
+                ->description('Berita yang Anda kirimkan')
                 ->icon('heroicon-o-chat-bubble-left')
                 ->color('primary'),
 
-            Stat::make('Published', Aspiration::where('user_id', $user->id)->where('published', true)->count())
-                ->description('Your published aspirations')
+            Stat::make('Telah Dipublikasikan', Aspiration::where('user_id', $user->id)->where('published', true)->count())
+                ->description('Berita Anda yang telah dipublikasikan')
                 ->icon('heroicon-o-eye')
                 ->color('success'),
 
             Stat::make('Draft', Aspiration::where('user_id', $user->id)->where('published', false)->count())
-                ->description('Your drafts')
+                ->description('Draft Berita Anda')
                 ->icon('heroicon-o-pencil')
                 ->color('warning'),
         ];

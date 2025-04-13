@@ -30,7 +30,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Aspiration::observe(AspirationObserver::class);
-        Post::observe(PostObserver::class);
         Category::observe(CategoryObserver::class);
         Slide::observe(SlideObserver::class);
         Unit::observe(UnitObserver::class);

@@ -34,20 +34,18 @@ class SlideResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-photo';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static ?string $navigationGroup = 'Manajemen Konten';
 
     public static function getNavigationBadge(): ?string
     {
         $model = static::getModel();
 
-        // Hitung jumlah unpublished
         if (!Auth::user()->hasRole(['super_admin', 'admin'], 'web')) {
             $unpublishedCount = $model::where('user_id', Auth::id())->withoutTrashed()->count();
         }
 
         $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
 
-        // Jika tidak ada unpublished, tampilkan jumlah published
         return $unpublishedCount > 0
             ? $unpublishedCount
             : $model::where('published', '1')->withoutGlobalScopes([SoftDeletingScope::class])->withoutTrashed()->count();
@@ -63,8 +61,8 @@ class SlideResource extends Resource
         $unpublishedCount = $model::where('published', '0')->withoutTrashed()->count();
 
         return $unpublishedCount > 0
-            ? 'Unpublished'
-            : 'Published';
+            ? 'Belum Dipublikasikan'
+            : 'Dipublikasikan';
     }
 
     public static function getNavigationBadgeColor(): ?string
@@ -83,32 +81,30 @@ class SlideResource extends Resource
     {
         return $form
             ->schema([
-                // SECTION: Meta Information
-                Section::make('Slide Info')
-                    ->description('Fill in the main details about the slide')
+                Section::make('Informasi Slide')
+                    ->description('Isi detail utama mengenai slide')
                     ->schema([
                         TextInput::make('title')
-                            ->label('Title')
-                            ->placeholder('Enter the title')
+                            ->label('Judul')
+                            ->placeholder('Masukkan judul slide')
                             ->required()
                             ->columnSpanFull(),
 
                         Textarea::make('description')
-                            ->label('Description')
-                            ->placeholder('Enter a description')
+                            ->label('Deskripsi')
+                            ->placeholder('Masukkan deskripsi slide')
                             ->rows(4)
-                            ->helperText('Provide a detailed description')
+                            ->helperText('Berikan deskripsi yang jelas dan lengkap')
                             ->columnSpanFull(),
                     ])
                     ->columns(1)
                     ->collapsible(),
 
-                // SECTION: Media Upload
-                Section::make('Image Upload')
-                    ->description('Attach an image for this slide')
+                Section::make('Unggah Gambar')
+                    ->description('Lampirkan gambar untuk slide ini')
                     ->schema([
                         FileUpload::make('image')
-                            ->label('Upload Image')
+                            ->label('Unggah Gambar')
                             ->image()
                             ->maxSize(5120)
                             ->directory('uploads/slides')
@@ -118,74 +114,83 @@ class SlideResource extends Resource
                     ->columns(1)
                     ->collapsible(),
 
-                // SECTION: Publish Control
-                Section::make('Visibility')
+                Section::make('Visibilitas')
                     ->schema([
                         Toggle::make('published')
-                            ->label('Published')
+                            ->label('Tampilkan')
                             ->default(true)
-                            ->helperText('Mark as published if you want this to be visible'),
+                            ->helperText('Tandai jika ingin slide ini ditampilkan'),
                     ])
                     ->columns(1),
             ]);
     }
+
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 ImageColumn::make('image')->toggleable(),
                 TextColumn::make('title')
+                    ->label('Judul')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 ToggleColumn::make('published')
-                    ->label('Published')
+                    ->label('Tampilkan')
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
                     ->sortable()
                     ->searchable()
                     ->toggleable(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                TrashedFilter::make()->label('Termasuk yang Dihapus'),
             ])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make()
                         ->color('info')
-                        ->icon('heroicon-o-eye'),
+                        ->icon('heroicon-o-eye')
+                        ->label('Lihat'),
                     EditAction::make()
                         ->color('warning')
-                        ->icon('heroicon-o-pencil'),
+                        ->icon('heroicon-o-pencil')
+                        ->label('Ubah'),
                     DeleteAction::make()
                         ->color('danger')
-                        ->icon('heroicon-o-trash'),
+                        ->icon('heroicon-o-trash')
+                        ->label('Hapus'),
                 ]),
                 RestoreAction::make()
                     ->color('success')
-                    ->icon('heroicon-o-arrow-path'),
+                    ->icon('heroicon-o-arrow-path')
+                    ->label('Pulihkan'),
                 ForceDeleteAction::make()
                     ->color('danger')
-                    ->icon('heroicon-o-trash'),
+                    ->icon('heroicon-o-trash')
+                    ->label('Hapus Permanen'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
                         ->color('danger')
-                        ->icon('heroicon-o-trash'),
+                        ->icon('heroicon-o-trash')
+                        ->label('Hapus Massal'),
                     Tables\Actions\RestoreBulkAction::make()
                         ->color('success')
-                        ->icon('heroicon-o-arrow-path'),
+                        ->icon('heroicon-o-arrow-path')
+                        ->label('Pulihkan Massal'),
                     Tables\Actions\ForceDeleteBulkAction::make()
                         ->color('danger')
-                        ->icon('heroicon-o-trash'),
+                        ->icon('heroicon-o-trash')
+                        ->label('Hapus Permanen Massal'),
                 ]),
             ])->modifyQueryUsing(function (Builder $query) {
                 $query->orderBy('created_at', 'desc')
                     ->withoutGlobalScopes([SoftDeletingScope::class]);
             });
-        ;
     }
 
     public static function getRelations(): array
@@ -199,8 +204,8 @@ class SlideResource extends Resource
     {
         return [
             'index' => Pages\ListSlides::route('/'),
-            'create' => Pages\CreateSlide::route('/create'),
-            'edit' => Pages\EditSlide::route('/{record}/edit'),
+            'create' => Pages\CreateSlide::route('/buat'),
+            'edit' => Pages\EditSlide::route('/{record}/ubah'),
         ];
     }
 }

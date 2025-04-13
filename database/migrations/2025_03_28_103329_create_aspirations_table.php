@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->string('thumbnail')->nullable();
             $table->text('body');
             $table->text('description');
+            $table->json('tags');
             $table->boolean('published')->default(1);
+            $table->enum('type', ['Blog', 'Aspirasi'])->default('Blog');
             $table->boolean('comments_enabled')->default(true);
             $table->timestamps();
             $table->softDeletes();

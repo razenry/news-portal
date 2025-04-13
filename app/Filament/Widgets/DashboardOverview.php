@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Widgets;
 
 use App\Models\Category;
@@ -11,51 +12,47 @@ use Filament\Widgets\StatsOverviewWidget\Card;
 
 class DashboardOverview extends BaseWidget
 {
-    protected static ?string $pollingInterval = '5s'; // Auto-refresh every 10 seconds
+    protected static ?string $pollingInterval = '5s'; // Refresh otomatis setiap 5 detik
 
     protected function getCards(): array
     {
-        $user = Filament::auth()->user(); // Get the logged-in user
+        $user = Filament::auth()->user(); // Ambil data pengguna yang sedang login
 
-        // Check if the user is a super admin
+        // Cek apakah pengguna adalah super admin atau admin
         if ($user->hasRole(['super_admin', 'admin'])) {
             return [
-                Card::make('Total Users', User::count())
-                    ->description('Number of registered users')
+                Card::make('Total Pengguna', User::count())
+                    ->description('Jumlah pengguna yang terdaftar')
                     ->icon('heroicon-o-user-group')
                     ->color('success'),
 
-                Card::make('Total Posts', Post::count())
-                    ->description('Total number of posts created')
-                    ->icon('heroicon-o-arrow-up-on-square-stack')
-                    ->color('primary'),
-
-                Card::make('Total Categories', Category::count())
-                    ->description('Number of available categories')
+                Card::make('Total Kategori', Category::count())
+                    ->description('Jumlah kategori yang tersedia')
                     ->icon('heroicon-o-tag')
                     ->color('warning'),
 
-                Card::make('Total Units', Unit::count())
-                    ->description('Number of available units')
+                Card::make('Total Unit', Unit::count())
+                    ->description('Jumlah unit yang tersedia')
                     ->icon('heroicon-o-building-office')
                     ->color('info'),
             ];
         }
 
-        // If not super_admin, show only user's posts, but all categories & units
+        // Jika bukan super admin/admin, hanya tampilkan kategori & unit
         return [
-            Card::make('Your Posts', Post::where('user_id', $user->id)->count())
-                ->description('Total posts you created')
+            Card::make('Postingan Saya', Post::where('user_id', $user->id)->count())
+                ->description('Jumlah postingan yang Anda buat')
                 ->icon('heroicon-o-document-text')
                 ->color('primary'),
 
-            Card::make('Total Categories', Category::count())
-                ->description('Number of available categories')
+
+            Card::make('Total Kategori', Category::count())
+                ->description('Jumlah kategori yang tersedia')
                 ->icon('heroicon-o-tag')
                 ->color('warning'),
 
-            Card::make('Total Units', Unit::count())
-                ->description('Number of available units')
+            Card::make('Total Unit', Unit::count())
+                ->description('Jumlah unit yang tersedia')
                 ->icon('heroicon-o-building-office')
                 ->color('info'),
         ];

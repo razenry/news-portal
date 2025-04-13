@@ -37,7 +37,7 @@ class RoleResource extends Resource implements HasShieldPermissions
 
     public static function getNavigationBadgeTooltip(): ?string
     {
-        return 'Available';
+        return 'Tersedia';
     }
 
     public static function form(Form $form): Form
@@ -118,7 +118,7 @@ class RoleResource extends Resource implements HasShieldPermissions
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->color('warning'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

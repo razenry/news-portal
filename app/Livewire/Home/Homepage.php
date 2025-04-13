@@ -13,12 +13,22 @@ class Homepage extends Component
     public function render()
     {
         return view('livewire.home.homepage', [
-            'posts' => Post::where('published', '!=', 0)->withoutTrashed()->orderBy('created_at', 'DESC')->paginate(8),
             'categories' => Category::withoutTrashed()->paginate(8),
             'slides' => Slide::where('published', '!=', 0)->withoutTrashed()->orderBy('created_at', 'DESC')->paginate(5),
-            'aspirations' => Aspiration::where('published', '!=', 0)->withoutTrashed()->orderBy('created_at', 'DESC')->paginate(2),
+            'aspirations' => Aspiration::query()
+                ->where('published', '!=', 0)
+                ->where('type', 'Aspirasi')
+                ->withoutTrashed()
+                ->orderBy('created_at', 'DESC')
+                ->paginate(2),
+            'blogs' => Aspiration::query()
+                ->where('published', '!=', 0)
+                ->where('type', 'Blog')
+                ->withoutTrashed()
+                ->orderBy('created_at', 'DESC')
+                ->paginate(2),
         ])->layout('livewire.layout.app', [
-            'title' => 'Homepage'
+            'title' => 'Beranda'
         ]);
     }
 }

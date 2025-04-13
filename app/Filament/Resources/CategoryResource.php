@@ -9,7 +9,6 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,7 +24,6 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ForceDeleteAction;
-use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -33,36 +31,39 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $breadcrumb = 'Kategori';
+    protected static ?string $slug = 'kategori';
+    protected static ?string $label = 'Kategori';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Category Info')
-                    ->description('Fill in the category details below.')
+                Section::make('Informasi Kategori')
+                    ->description('Isi detail kategori di bawah ini.')
                     ->schema([
                         TextInput::make('name')
-                            ->label('Category Name')
-                            ->placeholder('e.g. Technology, Food, etc.')
+                            ->label('Nama Kategori')
+                            ->placeholder('contoh: Teknologi, Makanan, dll.')
                             ->required()
                             ->columnSpanFull(),
 
                         FileUpload::make('icon')
-                            ->label('Category Icon')
+                            ->label('Ikon Kategori')
                             ->image()
                             ->imagePreviewHeight('100')
-                            ->directory('category-icons')
+                            ->directory('ikon-kategori')
                             ->required()
                             ->columnSpanFull(),
                     ])
                     ->columns(1),
 
-                Section::make('Description')
+                Section::make('Deskripsi')
                     ->collapsible()
                     ->schema([
                         RichEditor::make('description')
-                            ->label('Category Description')
+                            ->label('Deskripsi Kategori')
                             ->required()
                             ->columnSpanFull(),
                     ])
@@ -75,54 +76,66 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('icon')
+                    ->label('Ikon')
                     ->circular()
                     ->toggleable(),
 
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->sortable()
                     ->searchable()
                     ->toggleable(),
 
                 TextColumn::make('slug')
+                    ->label('Slug')
                     ->sortable()
                     ->copyable()
                     ->toggleable(),
 
                 TextColumn::make('description')
+                    ->label('Deskripsi')
                     ->limit(50)
                     ->toggleable(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                TrashedFilter::make()->label('Tampilkan yang Dihapus'),
             ])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make()
+                        ->label('Lihat')
                         ->color('info')
                         ->icon('heroicon-o-eye'),
                     EditAction::make()
+                        ->label('Ubah')
                         ->color('warning')
                         ->icon('heroicon-o-pencil'),
                     DeleteAction::make()
+                        ->label('Hapus')
                         ->color('danger')
                         ->icon('heroicon-o-trash'),
                 ]),
                 RestoreAction::make()
+                    ->label('Pulihkan')
                     ->color('success')
                     ->icon('heroicon-o-arrow-path'),
                 ForceDeleteAction::make()
+                    ->label('Hapus Permanen')
                     ->color('danger')
                     ->icon('heroicon-o-trash'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
+                        ->label('Hapus Massal')
                         ->color('danger')
                         ->icon('heroicon-o-trash'),
                     Tables\Actions\RestoreBulkAction::make()
+                        ->label('Pulihkan Massal')
                         ->color('success')
                         ->icon('heroicon-o-arrow-path'),
                     Tables\Actions\ForceDeleteBulkAction::make()
+                        ->label('Hapus Permanen Massal')
                         ->color('danger')
                         ->icon('heroicon-o-trash'),
                 ]),
@@ -131,7 +144,6 @@ class CategoryResource extends Resource
                 SoftDeletingScope::class,
             ]));
     }
-
 
     public static function getRelations(): array
     {
@@ -142,8 +154,8 @@ class CategoryResource extends Resource
     {
         return [
             'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'create' => Pages\CreateCategory::route('/tambah'),
+            'edit' => Pages\EditCategory::route('/{record}/ubah'),
         ];
     }
 }

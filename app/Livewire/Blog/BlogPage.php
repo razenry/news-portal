@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Livewire\Aspiration;
+namespace App\Livewire\Blog;
 
 use App\Models\Aspiration;
 use Livewire\Component;
 
-class AspirationPage extends Component
+class BlogPage extends Component
 {
     public $aspiration;
     protected $slug;
 
-    protected function getRelatedAspirationProperty()
+    protected function getRelatedBlogProperty()
     {
         return Aspiration::where('category_id', $this->aspiration->category->id)
             ->where('slug', '!=', $this->slug)
             ->where('published', '!=', 0)
-            ->where('type','!=', 'Blog')
+            ->where('type', '!=', 'Aspirasi')
             ->withoutTrashed()
             ->orderBy('created_at', 'DESC')
             ->paginate(8);
@@ -25,20 +25,20 @@ class AspirationPage extends Component
     {
         $this->slug = $slug;
         $this->aspiration = Aspiration::where('slug', $slug)
-            ->where('type','!=', 'Blog') 
             ->withoutTrashed()
             ->where('published', '!=', 0)
+            ->where('type', '!=', 'Aspirasi')
             ->firstOrFail();
     }
 
     public function render()
     {
-        $title = $this->aspiration ? $this->aspiration->title : 'Unknown Title';
+        $title = $this->aspiration ? $this->aspiration->title : 'Judul Tidak Di Ketahui';
 
-        return view('livewire.aspiration.aspiration-page', [
-            'relatedAspiration' => $this->getRelatedAspirationProperty(), // Mengakses computed property
+        return view('livewire.blog.blog-page', [
+            'relatedAspiration' => $this->getRelatedBlogProperty(),
         ])->layout('livewire.layout.app', [
-            'title' => "Kata Mereka : " . $title,
+            'title' => "Blog : " . $title,
         ]);
     }
 }

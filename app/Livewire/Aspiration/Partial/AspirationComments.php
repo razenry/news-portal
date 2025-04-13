@@ -18,6 +18,12 @@ class AspirationComments extends Component
         'content' => 'required|min:3|max:1000'
     ];
 
+    protected $messages = [
+        'content.required' => 'komentar wajib diisi.',
+        'content.min' => 'komentar harus memiliki minimal 3 karakter.',
+        'content.max' => 'komentar tidak boleh lebih dari 1000 karakter.'
+    ];
+
     public function mount($slug)
     {
         $this->slug = $slug;
