@@ -209,6 +209,7 @@ class AspirationResource extends Resource
                         Toggle::make('published')
                             ->label('Dipublikasikan')
                             ->inline()
+                            ->default(0)
                             ->required()
                             ->visible(fn() => Auth::user()->hasRole(['super_admin', 'admin'], 'web')),
                         Toggle::make('comments_enabled')
