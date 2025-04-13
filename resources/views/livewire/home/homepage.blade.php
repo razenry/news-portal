@@ -11,7 +11,7 @@
             <div class="flex items-center justify-between gap-4">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Kata mereka</h2>
 
-                <a href="#" title=""
+                <a href="/aspirasi" title=""
                     class="flex items-center text-base font-medium text-blue-700 hover:underline dark:text-blue-500">
                     Lihat semua
                     <svg class="ms-1 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
