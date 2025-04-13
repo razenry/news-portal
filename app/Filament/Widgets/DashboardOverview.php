@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Aspiration;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Unit;
@@ -40,7 +41,7 @@ class DashboardOverview extends BaseWidget
 
         // Jika bukan super admin/admin, hanya tampilkan kategori & unit
         return [
-            Card::make('Postingan Saya', Post::where('user_id', $user->id)->count())
+            Card::make('Postingan Saya', Aspiration::where('user_id', $user->id)->count())
                 ->description('Jumlah postingan yang Anda buat')
                 ->icon('heroicon-o-document-text')
                 ->color('primary'),
