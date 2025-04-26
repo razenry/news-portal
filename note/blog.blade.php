@@ -102,28 +102,12 @@
                     </div>
                 </header>
 
-
                 <!-- Article Content with improved typography -->
-                <div class="tiptap-prose text-gray-900 dark:text-white">
+                <div
+                    class="">
                     {!! $aspiration->body !!}
+                    {{-- {!! str($aspiration->body)->sanitizeHtml() !!} --}}
                 </div>
-
-                <style>
-                    .tiptap-prose {
-                        @apply prose prose-lg max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 hover:prose-a:text-blue-800 dark:prose-a:text-blue-400 dark:hover:prose-a:text-blue-300 prose-img:rounded-xl prose-img:shadow-lg prose-img:w-full prose-img:max-h-[480px] prose-img:object-cover prose-blockquote:border-l-blue-600 prose-blockquote:dark:border-l-blue-400;
-                    }
-
-                    /* Reset khusus untuk konten TinyMCE */
-                    .tiptap-prose * {
-                        all: revert;
-                    }
-
-                    /* Terapkan kembali styling Tailwind */
-                    .tiptap-prose {
-                        @apply prose-lg;
-                        /* dan lainnya */
-                    }
-                </style>
                 @auth
                     @if ($aspiration->comments_enabled)
                         <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />

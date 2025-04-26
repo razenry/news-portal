@@ -29,8 +29,41 @@ return [
     'profiles' => [
         'default' => [
             'plugins' => 'accordion autoresize codesample directionality advlist link image lists preview pagebreak searchreplace wordcount code fullscreen insertdatetime media table emoticons',
-            'toolbar' => 'undo redo removeformat | fontfamily fontsize fontsizeinput font_size_formats styles | bold italic underline | rtl ltr | alignjustify alignleft aligncenter alignright | numlist bullist outdent indent | forecolor backcolor | blockquote table toc hr | image link media codesample emoticons | wordcount fullscreen',
+            'toolbar' => 'undo redo removeformat | fontfamily fontsizeinput | bold italic underline | rtl ltr | alignjustify alignleft aligncenter alignright | numlist bullist outdent indent | forecolor backcolor | blockquote table toc hr | image link media codesample emoticons | wordcount fullscreen',
             'upload_directory' => null,
+            'content_css' => '/css/tinymce-content.css', // Tambahkan CSS khusus
+            'content_style' => '
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 0 1rem;
+        }
+        img, video, iframe {
+            max-width: 100%;
+            height: auto !important;
+        }
+        table {
+            width: 100% !important;
+            border-collapse: collapse;
+        }
+        @media (max-width: 768px) {
+            body { padding: 0; }
+        }
+    ',
+            'font_size_input_default_unit' => 'px',
+            'style_formats' => [
+                [
+                    'title' => 'Responsive Heading 1',
+                    'block' => 'h1',
+                    'classes' => 'text-2xl sm:text-3xl lg:text-4xl'
+                ],
+                [
+                    'title' => 'Responsive Paragraph',
+                    'block' => 'p',
+                    'classes' => 'text-base sm:text-lg'
+                ]
+            ]
         ],
 
         'simple' => [

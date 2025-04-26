@@ -20,6 +20,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -159,6 +160,7 @@ class AspirationResource extends Resource
                             ->image()
                             ->directory('blogs')
                             ->columnSpanFull(),
+                        // RichEditor::make('body'),
                         TinyEditor::make('body')
                             ->label('Isi Konten')
                             ->fileAttachmentsDisk('public')
@@ -174,7 +176,7 @@ class AspirationResource extends Resource
 
                 // BAGIAN: Kategori & Unit
                 Section::make('Klasifikasi')
-                    ->description('Kategorikan aspirasi dengan tepat')
+                    ->description('Kategorikan berita dengan tepat')
                     ->schema([
                         Grid::make(['default' => 1, 'md' => 4])->schema([
                             Select::make('category_id')

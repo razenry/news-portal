@@ -48,6 +48,7 @@ class CategoryResource extends Resource
                             ->placeholder('contoh: Teknologi, Makanan, dll.')
                             ->required()
                             ->columnSpanFull(),
+                            
 
                         FileUpload::make('icon')
                             ->label('Ikon Kategori')
