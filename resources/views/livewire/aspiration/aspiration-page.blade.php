@@ -114,6 +114,7 @@
                     {!! $aspiration->body !!}
                 </div>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 @auth
                     @if ($aspiration->comments_enabled)
                         <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />
@@ -126,6 +127,8 @@
                     @endif
                 @endauth
 =======
+=======
+>>>>>>> Stashed changes
 
 
 
@@ -138,6 +141,9 @@
                         </p>
                     </div>
                 @endif
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             </article>
         </div>
