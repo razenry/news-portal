@@ -26,12 +26,6 @@
                     <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3">
                         {{ $unit->name }}
                     </h1>
-                    <div class="relative inline-block">
-                        <div class="h-1 w-full bg-blue-500 dark:bg-blue-400 rounded-full"></div>
-                        <div
-                            class="absolute top-0 left-0 h-1 w-1/3 bg-indigo-500 dark:bg-indigo-400 rounded-full animate-[underline_3s_ease-in-out_infinite]">
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

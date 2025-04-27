@@ -1,9 +1,10 @@
 <div class="relative group h-full">
     <!-- Elegant Card Container -->
     <div
-        class="h-full flex flex-col justify-center bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 transform group-hover:shadow-xl group-hover:-translate-y-1">
+        class="h-[340px] w-[300px] flex flex-col justify-between bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 transform group-hover:shadow-xl group-hover:-translate-y-1">
+        
         <!-- Card Content -->
-        <div class="p-6 flex flex-col flex-grow">
+        <div class="p-6 flex flex-col flex-1">
             <!-- Category Badge -->
             <span
                 class="self-start mb-3 px-3 py-1 text-xs font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 rounded-full shadow">
@@ -26,7 +27,7 @@
                 {{ $aspiration->description }}
             </p>
 
-            <!-- Bottom section with button -->
+            <!-- Spacer agar tombol selalu di bawah -->
             <div class="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                 <a href="{{ route('aspiration.show', $aspiration->slug) }}"
                     class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg shadow-sm transition-all duration-300 transform hover:scale-[1.02]">
@@ -41,4 +42,3 @@
         </div>
     </div>
 </div>
-
