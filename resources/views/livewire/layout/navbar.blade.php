@@ -18,6 +18,8 @@
                     </svg>
 
                 </button>
+
+                {{-- Theme Button --}}
                 <button id="theme-toggle" type="button"
                     class="ml-1 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
                     <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -32,11 +34,13 @@
                     </svg>
                 </button>
 
+                {{-- Guest --}}
                 @guest
                     <a href="/admin"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 mx-3 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Login</a>
                 @endguest
 
+                {{-- User --}}
                 @auth
                     <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse ml-2">
                         <button type="button"
@@ -47,7 +51,7 @@
                             <div
                                 class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center text-white font-bold">
                                 {{-- Tampilkan inisial jika foto profil tidak ada --}}
-                                @if(Auth::user()->profile_photo_path)
+                                @if (Auth::user()->profile_photo_path)
                                     <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_photo_path }}"
                                         alt="user photo">
                                 @else
@@ -88,6 +92,7 @@
 
                 @endauth
 
+                {{-- Mobile Menu --}}
                 <button data-collapse-toggle="mobile-menu-2" type="button"
                     class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                     aria-controls="mobile-menu-2" aria-expanded="false">
@@ -105,13 +110,16 @@
                     </svg>
                 </button>
             </div>
+
             <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
                 <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                    {{-- Home --}}
                     <li>
                         <a href="{{ route('home') }}"
                             class="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white"
                             aria-current="page">Beranda</a>
                     </li>
+                    {{-- PPDB --}}
                     <li>
                         <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
                             class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Informasi
@@ -122,7 +130,7 @@
                                     stroke-width="2" d="m1 1 4 4 4-4" />
                             </svg>
                         </button>
-                        <!-- Dropdown menu -->
+
                         <div id="dropdownNavbar"
                             class="z-50 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
@@ -151,6 +159,7 @@
 
                         </div>
                     </li>
+                    {{-- Unit --}}
                     <li>
                         <button id="dropdownNavbarLink" data-dropdown-toggle="unit"
                             class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Unit
@@ -167,7 +176,7 @@
                                 aria-labelledby="dropdownLargeButton">
                                 @forelse ($units as $unit)
                                     <li>
-                                        <a href="#"
+                                        <a href="{{ route('unit.show', $unit->slug) }}"
                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $unit->name }}</a>
                                     </li>
                                 @empty
@@ -237,8 +246,9 @@
                                         class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                             fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                            <path stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2"
+                                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                         </svg>
                                         <span class="sr-only">Search</span>
                                     </button>
@@ -269,8 +279,8 @@
                         data-modal-hide="authentication-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>

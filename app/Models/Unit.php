@@ -17,6 +17,15 @@ class Unit extends Model
         'logo',
         'description',
     ];
+
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
+
+    public function blogs()
+    {
+        return $this->hasMany(Aspiration::class);
+    }
     
     protected $dates = ['deleted_at'];
 }

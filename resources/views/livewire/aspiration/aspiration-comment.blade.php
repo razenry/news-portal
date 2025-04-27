@@ -18,54 +18,60 @@
 
         <!-- Comment List -->
         <div wire:poll.60s class="space-y-5">
-            @foreach($comments as $comment)
+            @foreach ($comments as $comment)
                 @include('livewire.aspiration.partial.aspiration-comments', ['comment' => $comment])
             @endforeach
         </div>
     </section>
 
     <!-- Sticky Comment Form -->
-    <div
-        class="sticky bottom-0 w-full bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-600 z-20 px-4 md:px-6 py-4">
-        <form wire:submit.prevent="addComment" class="space-y-2">
-            <label for="comment" class="block text-sm font-medium text-gray-900 dark:text-white">
-                @if($parentId)
-                    Membalas <strong class="text-blue-600 dark:text-blue-400">
-                        {{ optional(\App\Models\CommentAspiration::find($parentId))->user->name }}
-                    </strong>
-                @else
-                    Berikan pendapatmu
-                @endif
-            </label>
+    @auth
+        <div
+            class="sticky bottom-0 w-full bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-600 z-20 px-4 md:px-6 py-4">
+            <form wire:submit.prevent="addComment" class="space-y-2">
+                <label for="comment" class="block text-sm font-medium text-gray-900 dark:text-white">
+                    @if ($parentId)
+                        Membalas <strong class="text-blue-600 dark:text-blue-400">
+                            {{ optional(\App\Models\CommentAspiration::find($parentId))->user->name }}
+                        </strong>
+                    @else
+                        Berikan pendapatmu
+                    @endif
+                </label>
 
-            <textarea id="comment" wire:model.defer="content" rows="3"
-                class="block w-full p-3 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                placeholder="Tulis komentar kamu..."></textarea>
+                <textarea id="comment" wire:model.defer="content" rows="3"
+                    class="block w-full p-3 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Tulis komentar kamu..."></textarea>
 
-            @error('content') <p class="text-red-500 text-sm">{{ $message }}</p> @enderror
+                @error('content')
+                    <p class="text-red-500 text-sm">{{ $message }}</p>
+                @enderror
 
-            <div class="flex justify-between items-center pt-2">
-                @if($parentId)
-                    <button type="button" wire:click="$set('parentId', null)"
-                        class="text-sm text-gray-500 hover:underline dark:text-gray-300">
-                        Batalkan balasan
+                <div class="flex justify-between items-center pt-2">
+                    @if ($parentId)
+                        <button type="button" wire:click="$set('parentId', null)"
+                            class="text-sm text-gray-500 hover:underline dark:text-gray-300">
+                            Batalkan balasan
+                        </button>
+                    @endif
+
+                    <button type="submit"
+                        class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition duration-300 disabled:opacity-50"
+                        wire:loading.attr="disabled">
+                        <span wire:loading.remove>Kirim</span>
+                        
+                        <svg wire:loading class="ml-2 w-4 h-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
                     </button>
-                @endif
-
-                <button type="submit"
-                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition duration-300 disabled:opacity-50"
-                    wire:loading.attr="disabled">
-                    <span wire:loading.remove>Kirim</span>
-                    <svg wire:loading class="ml-2 w-4 h-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                        </circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
-                </button>
-            </div>
-        </form>
-    </div>
+                </div>
+            </form>
+        </div>
+    @endauth
 </div>
 
 @push('scripts')
