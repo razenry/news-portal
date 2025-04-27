@@ -124,6 +124,8 @@
                         /* dan lainnya */
                     }
                 </style>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 @auth
                     @if ($aspiration->comments_enabled)
                         <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />
@@ -135,6 +137,25 @@
                         </div>
                     @endif
                 @endauth
+=======
+=======
+>>>>>>> Stashed changes
+
+
+
+                @if ($aspiration->comments_enabled)
+                    <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />
+                @else
+                    <div class="mt-6">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Komentar dinonaktifkan untuk artikel ini.
+                        </p>
+                    </div>
+                @endif
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
             </article>
         </div>
     </main>
