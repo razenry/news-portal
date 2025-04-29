@@ -16,13 +16,13 @@ class UnitPage extends Component
     {
         $this->unit = Unit::where('slug', $slug)->firstOrFail();
         $this->title = $this->unit->name;
-        $this->blogs = $this->unit->blogs()->latest()->take(3)->get();
+        $this->blogs = $this->unit->blogs()->latest()->take(16)->get();
     }
 
     public function render()
     {
         return view('livewire.unit.unit-page')->layout('livewire.layout.app', [
-            'title' => $this->title,
+            'title' => 'Unit : '.$this->title,
         ]);
     }
 }

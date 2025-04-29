@@ -21,7 +21,7 @@ Tiap postingan ada informasi nama editor unit nya, nama admin,  waktu posting (t
     Berita 1
     kategori
     Berita 2
-    
+
 
 
 - Unit
@@ -41,7 +41,7 @@ Tiap postingan ada informasi nama editor unit nya, nama admin,  waktu posting (t
 - Tentang kami
     - Visi, Misi, Tujuan
     - Struktur Organisasi
-    - Sejarah Singkat 
+    - Sejarah Singkat
     - Kemitraan
     - Kontak
 
@@ -50,3 +50,5 @@ Tiap postingan ada informasi nama editor unit nya, nama admin,  waktu posting (t
 - Task
 
 1. Buat Halaman Single Post (Berita, Categori, Aspiration)
+
+FYL5GtfG7gTRI

@@ -103,8 +103,7 @@
                 </header>
 
                 <!-- Article Content with improved typography -->
-                <div
-                    class="tiptap-prose text-gray-900 dark:text-white">
+                <div class="tiptap-prose text-gray-900 dark:text-white">
                     {!! $aspiration->body !!}
                 </div>
                 @auth
@@ -140,35 +139,36 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center place-items-center">
 
-                    @forelse ($relatedAspiration as $ra)
-                        <livewire:news.news-card :blog="$ra" />
-                    @empty
-                        <!-- Empty State Card -->
-                        <div class="relative group h-full col-span-full">
-                            <div
-                                class="h-full flex flex-col bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden shadow-lg p-6 items-center justify-center text-center">
-                                <svg class="w-16 h-16 text-gray-400 dark:text-gray-500 mb-4" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                    </path>
+                @forelse ($relatedAspiration as $ra)
+                    <livewire:news.news-card :blog="$ra" />
+                @empty
+                    <!-- Empty State Card -->
+                    <div class="relative group h-full col-span-full">
+                        <div
+                            class="h-full flex flex-col bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden shadow-lg p-6 items-center justify-center text-center">
+                            <svg class="w-16 h-16 text-gray-400 dark:text-gray-500 mb-4" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">Belum ada aspirasi
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 mb-4">Jadilah yang pertama mengajukan
+                                aspirasi!</p>
+                            <a href="#"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200">
+                                Buat Aspirasi
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
-                                <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">Belum ada aspirasi
-                                </h3>
-                                <p class="text-gray-500 dark:text-gray-400 mb-4">Jadilah yang pertama mengajukan
-                                    aspirasi!</p>
-                                <a href="#"
-                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200">
-                                    Buat Aspirasi
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                    </svg>
-                                </a>
-                            </div>
+                            </a>
                         </div>
-                    @endforelse
+                    </div>
+                @endforelse
+            </div>
         </div>
     </aside>
 </div>
