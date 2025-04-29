@@ -47,7 +47,7 @@
                             class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                             data-dropdown-placement="bottom">
-                            <span class="sr-only">Open user menu</span>
+                            <span class="sr-only">Open</span>
                             <div
                                 class="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center text-white font-bold">
                                 {{-- Tampilkan inisial jika foto profil tidak ada --}}
