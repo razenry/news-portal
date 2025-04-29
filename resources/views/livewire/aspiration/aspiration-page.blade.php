@@ -108,24 +108,6 @@
                     {!! $aspiration->body !!}
                 </div>
 
-                <style>
-                    .tiptap-prose {
-                        @apply prose prose-lg max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 hover:prose-a:text-blue-800 dark:prose-a:text-blue-400 dark:hover:prose-a:text-blue-300 prose-img:rounded-xl prose-img:shadow-lg prose-img:w-full prose-img:max-h-[480px] prose-img:object-cover prose-blockquote:border-l-blue-600 prose-blockquote:dark:border-l-blue-400;
-                    }
-
-                    /* Reset khusus untuk konten TinyMCE */
-                    .tiptap-prose * {
-                        all: revert;
-                    }
-
-                    /* Terapkan kembali styling Tailwind */
-                    .tiptap-prose {
-                        @apply prose-lg;
-                        /* dan lainnya */
-                    }
-                </style>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
                 @auth
                     @if ($aspiration->comments_enabled)
                         <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />
@@ -137,9 +119,6 @@
                         </div>
                     @endif
                 @endauth
-=======
-=======
->>>>>>> Stashed changes
 
 
 
@@ -152,10 +131,6 @@
                         </p>
                     </div>
                 @endif
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             </article>
         </div>
     </main>
@@ -180,7 +155,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center place-items-center">
 
                 @forelse ($relatedAspiration as $ra)
-                    <livewire:aspiration.partial.aspiration-card :aspiration="$ra" :type="$aspiration->type" />
+                    <livewire:aspiration.partial.aspiration-card :aspiration="$ra" :type="$ra->type" />
                 @empty
                     <!-- Empty State Card -->
                     <div class="relative group h-full col-span-full">

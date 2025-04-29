@@ -23,9 +23,9 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 justify-center place-items-center">
                 @forelse ($aspirations as $aspiration)
-                    <livewire:aspiration.partial.aspiration-card :aspiration="$aspiration" />
+                    <livewire:aspiration.partial.aspiration-card :aspiration="$aspiration" :type="$aspiration->type" />
                 @empty
-                    
+
                 @endforelse
             </div>
         </div>

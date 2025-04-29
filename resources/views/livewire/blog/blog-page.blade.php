@@ -104,14 +104,7 @@
 
                 <!-- Article Content with improved typography -->
                 <div
-                    class="prose max-w-none dark:prose-invert prose-lg
-                           prose-p:text-gray-700 dark:prose-p:text-gray-300
-                           prose-headings:text-gray-900 dark:prose-headings:text-white
-                           prose-a:text-blue-600 dark:prose-a:text-blue-400
-                           prose-img:rounded-xl prose-img:shadow-lg
-                           prose-blockquote:border-l-4 prose-blockquote:border-blue-500
-                           prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800
-                           prose-pre:bg-gray-900 dark:prose-pre:bg-gray-800 text-gray-900 dark:text-white">
+                    class="tiptap-prose text-gray-900 dark:text-white">
                     {!! $aspiration->body !!}
                 </div>
                 @auth
@@ -146,7 +139,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center place-items-center">
-              
+
                     @forelse ($relatedAspiration as $ra)
                         <livewire:news.news-card :blog="$ra" />
                     @empty

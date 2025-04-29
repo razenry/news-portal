@@ -11,6 +11,7 @@ class AspirationCard extends Component
     public $category;
     public $slug;
     public $description;
+    public $type;
 
     public function render()
     {

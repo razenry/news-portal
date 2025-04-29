@@ -17,7 +17,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse ($aspirations as $aspiration)
-                <livewire:aspiration.partial.aspiration-card :aspiration="$aspiration" />
+                <livewire:aspiration.partial.aspiration-card :aspiration="$aspiration" :type="$aspiration->type" />
             @empty
                 <!-- Empty State -->
                 <div class="col-span-full">

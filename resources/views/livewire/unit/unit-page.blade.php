@@ -50,7 +50,7 @@
         class="py-12 lg:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="px-4 mx-auto max-w-screen-xl">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Artikel serupa dari
+                <h2 class="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">Artikel terkait
                     {{ $unit->name }}</h2>
                 <a href="#"
                     class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 inline-flex items-center">
@@ -65,7 +65,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center place-items-center">
 
                 @forelse ($blogs as $ra)
-                    <livewire:aspiration.partial.aspiration-card :aspiration="$ra" :type="$unit->name" />
+                    <livewire:aspiration.partial.aspiration-card :aspiration="$ra" :type="$ra->type" />
                 @empty
                     <!-- Empty State Card -->
                     <div class="relative group h-full col-span-full">
