@@ -3,7 +3,7 @@
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="{{ route('home') }}" class="flex items-center">
                 <img src="{{ asset('logo.png') }}" class="mr-3 h-12 " alt="Flowbite Logo" />
-                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">NewsPortal</span>
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">News Portal</span>
             </a>
             <div class="flex items-center lg:order-2">
 
