@@ -5,11 +5,13 @@ namespace App\Providers;
 use App\Models\Aspiration;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Ppdb;
 use App\Models\Slide;
 use App\Models\Unit;
 use App\Observers\AspirationObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\PostObserver;
+use App\Observers\PpdbObserver;
 use App\Observers\SlideObserver;
 use App\Observers\UnitObserver;
 use Illuminate\Support\ServiceProvider;
@@ -33,5 +35,6 @@ class AppServiceProvider extends ServiceProvider
         Category::observe(CategoryObserver::class);
         Slide::observe(SlideObserver::class);
         Unit::observe(UnitObserver::class);
+        Ppdb::observe(PpdbObserver::class);
     }
 }

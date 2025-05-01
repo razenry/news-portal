@@ -264,6 +264,12 @@ class AspirationResource extends Resource
                     ->searchable()
                     ->toggleable(),
 
+                TextColumn::make('unit.name')
+                    ->label('Unit')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(),
+
                 TextColumn::make('type')
                     ->label('Tipe')
                     ->sortable()
@@ -300,15 +306,15 @@ class AspirationResource extends Resource
                         ->color('danger')
                         ->icon('heroicon-o-trash')
                         ->label('Hapus'),
+                    RestoreAction::make()
+                        ->color('success')
+                        ->icon('heroicon-o-arrow-path')
+                        ->label('Pulihkan'),
+                    ForceDeleteAction::make()
+                        ->color('danger')
+                        ->icon('heroicon-o-trash')
+                        ->label('Hapus Permanen'),
                 ]),
-                RestoreAction::make()
-                    ->color('success')
-                    ->icon('heroicon-o-arrow-path')
-                    ->label('Pulihkan'),
-                ForceDeleteAction::make()
-                    ->color('danger')
-                    ->icon('heroicon-o-trash')
-                    ->label('Hapus Permanen'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

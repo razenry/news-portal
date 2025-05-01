@@ -3,11 +3,11 @@
     <header
         class="w-full bg-white/80 dark:bg-gray-800/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-3">
+            <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
                 <!-- Logo Container with Neumorphism Effect -->
                 <div class="p-2 bg-white dark:bg-gray-800 rounded-2xl ">
-                    @if ($unit->logo)
-                        <img src="{{ asset('storage/' . $unit->logo) }}" alt="{{ $unit->name }} Logo"
+                    @if ($ppdb->image)
+                        <img src="{{ asset('storage/' . $ppdb->image) }}" alt="{{ $ppdb->name }} logo"
                             class="w-20 h-20 md:w-24 md:h-24 object-contain transition-all duration-500 hover:scale-110">
                     @else
                         <div
@@ -21,10 +21,10 @@
                     @endif
                 </div>
 
-                <!-- Unit Name with Animated Underline -->
+                <!-- ppdb Name with Animated Underline -->
                 <div class="text-center md:text-left">
                     <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-                       {{ $unit->name }}
+                       PPDB {{ $ppdb->name }}
                     </h1>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow overflow-hidden border border-gray-200/50 dark:border-gray-700/50">
                 <div class="p-6 sm:p-8 md:p-10 lg:p-12">
                     <div class="tiptap-prose text-gray-900 dark:text-white">
-                        {!! $unit->description !!}
+                        {!! $ppdb->content   !!}
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         <div class="px-4 mx-auto max-w-screen-xl">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">Artikel terkait
-                    {{ $unit->name }}</h2>
+                    {{ $ppdb->name }}</h2>
                 <a href="#"
                     class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 inline-flex items-center">
                     Lihat semua

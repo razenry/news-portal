@@ -130,26 +130,20 @@
                             class="z-50 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
                                 aria-labelledby="dropdownLargeButton">
+                                @forelse ($ppdbs as $ppdb)
                                 <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PONPES
-                                        ALAMANAH</a>
+                                    <a href="{{ route('ppdb.show', $ppdb->slug) }}"
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $ppdb->name }}</a>
                                 </li>
+                            @empty
+
                                 <li>
+
                                     <a href="#"
                                         class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">TK
-                                        ALAMANAH</a>
+                                        Belum ada infomasi PPDB</a>
                                 </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">SDI
-                                        ALAMANAH</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">SMK
-                                        ALAMANAH</a>
-                                </li>
+                            @endforelse
                             </ul>
 
                         </div>
@@ -180,7 +174,7 @@
 
                                         <a href="#"
                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">TK
-                                            ALAMANAH</a>
+                                            Belum ada unit</a>
                                     </li>
                                 @endforelse
                             </ul>
