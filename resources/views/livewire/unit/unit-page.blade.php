@@ -32,8 +32,8 @@
     </header>
 
     <!-- Content Section with Perfect Containment -->
-    <main class="w-full py-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <main class="w-full my-12">
+        <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Glassmorphism Content Card -->
             <div
                 class="bg-white/80 dark:bg-gray-800/90 backdrop-blur-md rounded-3xl shadow overflow-hidden border border-gray-200/50 dark:border-gray-700/50">

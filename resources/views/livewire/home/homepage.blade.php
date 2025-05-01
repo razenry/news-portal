@@ -25,7 +25,6 @@
                 @forelse ($aspirations as $aspiration)
                     <livewire:aspiration.partial.aspiration-card :aspiration="$aspiration" :type="$aspiration->type" />
                 @empty
-
                 @endforelse
             </div>
         </div>
@@ -104,6 +103,8 @@
         </div>
 
     </section>
+
+    <livewire:about.about-section />
 
     <style>
         .title-clamp {
