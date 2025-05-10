@@ -9,6 +9,13 @@ use Livewire\Component;
 class Navbar extends Component
 {
     public $title = 'NewsPortal';
+    public $keyword;
+    public $isSearching = false;
+
+    public function search()
+    {
+        return redirect()->route('search', ['query' => $this->keyword]);
+    }
 
     public function render()
     {

@@ -106,7 +106,6 @@
                 <div class="tiptap-prose text-gray-900 dark:text-white">
                     {!! $aspiration->body !!}
                 </div>
-                @auth
                     @if ($aspiration->comments_enabled)
                         <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />
                     @else
@@ -116,7 +115,6 @@
                             </p>
                         </div>
                     @endif
-                @endauth
             </article>
         </div>
     </main>

@@ -73,12 +73,13 @@
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
                                 </li>
                                 <li>
-                                    <form method="POST" action="{{ route('user.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                    <form method="POST" action="{{ route('user.logout') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                         @csrf
                                         @method('POST')
                                         <button type="submit" class="">Logout</button>
                                     </form>
-                                    
+
                                 </li>
                             </ul>
                         </div>
@@ -131,19 +132,19 @@
                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-400"
                                 aria-labelledby="dropdownLargeButton">
                                 @forelse ($ppdbs as $ppdb)
-                                <li>
-                                    <a href="{{ route('ppdb.show', $ppdb->slug) }}"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $ppdb->name }}</a>
-                                </li>
-                            @empty
+                                    <li>
+                                        <a href="{{ route('ppdb.show', $ppdb->slug) }}"
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $ppdb->name }}</a>
+                                    </li>
+                                @empty
 
-                                <li>
+                                    <li>
 
-                                    <a href="#"
-                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">TK
-                                        Belum ada infomasi PPDB</a>
-                                </li>
-                            @endforelse
+                                        <a href="#"
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">TK
+                                            Belum ada infomasi PPDB</a>
+                                    </li>
+                                @endforelse
                             </ul>
 
                         </div>
@@ -193,58 +194,38 @@
                     <li class="flex md:hidden">
                         <!-- Search -->
 
-                        <form class="max-w-lg mx-auto">
+                        <form wire:submit.prevent="search" class="max-w-lg mx-auto w-full">
                             <div class="flex">
-                                <label for="search-dropdown"
-                                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your
-                                    Email</label>
-                                <button id="dropdown-button" data-dropdown-toggle="dropdown"
-                                    class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                                    type="button">All categories <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2" d="m1 1 4 4 4-4" />
-                                    </svg></button>
-                                <div id="dropdown"
-                                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
-                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                        aria-labelledby="dropdown-button">
-                                        <li>
-                                            <button type="button"
-                                                class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                                        </li>
-                                        <li>
-                                            <button type="button"
-                                                class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                                        </li>
-                                        <li>
-                                            <button type="button"
-                                                class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                                        </li>
-                                        <li>
-                                            <button type="button"
-                                                class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                                        </li>
-                                    </ul>
-                                </div>
                                 <div class="relative w-full">
-                                    <input type="search" id="search-dropdown"
-                                        class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                                        placeholder="" required />
+                                    <input wire:model.live.lazy="keyword" type="search" id="search-dropdown"
+                                        class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                        placeholder="Cari..." required />
                                     <button type="submit"
-                                        class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 20 20">
+                                        class="absolute top-0 end-0 p-3 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-300 ease-in-out"
+                                        wire:loading.class="opacity-75" wire:target="search">
+                                        <!-- Default search icon -->
+                                        <svg class="w-4 h-4" wire:loading.remove aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                             <path stroke="currentColor" stroke-linecap="round"
                                                 stroke-linejoin="round" stroke-width="2"
                                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                         </svg>
+
+                                        <!-- Loading spinner -->
+                                        <svg wire:loading class="animate-spin w-4 h-4"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                            </path>
+                                        </svg>
+
                                         <span class="sr-only">Search</span>
                                     </button>
                                 </div>
                             </div>
                         </form>
-
                     </li>
                 </ul>
             </div>
@@ -276,56 +257,72 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 md:p-5">
-                    <form class="max-w-lg mx-auto">
+                    <form wire:submit.prevent="search" class="max-w-lg mx-auto">
                         <div class="flex">
-                            <label for="search-dropdown"
-                                class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your
-                                Email</label>
-                            <button id="dropdown-button" data-dropdown-toggle="search"
-                                class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-                                type="button">All categories <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg></button>
-                            <div id="search"
-                                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdown-button">
-                                    <li>
-                                        <button type="button"
-                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                                    </li>
-                                    <li>
-                                        <button type="button"
-                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                                    </li>
-                                </ul>
-                            </div>
                             <div class="relative w-full">
-                                <input type="search" id="search-dropdown"
-                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                                <input wire:model.live.lazy="keyword" type="search" id="search-dropdown"
+                                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                                     placeholder="Cari..." required />
                                 <button type="submit"
-                                    class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                        fill="none" viewBox="0 0 20 20">
+                                    class="absolute top-0 end-0 p-3 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-300 ease-in-out"
+                                    wire:loading.class="opacity-75" wire:target="search">
+                                    <!-- Default search icon -->
+                                    <svg class="w-4 h-4" wire:loading.remove aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                     </svg>
+
+                                    <!-- Loading spinner -->
+                                    <svg wire:loading class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10"
+                                            stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                        </path>
+                                    </svg>
+
                                     <span class="sr-only">Search</span>
                                 </button>
                             </div>
                         </div>
                     </form>
+
+                    @push('styles')
+                        <style>
+                            .animate-spin {
+                                animation: spin 1s linear infinite;
+                            }
+
+                            @keyframes spin {
+                                from {
+                                    transform: rotate(0deg);
+                                }
+
+                                to {
+                                    transform: rotate(360deg);
+                                }
+                            }
+
+                            /* Pulse animation for when hovering */
+                            .hover\:animate-pulse:hover {
+                                animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+                            }
+
+                            @keyframes pulse {
+
+                                0%,
+                                100% {
+                                    opacity: 1;
+                                }
+
+                                50% {
+                                    opacity: 0.5;
+                                }
+                            }
+                        </style>
+                    @endpush
                 </div>
             </div>
         </div>

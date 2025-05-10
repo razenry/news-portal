@@ -4,12 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
-use Filament\Forms;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -24,6 +25,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\RestoreAction;
 use Filament\Tables\Actions\ForceDeleteAction;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
@@ -35,7 +37,7 @@ class UserResource extends Resource
     protected static ?string $navigationGroup = 'Manajemen Pengguna';
 
     protected static ?string $label = 'Pengguna';
-    
+
     protected static ?string $slug = 'pengguna';
 
     public static function form(Form $form): Form
@@ -65,10 +67,10 @@ class UserResource extends Resource
                         TextInput::make('password')
                             ->label('Kata Sandi')
                             ->password()
-                            ->default(fn ($record) => $record ? null : '12345')
-                            ->required(fn ($record) => is_null($record))
-                            ->dehydrated(fn ($state) => !empty($state))
-                            ->helperText(fn ($record) => $record ? 'Biarkan kosong untuk mempertahankan kata sandi saat ini' : 'Kata sandi default adalah 12345'),
+                            ->default(fn($record) => $record ? null : '12345')
+                            ->required(fn($record) => is_null($record))
+                            ->dehydrated(fn($state) => !empty($state))
+                            ->helperText(fn($record) => $record ? 'Biarkan kosong untuk mempertahankan kata sandi saat ini' : 'Kata sandi default adalah 12345'),
                     ])
                     ->columns(1)
                     ->collapsible(),
@@ -102,12 +104,33 @@ class UserResource extends Resource
                 SelectFilter::make('roles')
                     ->label('Filter berdasarkan Peran')
                     ->relationship('roles', 'name')
-                    ->options(fn () => Role::pluck('name', 'id')->toArray())
+                    ->options(fn() => Role::pluck('name', 'id')->toArray())
                     ->multiple()
                     ->searchable(),
             ])
             ->actions([
                 ActionGroup::make([
+                    Action::make('resetToDefaultPassword')
+                        ->label('Reset Password')
+                        ->color('warning')
+                        ->icon('heroicon-o-arrow-path')
+                        ->action(function ($record) {
+                            $record->update([
+                                'password' => Hash::make('12345678') // Password default
+                            ]);
+
+                            Notification::make()
+                                ->title('Password berhasil direset ke default')
+                                ->body('Password untuk ' . $record->email . ' telah diubah menjadi default')
+                                ->success()
+                                ->send();
+                        })
+                        ->requiresConfirmation()
+                        ->modalHeading('Reset Password ke Default')
+                        ->modalDescription(function ($record) {
+                            return 'Apakah Anda yakin mereset password ' . $record->email . ' menjadi default?';
+                        })
+                        ->modalButton('Ya, Reset Sekarang'),
                     ViewAction::make()
                         ->label('Lihat')
                         ->color('info')

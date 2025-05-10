@@ -19,9 +19,9 @@ return new class extends Migration
             $table->text('body');
             $table->text('description');
             $table->json('tags');
-            $table->boolean('published')->default(1);
+            $table->boolean('published')->default(0);
             $table->enum('type', ['Blog', 'Aspirasi'])->default('Blog');
-            $table->boolean('comments_enabled')->default(true);
+            $table->boolean('comments_enabled')->default(value: true);
             $table->timestamps();
             $table->softDeletes();
 

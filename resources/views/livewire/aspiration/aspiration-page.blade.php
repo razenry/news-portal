@@ -108,17 +108,15 @@
                     {!! $aspiration->body !!}
                 </div>
 
-                @auth
-                    @if ($aspiration->comments_enabled)
-                        <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />
-                    @else
-                        <div class="mt-6">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                Komentar dinonaktifkan untuk artikel ini.
-                            </p>
-                        </div>
-                    @endif
-                @endauth
+                @if ($aspiration->comments_enabled)
+                    <livewire:aspiration.partial.aspiration-comments :slug="$aspiration->slug" />
+                @else
+                    <div class="mt-6">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Komentar dinonaktifkan untuk artikel ini.
+                        </p>
+                    </div>
+                @endif
 
             </article>
         </div>

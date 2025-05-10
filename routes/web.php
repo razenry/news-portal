@@ -7,6 +7,7 @@ use App\Livewire\Blog\AllBlogPage;
 use App\Livewire\Blog\BlogPage;
 use App\Livewire\Home\Homepage;
 use App\Livewire\Ppdb\PpdbPage;
+use App\Livewire\Search\SearchPage;
 use App\Livewire\Unit\UnitPage;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,10 @@ Route::get('/unit/{slug}', UnitPage::class)->name('unit.show');
 
 // Ppdb
 Route::get('/ppdb/{slug}', PpdbPage::class)->name('ppdb.show');
+
+// Search
+
+Route::get('/search/{query}', SearchPage::class)->name('search');
 
 // Auth
 Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
