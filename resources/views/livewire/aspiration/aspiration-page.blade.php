@@ -127,8 +127,8 @@
         class="py-12 lg:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="px-4 mx-auto max-w-screen-xl">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Artikel serupa
-                    {{ $aspiration->type }}</h2>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{{ $aspiration->type }} serupa
+                </h2>
                 <a href="#"
                     class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 inline-flex items-center">
                     Lihat semua
@@ -144,27 +144,30 @@
                 @forelse ($relatedAspiration as $ra)
                     <livewire:aspiration.partial.aspiration-card :aspiration="$ra" :type="$ra->type" />
                 @empty
-                    <!-- Empty State Card -->
-                    <div class="relative group h-full col-span-full">
+                    <div class="col-span-full">
                         <div
-                            class="h-full flex flex-col bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden shadow-lg p-6 items-center justify-center text-center">
+                            class="flex flex-col items-center justify-center text-center bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
                             <svg class="w-16 h-16 text-gray-400 dark:text-gray-500 mb-4" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                     d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                                 </path>
                             </svg>
-                            <h3 class="text-xl font-bold text-gray-700 dark:text-gray-300 mb-2">Belum ada aspirasi
-                            </h3>
-                            <p class="text-gray-500 dark:text-gray-400 mb-4">Jadilah yang pertama mengajukan
-                                aspirasi!</p>
+                            <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">Berita belum
+                                tersedia
+                            </h2>
+                            <p class="text-gray-600 dark:text-gray-400 mb-6">Kami belum memiliki berita terbaru
+                                untuk
+                                ditampilkan saat
+                                ini.</p>
                             <a href="#"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200">
-                                Buat Aspirasi
+                                class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 inline-flex items-center">
+                                Segera hadir
                                 <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3">
+                                    </path>
                                 </svg>
                             </a>
                         </div>

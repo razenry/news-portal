@@ -16,7 +16,8 @@ class UnitPage extends Component
     {
         $this->unit = Unit::where('slug', $slug)->firstOrFail();
         $this->title = $this->unit->name;
-        $this->blogs = $this->unit->blogs()->latest()->take(16)->get();
+        $this->blogs = $this->unit->blogs()
+        ->where('published', '!=', 0)->latest()->take(16)->get();
     }
 
     public function render()

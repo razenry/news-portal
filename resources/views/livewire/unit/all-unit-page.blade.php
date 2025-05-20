@@ -1,10 +1,10 @@
-<main class="container mx-auto px-4 py-4">
+<main class="container mx-auto px-4 py-8">
     <!-- Berita Terbaru -->
-    <section class="mt-8">
+    <section class="mt-4">
         <div class="flex items-center justify-between gap-4 mb-3">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Kata Mereka terkini</h2>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Unit {{ $title }}</h2>
 
-            <a href="{{ route('home') }}" title=""
+            <a href="/" title=""
                 class="flex items-center text-base font-medium text-blue-700 hover:underline dark:text-blue-500">
                 Kembali
                 <svg class="ms-1 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -16,8 +16,13 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            @forelse ($aspirations as $aspiration)
-                <livewire:aspiration.partial.aspiration-card :aspiration="$aspiration" :type="$aspiration->type" />
+            @forelse ($blogs as $blog)
+                @if ($blog->type->value === 'Blog')
+                    <livewire:news.news-card :blog="$blog" />
+                @endif
+                @if ($blog->type->value === 'Aspirasi')
+                    <livewire:aspiration.partial.aspiration-card :aspiration="$blog" :type="$blog->type" />
+                @endif
             @empty
                 <!-- Empty State -->
                 <div class="col-span-full">
@@ -29,9 +34,11 @@
                                 d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                             </path>
                         </svg>
-                        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">Berita belum tersedia
+                        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">Berita belum
+                            tersedia
                         </h2>
-                        <p class="text-gray-600 dark:text-gray-400 mb-6">Kami belum memiliki berita terbaru untuk
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Kami belum memiliki berita terbaru
+                            untuk
                             ditampilkan saat
                             ini.</p>
                         <a href="#"
@@ -48,6 +55,5 @@
                 </div>
             @endforelse
         </div>
-
     </section>
 </main>

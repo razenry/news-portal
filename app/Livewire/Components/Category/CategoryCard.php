@@ -13,7 +13,7 @@ class CategoryCard extends Component
     public function render()
     {
         return view('livewire.components.category.category-card', [
-            'categories' => Category::withoutTrashed()->paginate($this->paginate),
+            'categories' => Category::withoutTrashed()->latest()->paginate($this->paginate),
         ]);
     }
 }

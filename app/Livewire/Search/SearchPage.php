@@ -34,6 +34,7 @@ class SearchPage extends Component
             ->orWhereHas('allComments', function ($query) {
                 $query->where('body', 'like', '%' . $this->keyword . '%');
             })
+            ->where('published', '!=', 0)
             ->with(['author', 'category', 'unit']) // Eager load relationships
             ->get();
     }
@@ -43,7 +44,7 @@ class SearchPage extends Component
         return view('livewire.search.search-page', [
             'aspirations' => $this->aspirations
         ])->layout('livewire.layout.app', [
-            'title' => 'Pencarian : '.$this->keyword,
-        ]);
+                    'title' => 'Pencarian : ' . $this->keyword,
+                ]);
     }
 }

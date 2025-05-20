@@ -1,7 +1,7 @@
 <main class="container mx-auto px-4 py-8">
 
     <div class="flex items-center justify-between gap-4 mb-3">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Hasil pencarian {{ $keyword }}</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Kategori {{ $category->name }}</h2>
 
         <a href="/  " title=""
             class="flex items-center text-base font-medium text-blue-700 hover:underline dark:text-blue-500">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        @forelse ($aspirations as $blog)
+        @forelse ($blogs as $blog)
             @if ($blog->type->value === 'Blog')
                 <livewire:news.news-card :blog="$blog" />
             @endif

@@ -18,4 +18,9 @@ class Category extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function blogs()
+    {
+        return $this->hasMany(Aspiration::class);
+    }
 }
