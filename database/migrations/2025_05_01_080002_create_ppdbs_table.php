@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('name');
             $table->string('image')->nullable();
-            $table->string('content')->nullable();
+            $table->text('content')->nullable();
             $table->foreignId('unit_id')->constrained('units')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
