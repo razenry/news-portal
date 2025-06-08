@@ -4,6 +4,7 @@ namespace App\Livewire\Layout;
 
 use App\Models\Ppdb;
 use App\Models\Unit;
+use App\Models\Setting;
 use Livewire\Component;
 
 class Navbar extends Component
@@ -22,6 +23,7 @@ class Navbar extends Component
         return view('livewire.layout.navbar', [
             'units' => Unit::withoutTrashed()->get(),
             'ppdbs' => Ppdb::withoutTrashed()->get(),
+            'settings' => Setting::withoutTrashed()->first(),
         ]);
     }
 }

@@ -11,6 +11,7 @@ class CategoryPage extends Component
     public $title;
     public $slug;
     public $blogs;
+    public $aspirations;
 
     public function mount(string $slug)
     {
@@ -27,6 +28,7 @@ class CategoryPage extends Component
             ->where('published', '!=', 0)
             ->latest()
             ->get();
+        $this->aspirations = $this->blogs;
     }
 
     public function render()

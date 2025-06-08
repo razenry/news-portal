@@ -139,11 +139,12 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center place-items-center">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center">
 
                 @forelse ($relatedAspiration as $ra)
                     <livewire:aspiration.partial.aspiration-card :aspiration="$ra" :type="$ra->type" />
                 @empty
+                    <!-- Empty State -->
                     <div class="col-span-full">
                         <div
                             class="flex flex-col items-center justify-center text-center bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
@@ -153,11 +154,9 @@
                                     d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                                 </path>
                             </svg>
-                            <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">Berita belum
-                                tersedia
+                            <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">Berita belum tersedia
                             </h2>
-                            <p class="text-gray-600 dark:text-gray-400 mb-6">Kami belum memiliki berita terbaru
-                                untuk
+                            <p class="text-gray-600 dark:text-gray-400 mb-6">Kami belum memiliki berita terbaru untuk
                                 ditampilkan saat
                                 ini.</p>
                             <a href="#"

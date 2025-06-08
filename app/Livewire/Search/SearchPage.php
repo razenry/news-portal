@@ -9,6 +9,7 @@ class SearchPage extends Component
 {
     public $keyword;
     public $aspirations;
+    public $blogs;
 
     public function mount(string $query)
     {
@@ -37,6 +38,7 @@ class SearchPage extends Component
             ->where('published', '!=', 0)
             ->with(['author', 'category', 'unit']) // Eager load relationships
             ->get();
+            $this->blogs = $this->aspirations;
     }
 
     public function render()

@@ -2,9 +2,9 @@
     <div class="mx-auto max-w-screen-xl">
         <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
-                <a  href="" class="flex items-center">
-                    <img src="{{ asset('logo.png') }}" class="mr-3 h-8" alt="FlowBite Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">NewsPortal</span>
+                <a href="" class="flex items-center">
+                    <img src="{{ asset('storage/' . $settings->icon) }}" class="mr-3 h-8" alt="FlowBite Logo" />
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">{{ $settings->name }}</span>
                 </a>
             </div>
             <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3" id="kontak">
@@ -13,7 +13,8 @@
                     <ul class="text-gray-600 dark:text-gray-400">
                         @forelse ($socmeds as $socmed)
                             <li class="mb-4">
-                                <a target="_blank" href="{{ $socmed->link }}" class="hover:underline">{{ $socmed->name }}</a>
+                                <a target="_blank" href="{{ $socmed->link }}"
+                                    class="hover:underline">{{ $socmed->name }}</a>
                             </li>
                         @empty
 
@@ -28,7 +29,8 @@
                     <ul class="text-gray-600 dark:text-gray-400">
                         @forelse ($contacts as $contact)
                             <li class="mb-4">
-                                <a target="_blank" href="{{ $contact->link }}" class="hover:underline">{{ $contact->name }}</a>
+                                <a target="_blank" href="{{ $contact->link }}"
+                                    class="hover:underline">{{ $contact->name }}</a>
                             </li>
                         @empty
 

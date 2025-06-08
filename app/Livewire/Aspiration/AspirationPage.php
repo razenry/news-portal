@@ -29,6 +29,9 @@ class AspirationPage extends Component
             ->withoutTrashed()
             ->where('published', '!=', 0)
             ->firstOrFail();
+
+        // Increment views count    
+        $this->aspiration->increment('views');        
     }
 
     public function render()

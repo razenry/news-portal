@@ -17,10 +17,9 @@ class Homepage extends Component
             'slides' => Slide::where('published', '!=', 0)->withoutTrashed()->orderBy('created_at', 'DESC')->paginate(5),
             'aspirations' => Aspiration::query()
                 ->where('published', '!=', 0)
-                ->where('type', 'Aspirasi')
                 ->withoutTrashed()
-                ->orderBy('created_at', 'DESC')
-                ->paginate(2),
+                ->orderBy('views', 'DESC')
+                ->get(),
             'blogs' => Aspiration::query()
                 ->where('published', '!=', 0)
                 ->where('type', 'Blog')
@@ -28,7 +27,7 @@ class Homepage extends Component
                 ->orderBy('created_at', 'DESC')
                 ->paginate(2),
         ])->layout('livewire.layout.app', [
-            'title' => 'Beranda'
-        ]);
+                    'title' => 'Beranda'
+                ]);
     }
 }

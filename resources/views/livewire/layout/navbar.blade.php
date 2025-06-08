@@ -2,8 +2,9 @@
     <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 fixed w-full z-90 top-0 start-0">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('logo.png') }}" class="mr-3 h-12 " alt="Flowbite Logo" />
-                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">News Portal</span>
+                <img src="{{ asset('storage/' . $settings->icon) }}" class="mr-3 h-12 " alt="Flowbite Logo" />
+                <span
+                    class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ $settings->name }}</span>
             </a>
             <div class="flex items-center lg:order-2">
 

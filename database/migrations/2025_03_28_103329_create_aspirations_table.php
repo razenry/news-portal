@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('tags');
             $table->boolean('published')->default(0);
             $table->enum('type', ['Blog', 'Aspirasi'])->default('Blog');
+            $table->integer('views')->nullable()->default(0);
             $table->boolean('comments_enabled')->default(value: true);
             $table->timestamps();
             $table->softDeletes();

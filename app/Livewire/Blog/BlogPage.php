@@ -29,6 +29,7 @@ class BlogPage extends Component
             ->where('published', '!=', 0)
             ->where('type', '!=', 'Aspirasi')
             ->firstOrFail();
+        $this->aspiration->increment('views');
     }
 
     public function render()
@@ -38,7 +39,7 @@ class BlogPage extends Component
         return view('livewire.blog.blog-page', [
             'relatedAspiration' => $this->getRelatedBlogProperty(),
         ])->layout('livewire.layout.app', [
-            'title' => "Blog : " . $title,
-        ]);
+                    'title' => "Blog : " . $title,
+                ]);
     }
 }

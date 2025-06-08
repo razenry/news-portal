@@ -2,7 +2,7 @@
     <!-- Berita Terbaru -->
     <section class="mt-8">
         <div class="flex items-center justify-between gap-4 mb-3">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Kata Mereka terkini</h2>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Semua topik terkini</h2>
 
             <a href="{{ route('home') }}" title=""
                 class="flex items-center text-base font-medium text-blue-700 hover:underline dark:text-blue-500">

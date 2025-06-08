@@ -28,6 +28,14 @@
         </script>
 
         <style>
+
+            body {
+                background-image: url(`{{ asset('image/bubble.svg') }}`);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
             .tiptap-prose {
                 width: 100%;
                 max-width: 100%;
@@ -448,7 +456,7 @@
     @endif
 </head>
 
-<body class="bg-white dark:bg-gray-900 flex flex-col min-h-screen">
+<body class="bg-white dark:bg-gray-900 flex flex-col min-h-screen background">
 
 
     <livewire:layout.navbar />

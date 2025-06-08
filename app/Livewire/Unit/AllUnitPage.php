@@ -12,6 +12,7 @@ class AllUnitPage extends Component
     public $unit;
     public $slug;
     public $blogs;
+    public $aspirations;
 
     public function mount($slug)
     {
@@ -23,13 +24,14 @@ class AllUnitPage extends Component
         $this->title = $this->unit->name;
         $this->blogs = $this->unit->blogs()
             ->where('published', '!=', 0)->withoutTrashed()->latest()->get();
+        $this->aspirations = $this->blogs;
     }
 
     public function render()
     {
 
         return view('livewire.unit.all-unit-page')->layout('livewire.layout.app', [
-            'title' => 'Semua dari Unit : ',
+            'title' => "Semua dari Unit : $this->title",
         ]);
     }
 }
