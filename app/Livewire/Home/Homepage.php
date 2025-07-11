@@ -14,7 +14,7 @@ class Homepage extends Component
     {
         return view('livewire.home.homepage', [
             'categories' => Category::withoutTrashed()->paginate(8),
-            'slides' => Slide::where('published', '!=', 0)->withoutTrashed()->orderBy('created_at', 'DESC')->paginate(5),
+            'slides' => Aspiration::withoutTrashed()->where('published', '!=', 0)->latest()->limit(8)->get(),
             'aspirations' => Aspiration::query()
                 ->where('published', '!=', 0)
                 ->withoutTrashed()

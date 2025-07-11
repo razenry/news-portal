@@ -2,9 +2,10 @@
     <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 fixed w-full z-90 top-0 start-0">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('storage/' . $settings->icon) }}" class="mr-3 h-12 " alt="Flowbite Logo" />
+                <img src="{{ asset($settings?->icon ? 'storage/' . $settings?->icon : 'logo.png') }}" class="mr-3 h-12 "
+                    alt="Flowbite Logo" />
                 <span
-                    class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ $settings->name }}</span>
+                    class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">{{ $settings->name ?? 'News Portal' }}</span>
             </a>
             <div class="flex items-center lg:order-2">
 
@@ -37,8 +38,11 @@
 
                 {{-- Guest --}}
                 @guest
+                    <!-- Desktop Login Button -->
                     <a href="/admin"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 mx-3 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Login</a>
+                        class="hidden md:inline-block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 mx-3 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        Login
+                    </a>
                 @endguest
 
                 {{-- User --}}
@@ -138,16 +142,13 @@
                                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $ppdb->name }}</a>
                                     </li>
                                 @empty
-
                                     <li>
-
                                         <a href="#"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">TK
+                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                             Belum ada infomasi PPDB</a>
                                     </li>
                                 @endforelse
                             </ul>
-
                         </div>
                     </li>
                     {{-- Unit --}}
@@ -192,9 +193,14 @@
                         <a href="#kontak"
                             class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Kontak</a>
                     </li>
+                    <li class=" md:hidden mb-5">
+                        <a href="/admin"
+                            class="block pr-4 pl-3 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                            Login
+                        </a>
+                    </li>
                     <li class="flex md:hidden">
                         <!-- Search -->
-
                         <form wire:submit.prevent="search" class="max-w-lg mx-auto w-full">
                             <div class="flex">
                                 <div class="relative w-full">

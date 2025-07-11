@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Unit;
+use App\Models\Setting;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UnitPolicy
+class SettingPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class UnitPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_unit');
+        return $user->can('view_any_setting');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Unit $unit): bool
+    public function view(User $user, Setting $setting): bool
     {
-        return $user->can('view_unit');
+        return $user->can('view_setting');
     }
 
     /**
@@ -31,23 +31,23 @@ class UnitPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_unit');
+        return $user->can('create_setting');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Unit $unit): bool
+    public function update(User $user, Setting $setting): bool
     {
-        return $user->can('update_unit');
+        return $user->can('update_setting');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Unit $unit): bool
+    public function delete(User $user, Setting $setting): bool
     {
-        return $user->can('delete_unit');
+        return $user->can('delete_setting');
     }
 
     /**
@@ -55,15 +55,15 @@ class UnitPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_unit');
+        return $user->can('delete_any_setting');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Unit $unit): bool
+    public function forceDelete(User $user, Setting $setting): bool
     {
-        return $user->can('force_delete_unit');
+        return $user->can('force_delete_setting');
     }
 
     /**
@@ -71,15 +71,15 @@ class UnitPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_unit');
+        return $user->can('force_delete_any_setting');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Unit $unit): bool
+    public function restore(User $user, Setting $setting): bool
     {
-        return $user->can('restore_unit');
+        return $user->can('restore_setting');
     }
 
     /**
@@ -87,15 +87,15 @@ class UnitPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_unit');
+        return $user->can('restore_any_setting');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Unit $unit): bool
+    public function replicate(User $user, Setting $setting): bool
     {
-        return $user->can('replicate_unit');
+        return $user->can('replicate_setting');
     }
 
     /**
@@ -103,6 +103,6 @@ class UnitPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_unit');
+        return $user->can('reorder_setting');
     }
 }
