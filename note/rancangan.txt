@@ -52,3 +52,6 @@ Tiap postingan ada informasi nama editor unit nya, nama admin,  waktu posting (t
 1. Buat Halaman Single Post (Berita, Categori, Aspiration)
 
 FYL5GtfG7gTRI
+
+
+sudo chcon -R -t httpd_sys_rw_content_t /var/www/html/news-portal/storage
