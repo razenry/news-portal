@@ -13,14 +13,25 @@ class PpdbPage extends Component
 
     public $unit;
     public $blogs;
+    public $aspirations;
 
     public function mount(string $slug)
     {
         $this->ppdb = Ppdb::where('slug', $slug)->firstOrFail();
         $this->title = $this->ppdb->name;
         $this->unit = $this->ppdb->unit;
-        $this->blogs = $this->unit->blogs()->latest()
-            ->where('published', '!=', 0)->take(16)->get();
+        $this->blogs = $this->unit->blogs()
+            ->withoutTrashed()
+            ->where('published', '!=', 0)
+            ->where('type', '!=', 'Aspirasi')
+            ->latest()
+            ->get();
+        $this->aspirations = $this->unit->blogs()
+            ->withoutTrashed()
+            ->where('published', '!=', 0)
+            ->where('type', '!=', 'Blog')
+            ->latest()
+            ->get();
     }
 
     public function render()

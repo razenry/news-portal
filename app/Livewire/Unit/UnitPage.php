@@ -18,8 +18,17 @@ class UnitPage extends Component
         $this->unit = Unit::where('slug', $slug)->firstOrFail();
         $this->title = $this->unit->name;
         $this->blogs = $this->unit->blogs()
-            ->where('published', '!=', 0)->latest()->take(16)->get();
-        $this->aspirations = $this->blogs;
+            ->withoutTrashed()
+            ->where('published', '!=', 0)
+            ->where('type', '!=', 'Aspirasi')
+            ->latest()
+            ->get();
+        $this->aspirations = $this->unit->blogs()
+            ->withoutTrashed()
+            ->where('published', '!=', 0)
+            ->where('type', '!=', 'Blog')
+            ->latest()
+            ->get();
     }
 
     public function render()

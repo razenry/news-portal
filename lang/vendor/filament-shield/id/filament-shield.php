@@ -57,6 +57,35 @@ return [
 
     'forbidden' => 'Kamu tidak punya izin akses',
 
+    'validation' => [
+        'required' => 'Kolom :attribute wajib diisi.',
+        'string' => 'Kolom :attribute harus berupa teks.',
+        'max' => [
+            'string' => 'Kolom :attribute tidak boleh lebih dari :max karakter.',
+        ],
+        'min' => [
+            'string' => 'Kolom :attribute minimal harus :min karakter.',
+        ],
+        'email' => 'Kolom :attribute harus berupa alamat email yang valid.',
+        'unique' => 'Kolom :attribute sudah digunakan.',
+        'exists' => 'Kolom :attribute tidak valid.',
+        'confirmed' => 'Konfirmasi :attribute tidak cocok.',
+        'same' => 'Kolom :attribute dan :other harus sama.',
+        'different' => 'Kolom :attribute dan :other harus berbeda.',
+        'numeric' => 'Kolom :attribute harus berupa angka.',
+        'boolean' => 'Kolom :attribute harus bernilai benar atau salah.',
+    ],
+
+    'attributes' => [
+        'name' => 'Nama',
+        'email' => 'Email',
+        'password' => 'Kata Sandi',
+        'password_confirmation' => 'Konfirmasi Kata Sandi',
+        'permissions' => 'Izin',
+        'roles' => 'Peran',
+        'guard_name' => 'Nama Penjaga',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Resource Permissions' Labels

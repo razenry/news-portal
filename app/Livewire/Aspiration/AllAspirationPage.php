@@ -15,6 +15,7 @@ class AllAspirationPage extends Component
         $this->aspirations = Aspiration::withoutTrashed()
             ->where('published', '!=', 0)
             ->where('type', '!=', 'Blog')
+            ->latest()
             ->get();
     }
 

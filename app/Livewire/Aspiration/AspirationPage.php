@@ -25,13 +25,13 @@ class AspirationPage extends Component
     {
         $this->slug = $slug;
         $this->aspiration = Aspiration::where('slug', $slug)
-            ->where('type','!=', 'Blog') 
+            ->where('type','!=', 'Blog')
             ->withoutTrashed()
             ->where('published', '!=', 0)
             ->firstOrFail();
 
-        // Increment views count    
-        $this->aspiration->increment('views');        
+        // Increment views count
+        $this->aspiration->increment('views');
     }
 
     public function render()

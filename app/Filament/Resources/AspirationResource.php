@@ -290,6 +290,13 @@ class AspirationResource extends Resource
                     ->label('Unit')
                     ->searchable()
                     ->options(Unit::pluck('name', 'id')),
+                SelectFilter::make('type')
+                    ->label('Tipe Konten')
+                    ->options([
+                        'Blog' => 'Blog',
+                        'Aspirasi' => 'Aspirasi',
+                    ])
+                    ->native(false)
             ])
             ->actions([
                 ActionGroup::make([

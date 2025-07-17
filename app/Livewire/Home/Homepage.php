@@ -17,15 +17,16 @@ class Homepage extends Component
             'slides' => Aspiration::withoutTrashed()->where('published', '!=', 0)->latest()->limit(8)->get(),
             'aspirations' => Aspiration::query()
                 ->where('published', '!=', 0)
+                ->where('type', 'Aspirasi')
                 ->withoutTrashed()
                 ->orderBy('views', 'DESC')
-                ->get(),
+                ->paginate(8),
             'blogs' => Aspiration::query()
                 ->where('published', '!=', 0)
                 ->where('type', 'Blog')
                 ->withoutTrashed()
                 ->orderBy('created_at', 'DESC')
-                ->paginate(2),
+                ->paginate(8),
         ])->layout('livewire.layout.app', [
                     'title' => 'Beranda'
                 ]);
