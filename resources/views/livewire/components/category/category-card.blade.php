@@ -1,4 +1,4 @@
-<div class="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+<div class="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
     @forelse($categories as $category)
         <a href="{{ route('category.show', $category->slug) }}"
             class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white px-5 py-4 w-full shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">

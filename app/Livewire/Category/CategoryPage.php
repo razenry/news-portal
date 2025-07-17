@@ -26,9 +26,15 @@ class CategoryPage extends Component
         $this->blogs = $this->category->blogs()
             ->withoutTrashed()
             ->where('published', '!=', 0)
+            ->where('type', '!=', 'Aspirasi')
             ->latest()
             ->get();
-        $this->aspirations = $this->blogs;
+        $this->aspirations = $this->category->blogs()
+            ->withoutTrashed()
+            ->where('published', '!=', 0)
+            ->where('type', '!=', 'Blog')
+            ->latest()
+            ->get();
     }
 
     public function render()

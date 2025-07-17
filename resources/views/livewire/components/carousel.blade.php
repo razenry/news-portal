@@ -5,19 +5,22 @@
         <!-- Carousel Slides -->
         <div class="carousel-inner relative w-full h-full">
             @forelse ($slides as $index => $slide)
-                <a href="{{ route('aspiration.show', $slide->slug) }}"
+                @php
+                    $route = $slide->type === "Aspirasi" ? 'aspiration.show' : 'blog.show';
+                @endphp
+                <a href="{{ route($route, $slide->slug) }}"
                     class="carousel-item absolute inset-0 transition-opacity duration-700 ease-in-out {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}"
                     data-slide-index="{{ $index }}">
                     <img src="{{ asset('storage/' . $slide->thumbnail) }}" alt="{{ $slide->title }}"
                         class="w-full h-full max-h-[70vh] md:max-h-[82vh] object-cover object-center">
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white space-y-2">
-                        {{-- <div>
+                        <div>
                             <a href="{{ route('unit.show', $slide->unit->slug) }}"
                                 class="inline-flex items-center px-3 py-1 text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-700 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-300">
                                 {{ $slide->unit->name }}
                             </a>
-                        </div> --}}
+                        </div>
                         <h2 class="text-xl md:text-4xl font-bold leading-tight line-clamp-2">
                             {{ $slide->title }}
                         </h2>
@@ -30,7 +33,8 @@
                 <div class="carousel-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100">
                     <img src="{{ asset('image/banner.jpg') }}" alt="Default Slide"
                         class="w-full h-full max-h-[70vh] md:max-h-[82vh] object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent">
+                    </div>
                     <div class="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white">
                         <h2 class="text-xl md:text-4xl font-bold">Judul Slide</h2>
                         <p class="text-sm md:text-lg text-gray-200 opacity-90 mt-2">Deskripsi singkat untuk slide.</p>
@@ -172,13 +176,17 @@
         carousel.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
             clearInterval(slideInterval);
-        }, {passive: true});
+        }, {
+            passive: true
+        });
 
         carousel.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
             startInterval();
-        }, {passive: true});
+        }, {
+            passive: true
+        });
 
         function handleSwipe() {
             const threshold = 50; // minimum swipe distance

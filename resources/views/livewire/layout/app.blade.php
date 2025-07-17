@@ -28,7 +28,6 @@
         </script>
 
         <style>
-
             body {
                 background-image: url(`{{ asset('image/bubble.svg') }}`);
                 background-size: cover;
@@ -351,7 +350,8 @@
             }
 
             .dark .tiptap-prose p,
-            .dark .tiptap-prose li {
+            .dark .tiptap-prose li,
+            .dark .tiptap-prose strong {
                 color: #d1d5db;
             }
 
