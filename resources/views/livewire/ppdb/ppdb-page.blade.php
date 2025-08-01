@@ -50,7 +50,7 @@
         class="py-12 lg:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="px-4 mx-auto max-w-screen-xl">
             <!-- Berita Terbaru -->
-            <section class="mt-12">
+            <section class="mt-4">
                 <div class="flex items-center justify-between gap-4 mb-3">
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Berita terkini di {{ $title }}</h2>
 
