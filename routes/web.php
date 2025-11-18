@@ -41,3 +41,18 @@ Route::get('/kategori/{slug}', CategoryPage::class)->name('category.show');
 
 // Auth
 Route::post('/logout', [AuthController::class, 'logout'])->name('user.logout');
+
+
+// Forgot Password (request)
+Route::get(
+    '/admin/forgot-password',
+    fn() =>
+    redirect()->route('filament.admin.auth.password.request')
+);
+
+// Reset Password (form)
+Route::get(
+    '/admin/reset-password/{token}',
+    fn($token) =>
+    redirect()->route('filament.admin.auth.password.reset', ['token' => $token])
+)->name('password.reset');
