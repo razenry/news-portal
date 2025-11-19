@@ -24,7 +24,7 @@
                 <!-- ppdb Name with Animated Underline -->
                 <div class="text-center">
                     <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white">
-                       PPDB {{ $ppdb->name }}
+                       SPMB {{ $ppdb->name }}
                     </h1>
                 </div>
             </div>

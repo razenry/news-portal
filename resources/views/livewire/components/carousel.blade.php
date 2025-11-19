@@ -6,7 +6,7 @@
         <div class="carousel-inner relative w-full h-full">
             @forelse ($slides as $index => $slide)
                 @php
-                    $route = $slide->type === "Aspirasi" ? 'aspiration.show' : 'blog.show';
+                    $route = $slide->type === 'Aspirasi' ? 'aspiration.show' : 'blog.show';
                 @endphp
                 <div class="carousel-item absolute inset-0 transition-opacity duration-700 ease-in-out {{ $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0' }}"
                     data-slide-index="{{ $index }}">
@@ -14,7 +14,8 @@
                         <img src="{{ asset('storage/' . $slide->thumbnail) }}" alt="{{ $slide->title }}"
                             class="w-full h-full max-h-[70vh] md:max-h-[82vh] object-cover object-center"
                             loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent">
+                        </div>
                         <div class="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white space-y-2">
                             <div>
                                 <a href="{{ route('unit.show', $slide->unit->slug) }}"
@@ -22,8 +23,11 @@
                                     {{ $slide->unit->name }}
                                 </a>
                             </div>
+
                             <h2 class="text-xl md:text-4xl font-bold leading-tight line-clamp-2">
-                                {{ $slide->title }}
+                                <a href="{{ route($route, $slide->slug) }}">
+                                    {{ $slide->title }}
+                                </a>
                             </h2>
                             <p class="text-sm md:text-lg text-gray-200 opacity-90 mt-1 md:mt-2 line-clamp-2">
                                 {{ $slide->description }}
@@ -32,11 +36,14 @@
                     </a>
                 </div>
             @empty
-                <div class="carousel-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 z-10">
+                <div
+                    class="carousel-item relative aspect-[16/9] overflow-hidden transition-opacity duration-700 ease-in-out opacity-100 z-10">
                     <img src="{{ asset('image/banner.jpg') }}" alt="Default Slide"
-                        class="w-full h-full max-h-[70vh] md:max-h-[82vh] object-cover" loading="eager">
+                        class="absolute inset-0 w-full h-full object-contain" loading="eager">
+
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent">
                     </div>
+
                     <div class="absolute bottom-0 left-0 right-0 p-4 md:p-8 text-white">
                         <h2 class="text-xl md:text-4xl font-bold">Judul Slide</h2>
                         <p class="text-sm md:text-lg text-gray-200 opacity-90 mt-2">Deskripsi singkat untuk slide.</p>
@@ -64,15 +71,16 @@
         </button>
 
         <!-- Indicator Dots -->
-        @if(count($slides) > 1)
-        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-            @foreach ($slides as $index => $slide)
-                <button data-slide-index="{{ $index }}"
-                    class="indicator-dot w-3 h-3 rounded-full transition-all duration-300 {{ $index === 0 ? 'bg-white w-6' : 'bg-white/30' }} hover:bg-white/70 focus:outline-none"
-                    aria-label="Go to slide {{ $index + 1 }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}">
-                </button>
-            @endforeach
-        </div>
+        @if (count($slides) > 1)
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+                @foreach ($slides as $index => $slide)
+                    <button data-slide-index="{{ $index }}"
+                        class="indicator-dot w-3 h-3 rounded-full transition-all duration-300 {{ $index === 0 ? 'bg-white w-6' : 'bg-white/30' }} hover:bg-white/70 focus:outline-none"
+                        aria-label="Go to slide {{ $index + 1 }}"
+                        aria-current="{{ $index === 0 ? 'true' : 'false' }}">
+                    </button>
+                @endforeach
+            </div>
         @endif
     </div>
 </div>
@@ -224,13 +232,17 @@
         carousel.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
             clearInterval(slideInterval);
-        }, { passive: true });
+        }, {
+            passive: true
+        });
 
         carousel.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
             startInterval();
-        }, { passive: true });
+        }, {
+            passive: true
+        });
 
         function handleSwipe() {
             const threshold = 50; // minimum swipe distance
