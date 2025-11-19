@@ -1,22 +1,45 @@
 <div class="group relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full border border-gray-200/50 dark:border-gray-700/30"
     data-aos="fade-up">
-    <!-- Enhanced Image with overlay - Fixed aspect ratio -->
+
+    <!-- Image (16:9 Aspect Ratio) -->
     <div class="relative overflow-hidden aspect-[16/9] group">
         <img src="{{ asset('storage/' . $blog->thumbnail) }}" alt="Gambar {{ $blog->title }}"
-            class="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-110">
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
 
         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent"></div>
 
-        <a href="{{ route('category.show', $blog->category->slug) }}"
-            class="absolute top-4 right-4 px-3 py-1 text-xs font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700 rounded-full shadow-md hover:shadow-lg transition-shadow duration-300">
-            {{ $blog->category->name }}
-        </a>
+        <!-- Views Badge — biru solid -->
+        <div
+            class="absolute top-3 right-3 z-20 px-3 py-2 text-xs font-bold flex items-center gap-1.5
+                   rounded-xl shadow-lg
+                   bg-blue-600 text-white
+                   dark:bg-blue-700]
+                   transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl">
+
+            <!-- Eye Icon -->
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+
+            <span class="font-bold tracking-wide">
+                @if ($blog->views >= 1000000)
+                    {{ number_format($blog->views / 1000000, 1) }}m
+                @elseif($blog->views >= 1000)
+                    {{ number_format($blog->views / 1000, 1) }}k
+                @else
+                    {{ $blog->views }}
+                @endif
+            </span>
+        </div>
     </div>
 
-
-    <!-- Card Content - Flex container with consistent spacing -->
+    <!-- Card Content -->
     <div class="p-5 flex flex-col flex-grow">
-        <!-- Title with fixed height -->
+
+        <!-- Title -->
         <h3 class="min-h-[3.5rem] mb-3">
             <a href="{{ route('blog.show', $blog->slug) }}" class="block">
                 <span
@@ -26,8 +49,21 @@
             </a>
         </h3>
 
-        <!-- Metadata - Fixed height -->
+        <!-- Category Badge -->
+        <div class="mb-3">
+            <a href="{{ route('category.show', $blog->category->slug) }}"
+                class="inline-flex items-center px-3 py-1.5 text-xs font-semibold text-white
+                       bg-gradient-to-r from-blue-500 to-blue-600
+                       dark:from-blue-600 dark:to-blue-700
+                       rounded-full shadow hover:shadow-md transition-all duration-300">
+                {{ $blog->category->name }}
+            </a>
+        </div>
+
+        <!-- Metadata -->
         <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-4 min-h-[1.5rem]">
+
+            <!-- Author -->
             <div class="flex items-center hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200">
                 <svg class="w-4 h-4 mr-1.5 opacity-70" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -35,7 +71,10 @@
                 </svg>
                 <span class="font-medium">{{ $blog->author->name }}</span>
             </div>
+
             <span class="text-gray-300 dark:text-gray-600">•</span>
+
+            <!-- Published Date -->
             <div class="flex items-center hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200">
                 <svg class="w-4 h-4 mr-1.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,54 +82,71 @@
                 </svg>
                 <span class="font-medium">{{ $blog->created_at->format('d M Y') }}</span>
             </div>
+
         </div>
 
-        <!-- Description - Fixed height with line clamp -->
+        <!-- Description -->
         <p
             class="text-gray-600 dark:text-gray-300 mb-5 line-clamp-3 leading-relaxed min-h-[4.5rem] group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">
             {{ $blog->description }}
         </p>
 
-        <!-- Tags - Scrollable if too many -->
+        <!-- Tags -->
         <div class="mb-5">
             <div
-                class="flex flex-wrap gap-2 max-h-20 overflow-y-auto py-1 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                class="flex flex-wrap gap-2 max-h-20 overflow-y-auto py-1
+               scrollbar-thin scrollbar-thumb-gray-300
+               dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
+
                 @foreach ($blog->tags as $tag)
                     <span
-                        class="px-2.5 py-1 text-xs font-medium bg-blue-100/80 hover:bg-blue-200 text-blue-800 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-300 rounded-full transition-colors duration-200 cursor-default">
+                        class="px-2.5 py-1 text-xs font-medium
+                       rounded-full transition-all duration-200
+                       bg-blue-100 text-blue-800 hover:bg-blue-200
+                       dark:bg-blue-800/40 dark:text-blue-800
+                       dark:hover:bg-blue-800/60">
+
                         #{{ $tag }}
                     </span>
                 @endforeach
+
             </div>
         </div>
 
-        <!-- Unit Badge - Fixed position -->
+
+        <!-- Unit -->
         <div class="mt-auto">
             <a href="{{ route('unit.show', $blog->unit->slug) }}"
-                class="inline-flex items-center px-3 py-1 text-xs font-semibold bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-full shadow-sm hover:from-purple-600 hover:to-indigo-700 transition-all duration-300">
-                <svg class="w-4 h-4 mr-1 text-white opacity-80" fill="none" stroke="currentColor" stroke-width="2"
+                class="inline-flex items-center px-3 py-1 text-xs font-semibold
+               text-white rounded-full shadow-sm
+               bg-gradient-to-r from-purple-500 to-indigo-600
+               hover:from-purple-600 hover:to-indigo-700
+               dark:from-purple-600 dark:to-indigo-700
+               dark:hover:from-purple-700 dark:hover:to-indigo-800
+               transition-all duration-300">
+
+                <svg class="w-4 h-4 mr-1 opacity-90" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 20 20">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M4 13V7a2 2 0 012-2h8a2 2 0 012 2v6m-2 4H6a2 2 0 01-2-2v-1h12v1a2 2 0 01-2 2z" />
                 </svg>
+
                 {{ $blog->unit->name }}
             </a>
         </div>
 
-        <!-- Read More Button - Always at bottom -->
+        <!-- Read More -->
         <div class="mt-4 pt-4 border-t border-gray-100/50 dark:border-gray-700/50">
             <a href="{{ route('blog.show', $blog->slug) }}"
                 class="inline-flex items-center text-base font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors group/button">
                 Baca selengkapnya
                 <svg class="ms-2 h-5 w-5 transition-transform duration-300 group-hover/button:translate-x-1"
-                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                    viewBox="0 0 24 24">
+                    aria-hidden="true" viewBox="0 0 24 24" fill="none">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 12H5m14 0-4 4m4-4-4-4" />
                 </svg>
-                <span
-                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover/button:w-full transition-all duration-300"></span>
             </a>
         </div>
+
     </div>
 </div>
